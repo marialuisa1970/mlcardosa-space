@@ -1,0 +1,32 @@
+# Netlify config for mlcardosa.space — plain static site, no build step.
+
+# Nice clean URLs: /ai-lab instead of /ai-lab.html
+[[redirects]]
+  from = "/ai-lab"
+  to = "/ai-lab.html"
+  status = 200
+
+[[redirects]]
+  from = "/nextstep50"
+  to = "/nextstep50.html"
+  status = 200
+
+[[redirects]]
+  from = "/bloom-sessions"
+  to = "/bloom-sessions.html"
+  status = 200
+
+[[redirects]]
+  from = "/ai-studio"
+  to = "/ai-studio.html"
+  status = 200
+
+[[redirects]]
+  from = "/networking"
+  to = "/networking.html"
+  status = 200
+
+[[redirects]]
+  from = "/field-notes"
+  to = "/field-notes.html"
+  status = 200

@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Claude Playbook · mlcardosa.space · AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --offwhite:  #F8F8F5;
+  --cream:     #F5F5F0;
+  --cream2:    #EDEAE0;
+  --cream3:    #E5E1D5;
+  --ink:       #1A1A1A;
+  --ink2:      #2C2C2C;
+  --ink3:      #555555;
+  --ink4:      #8A8377;
+  --bdr:       rgba(26,26,26,.08);
+  --bdr2:      rgba(26,26,26,.15);
+  --night:     #1B2A3F;
+  --night3:    #0F1A2A;
+  --moon:      #E8D9B8;
+  --gold:      #C9A869;
+  --gold-soft: rgba(201,168,105,.12);
+  --obsidian:  #0A0A0A;
+  /* Playbook accent: Aqua — AI Lab division */
+  --accent:      #5bc4c5;
+  --accent-dk:   #2f8485;
+  --accent-soft: rgba(91,196,197,.12);
+  --sage:        #4E7A5B;
+  --sage-soft:   rgba(78,122,91,.09);
+  --warn:        #B85C38;
+  --warn-soft:   rgba(184,92,56,.07);
+  --serif: "Instrument Serif", Georgia, serif;
+  --mono:  "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--mono);font-weight:300;font-size:14px;
+  background:var(--offwhite);color:var(--ink);
+  line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--gold);color:var(--night3)}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(248,248,245,.93);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--bdr);
+  padding:14px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand-mark{
+  display:flex;align-items:center;gap:0;
+  font-family:var(--serif);font-style:italic;font-size:15px;
+  color:var(--ink);letter-spacing:-.01em;white-space:nowrap;
+}
+.brand-mark .dot{color:var(--gold);font-style:normal}
+.brand-mark .sep{font-family:var(--mono);font-style:normal;font-size:10px;color:var(--ink4);margin:0 8px}
+.topbar-right{display:flex;align-items:center;gap:20px}
+.topbar-badge{
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent-dk);border:1px solid var(--accent);
+  padding:5px 12px;border-radius:999px;
+}
+.topbar-nav{display:flex;gap:22px;list-style:none}
+.topbar-nav a{
+  font-family:var(--mono);font-size:10px;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink4);transition:color .2s;
+}
+.topbar-nav a:hover{color:var(--accent-dk)}
+
+/* ── RIBBON ── */
+.ribbon{
+  background:var(--night);color:rgba(232,217,184,.5);
+  padding:6px 48px;
+  font-family:var(--mono);font-size:9px;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;text-align:center;
+}
+
+/* ── WRAP ── */
+.wrap{max-width:780px;margin:0 auto;padding:0 48px}
+
+/* ── COVER ── */
+.cover{
+  min-height:92vh;padding:88px 48px 80px;
+  max-width:780px;margin:0 auto;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.cover-ghost{
+  position:absolute;right:40px;bottom:-24px;
+  font-family:var(--serif);font-style:italic;
+  font-size:220px;line-height:1;
+  color:var(--cream2);pointer-events:none;user-select:none;
+  letter-spacing:-.04em;
+}
+.cover-eyebrow{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:var(--accent-dk);margin-bottom:24px;
+  display:flex;align-items:center;gap:14px;
+}
+.cover-eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+.cover h1{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(44px,7vw,78px);
+  line-height:.96;letter-spacing:-.028em;font-weight:400;
+  color:var(--ink);margin-bottom:22px;position:relative;z-index:1;
+}
+.cover h1 em{color:var(--accent-dk)}
+.cover-sub{
+  font-family:var(--serif);font-style:italic;
+  font-size:17px;color:var(--ink3);line-height:1.65;
+  max-width:480px;margin-bottom:44px;position:relative;z-index:1;
+}
+
+/* Lesson map */
+.lesson-map{display:flex;flex-direction:column;gap:8px;margin-bottom:44px;position:relative;z-index:1}
+.lesson-row{
+  display:flex;align-items:center;gap:16px;
+  padding:12px 16px;background:var(--cream);
+  border-radius:6px;border:1px solid var(--bdr);
+}
+.lesson-row.is-intro{border-color:var(--accent-dk);background:var(--accent-soft)}
+.l-num{
+  min-width:32px;height:32px;border-radius:50%;
+  background:var(--accent-dk);color:var(--offwhite);
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.lesson-row.is-intro .l-num{background:var(--night)}
+.l-title{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.l-desc{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-top:3px;font-weight:300}
+.l-time{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink4);white-space:nowrap;letter-spacing:.06em}
+
+.cover-meta{
+  display:flex;gap:28px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11px;color:var(--ink4);
+  border-top:1px solid var(--bdr);padding-top:22px;
+  position:relative;z-index:1;letter-spacing:.04em;
+}
+.cover-meta strong{color:var(--ink3);font-weight:500}
+
+/* ── LESSON SECTION ── */
+.lesson{padding:88px 0;position:relative;overflow:hidden}
+.lesson+.lesson{border-top:1px solid var(--bdr)}
+
+.lesson-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:36px}
+.lesson-badge{
+  min-width:52px;height:52px;border-radius:10px;
+  background:var(--accent);color:var(--offwhite);
+  font-family:var(--serif);font-style:italic;font-size:20px;font-weight:400;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.lesson-badge.intro{background:var(--night)}
+.lesson-badge.l1{background:var(--accent-dk)}
+.lesson-badge.l2{background:#2C5F6B}
+.lesson-badge.l3{background:#5A3B2E}
+.lesson-badge.l4{background:#2E3D5A}
+
+.lesson-header-text{flex:1}
+.lesson-eyebrow{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent-dk);margin-bottom:8px;
+}
+.lesson h2{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(28px,4.5vw,44px);
+  line-height:1.02;letter-spacing:-.022em;font-weight:400;color:var(--ink);
+}
+.lesson h2 em{color:var(--accent-dk)}
+.lesson-lede{
+  font-family:var(--mono);font-size:14px;font-weight:300;
+  color:var(--ink3);line-height:1.75;max-width:600px;margin-bottom:40px;
+}
+
+/* ── CONCEPT BLOCK ── */
+.concept{
+  background:var(--cream);border:1px solid var(--bdr);
+  border-radius:8px;padding:24px 28px;margin-bottom:20px;
+}
+.concept-label{
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--accent-dk);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.concept-label::before{content:'';width:16px;height:1px;background:var(--accent)}
+.concept h4{
+  font-family:var(--serif);font-style:italic;
+  font-size:18px;font-weight:400;color:var(--ink);margin-bottom:10px;
+}
+.concept p{font-size:13px;color:var(--ink3);line-height:1.75;margin-bottom:8px}
+.concept p:last-child{margin-bottom:0}
+.concept strong{color:var(--ink);font-weight:500}
+.concept em{font-family:var(--serif);font-style:italic;color:var(--accent-dk)}
+.concept-analogy{
+  background:var(--accent-soft);
+  border-left:2px solid var(--accent-dk);
+  border-radius:0 6px 6px 0;
+  padding:14px 18px;margin-top:16px;
+  font-family:var(--serif);font-style:italic;
+  font-size:14px;color:var(--ink2);line-height:1.65;
+}
+
+/* ── STEP LIST ── */
+.steps-title{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--accent-dk);
+  margin-bottom:16px;display:flex;align-items:center;gap:12px;
+}
+.steps-title::before{content:'';width:16px;height:1px;background:var(--bdr2)}
+.step-list{
+  display:flex;flex-direction:column;gap:0;
+  margin-bottom:28px;position:relative;
+}
+.step-list::before{
+  content:'';position:absolute;
+  left:19px;top:42px;bottom:42px;
+  width:1px;background:var(--bdr2);z-index:0;
+}
+.step-item{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:14px 0;position:relative;z-index:1;
+}
+.step-dot{
+  min-width:38px;height:38px;border-radius:50%;
+  background:var(--cream);border:1px solid var(--bdr2);
+  font-family:var(--serif);font-style:italic;font-size:15px;
+  color:var(--accent-dk);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;position:relative;z-index:1;
+}
+.step-dot.done{background:var(--sage);border-color:var(--sage);color:var(--offwhite);font-style:normal;font-size:13px}
+.step-content strong{
+  display:block;font-family:var(--mono);font-size:13px;font-weight:500;
+  color:var(--ink);margin-bottom:5px;
+}
+.step-content p{font-size:12px;color:var(--ink3);line-height:1.7}
+.step-content p+p{margin-top:6px}
+.step-content code{
+  background:var(--cream2);border:1px solid var(--bdr2);
+  border-radius:3px;padding:2px 7px;
+  font-family:var(--mono);font-size:11px;color:var(--ink2);
+}
+.ui-path{
+  display:inline-block;font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--night);background:rgba(27,42,63,.08);
+  border-radius:4px;padding:3px 9px;margin-top:4px;letter-spacing:.04em;
+}
+.step-note{
+  background:var(--gold-soft);border-left:2px solid var(--gold);
+  border-radius:0 5px 5px 0;padding:10px 14px;margin-top:10px;
+  font-family:var(--mono);font-size:11px;color:var(--ink2);line-height:1.6;font-weight:300;
+}
+
+/* ── SKILL BLOCK (dark) ── */
+.skill-block{
+  background:var(--night);border-radius:10px;
+  padding:28px 32px;margin:28px 0;
+  position:relative;overflow:hidden;
+}
+.skill-block::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,105,.14),transparent 65%);
+  pointer-events:none;
+}
+.skill-block-label{
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;
+}
+.skill-block-title{
+  font-family:var(--serif);font-style:italic;font-size:16px;
+  color:rgba(232,217,184,.9);margin-bottom:18px;
+}
+.skill-code{
+  font-family:var(--mono);font-size:12px;line-height:1.85;
+  color:rgba(232,217,184,.8);
+  background:rgba(255,255,255,.04);
+  padding:18px 72px 18px 20px;border-radius:6px;
+  border:1px solid rgba(232,217,184,.1);
+  white-space:pre-wrap;word-break:break-word;
+  position:relative;font-weight:300;
+}
+.copy-btn{
+  position:absolute;top:10px;right:10px;
+  background:var(--accent-dk);color:var(--offwhite);
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 12px;border-radius:999px;cursor:pointer;
+  border:none;transition:background .2s;
+}
+.copy-btn:hover{background:var(--gold);color:var(--ink)}
+.copy-btn.copied{background:var(--sage)}
+.skill-block-note{
+  font-family:var(--mono);font-size:11px;font-weight:300;
+  color:rgba(232,217,184,.38);margin-top:14px;line-height:1.6;
+}
+
+/* ── ANATOMY GRID ── */
+.anatomy-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;margin:28px 0;
+  background:var(--cream);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;
+}
+.anat-card{padding:22px 20px;border-right:1px solid var(--bdr)}
+.anat-card:last-child{border-right:none}
+.anat-k{
+  font-family:var(--mono);font-size:9px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-dk);margin-bottom:10px;
+}
+.anat-card h5{
+  font-family:var(--serif);font-style:italic;
+  font-size:17px;font-weight:400;color:var(--ink);margin-bottom:8px;
+}
+.anat-card p{font-size:12px;color:var(--ink3);line-height:1.65}
+
+/* ── COMPARE ── */
+.compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0}
+.c-card{border-radius:8px;padding:18px 20px}
+.c-card.bad{background:var(--offwhite);border:1px solid var(--bdr)}
+.c-card.good{background:var(--offwhite);border:1px solid var(--sage)}
+.c-tag{
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:5px;margin-bottom:10px;
+}
+.c-tag.bad{background:var(--warn-soft);color:var(--warn)}
+.c-tag.good{background:var(--sage-soft);color:var(--sage)}
+.c-card h5{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink);margin-bottom:5px}
+.c-card p{font-size:11px;color:var(--ink3);line-height:1.55;margin-bottom:8px;font-weight:300}
+.c-card code{
+  display:block;background:var(--cream);
+  border:1px solid var(--bdr);border-radius:5px;
+  padding:10px 12px;font-family:var(--mono);
+  font-size:11px;line-height:1.75;color:var(--ink2);
+  white-space:pre-wrap;font-weight:300;
+}
+
+/* ── OUTPUT PREVIEW ── */
+.output-preview{
+  background:var(--cream);border-radius:8px;
+  padding:22px 26px;border-left:2px solid var(--accent-dk);margin:20px 0;
+}
+.output-label{
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--accent-dk);margin-bottom:14px;
+}
+.output-item{
+  display:flex;gap:12px;align-items:flex-start;
+  font-family:var(--mono);font-size:12px;color:var(--ink2);
+  margin-bottom:8px;line-height:1.6;font-weight:300;
+}
+.output-item:last-child{margin-bottom:0}
+.output-item .dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--accent-dk);flex-shrink:0;margin-top:7px;
+}
+.output-item strong{font-weight:500;color:var(--ink)}
+
+/* ── PRACTICE BOX ── */
+.practice{
+  border:1px dashed var(--bdr2);
+  border-radius:8px;padding:24px 28px;margin:28px 0;
+}
+.practice-label{
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sage);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.practice-label::before{content:'✎';font-size:12px;font-family:serif}
+.practice h4{
+  font-family:var(--serif);font-style:italic;
+  font-size:17px;font-weight:400;color:var(--ink);margin-bottom:8px;
+}
+.practice p{font-size:13px;color:var(--ink2);line-height:1.75;margin-bottom:8px}
+.practice-task{
+  background:var(--sage-soft);border-left:2px solid var(--sage);
+  border-radius:0 6px 6px 0;
+  padding:14px 18px;margin-top:12px;
+  font-family:var(--mono);font-size:12px;color:#2E5038;line-height:1.65;font-weight:300;
+}
+.practice-task strong{font-weight:500;display:block;margin-bottom:5px}
+
+/* ── CHECK BLOCK ── */
+.check-block{
+  background:var(--night);border-radius:10px;
+  padding:24px 28px;margin:32px 0;
+  display:flex;gap:18px;align-items:flex-start;
+}
+.check-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(201,168,105,.15);color:var(--gold);
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-family:var(--mono);
+}
+.check-body strong{
+  display:block;font-family:var(--mono);font-size:12px;font-weight:500;
+  color:rgba(232,217,184,.9);margin-bottom:8px;
+}
+.check-body p{font-size:12px;color:rgba(232,217,184,.5);line-height:1.65;font-weight:300}
+.check-body ul{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.check-body li{
+  font-family:var(--mono);font-size:12px;font-weight:300;
+  color:rgba(232,217,184,.5);padding-left:16px;
+  position:relative;line-height:1.6;
+}
+.check-body li::before{content:'✓';position:absolute;left:0;color:var(--sage);font-size:11px}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:0;margin:24px 0}
+.check-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:11px 0;border-bottom:1px solid var(--bdr);
+  cursor:pointer;transition:padding .15s;
+}
+.check-item:last-child{border-bottom:none}
+.check-item:hover{padding-left:4px}
+.check-box{
+  width:17px;height:17px;border:1px solid var(--bdr2);border-radius:4px;
+  flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.check-item.done .check-box{background:var(--sage);border-color:var(--sage)}
+.check-item.done .check-box svg{opacity:1}
+.check-box svg{opacity:0;transition:opacity .15s}
+.check-text{font-size:13px;font-weight:300;line-height:1.55;color:var(--ink2);transition:all .15s}
+.check-item.done .check-text{color:var(--ink4);text-decoration:line-through}
+
+/* ── DIVIDER ── */
+hr.rule{border:none;border-top:1px solid var(--bdr);margin:0 auto;max-width:780px}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--obsidian);padding:40px 48px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+}
+.f-brand{
+  font-family:var(--serif);font-style:italic;font-size:16px;
+  color:var(--moon);display:flex;align-items:center;gap:6px;
+}
+.f-brand em{color:var(--gold)}
+.f-brand .sep{font-family:var(--mono);font-size:10px;color:rgba(232,217,184,.3);margin:0 2px;font-style:normal}
+.f-quote{
+  font-family:var(--serif);font-style:italic;font-size:11px;
+  color:rgba(232,217,184,.35);margin-top:6px;
+}
+.f-meta{
+  font-family:var(--mono);font-size:10px;font-weight:300;
+  color:rgba(232,217,184,.35);text-align:right;line-height:1.8;letter-spacing:.04em;
+}
+.f-meta strong{color:rgba(232,217,184,.65);font-weight:500}
+
+/* ── FADE IN ── */
+.fade{opacity:0;transform:translateY(18px);transition:opacity .75s ease,transform .75s ease}
+.fade.in{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:680px){
+  .topbar{padding:12px 20px}
+  .topbar-nav{display:none}
+  .cover{padding:56px 20px 48px}
+  .cover-ghost{font-size:100px}
+  .wrap{padding:0 20px}
+  .ribbon{padding:6px 20px}
+  .anatomy-grid{grid-template-columns:1fr}
+  .anat-card{border-right:none;border-bottom:1px solid var(--bdr)}
+  .anat-card:last-child{border-bottom:none}
+  .compare-wrap{grid-template-columns:1fr}
+  footer{padding:28px 20px}
+  .f-meta{text-align:left}
+  .step-list::before{left:17px}
+}
+
+/* ── PRINT ── */
+@media print{
+  @page{size:A4;margin:16mm 14mm}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .topbar,.ribbon{display:none!important}
+  body{background:var(--offwhite)!important}
+  .cover{min-height:auto;padding:40px 48px;break-after:page}
+  .lesson{padding:40px 0;break-inside:avoid}
+  .skill-block,.concept,.compare-wrap,.check-block{break-inside:avoid}
+  .copy-btn{display:none!important}
+  footer{-webkit-print-color-adjust:exact!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a href="#top" class="brand-mark">
+    <em style="font-family:var(--serif);font-style:italic;font-size:17px">AI Lab<span style="color:var(--accent-dk)">.</span></em>
+    <span class="sep" style="font-family:var(--mono);font-size:10px;color:var(--ink4);font-style:normal">→ MLCARDOSA.SPACE</span>
+  </a>
+  <div class="topbar-right">
+    <ul class="topbar-nav">
+      <li><a href="#lesson0">Method</a></li>
+      <li><a href="#lesson1">Build</a></li>
+      <li><a href="#lesson2">Preferences</a></li>
+      <li><a href="#lesson3">Prompts</a></li>
+      <li><a href="#lesson4">Sessions</a></li>
+    </ul>
+    <div class="topbar-badge">Playbook</div>
+  </div>
+</nav>
+<div class="ribbon">AI Lab · mlcardosa.space · The Claude Playbook · Vol. 01 · 2026</div>
+
+<!-- COVER -->
+<div class="cover" id="top">
+  <div class="cover-ghost">Ai</div>
+  <div class="cover-eyebrow">AI Lab · Vol. 01 · 2026</div>
+  <h1>How to get the best<br>out of <em>every prompt.</em></h1>
+  <p class="cover-sub">A practical guide to designing AI projects that give you sharper, more useful, more consistent answers, using a real Job Coach project as the worked example.</p>
+
+  <div class="lesson-map">
+    <div class="lesson-row is-intro">
+      <div class="l-num">00</div>
+      <div>
+        <div class="l-title">Start here: Why setup matters</div>
+        <div class="l-desc">The problem with how most people use AI, and three principles that change everything.</div>
+      </div>
+      <div class="l-time">~8 min</div>
+    </div>
+    <div class="lesson-row">
+      <div class="l-num">01</div>
+      <div>
+        <div class="l-title">Build your first project</div>
+        <div class="l-desc">The anatomy of a great project, and a five-step walkthrough to set yours up.</div>
+      </div>
+      <div class="l-time">~10 min</div>
+    </div>
+    <div class="lesson-row">
+      <div class="l-num">02</div>
+      <div>
+        <div class="l-title">Styles &amp; preferences: the quiet upgrade</div>
+        <div class="l-desc">Two settings almost nobody touches that stop responses sounding like AI.</div>
+      </div>
+      <div class="l-time">~5 min</div>
+    </div>
+    <div class="lesson-row">
+      <div class="l-num">03</div>
+      <div>
+        <div class="l-title">Prompts that actually work</div>
+        <div class="l-desc">Before &amp; after comparison, plus four copy-paste prompts for your job search.</div>
+      </div>
+      <div class="l-time">~5 min</div>
+    </div>
+    <div class="lesson-row">
+      <div class="l-num">04</div>
+      <div>
+        <div class="l-title">When things go wrong + your starter kit</div>
+        <div class="l-desc">A troubleshooting checklist and a copy-paste template to get started in minutes.</div>
+      </div>
+      <div class="l-time">~5 min</div>
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <div><strong>Level</strong>&nbsp; Complete beginner welcome</div>
+    <div><strong>Requires</strong>&nbsp; Claude Pro · claude.ai</div>
+    <div><strong>Example</strong>&nbsp; Job Coach · DACH market</div>
+    <div><strong>Reading time</strong>&nbsp; ~33 minutes total</div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ═══ LESSON 00 ═══ -->
+<section class="lesson" id="lesson0">
+<div class="wrap">
+  <div class="lesson-header fade">
+    <div class="lesson-badge intro">00</div>
+    <div class="lesson-header-text">
+      <div class="lesson-eyebrow">Start here · Read this first</div>
+      <h2>Most people use AI<br>the <em>wrong way.</em></h2>
+    </div>
+  </div>
+  <p class="lesson-lede fade">They open a fresh chat, type a vague question, and wonder why the answer feels generic. The issue is rarely the model: it is the setup. Before you build anything, internalise these three ideas.</p>
+
+  <div class="concept fade">
+    <div class="concept-label">The real problem</div>
+    <h4>A well-designed project changes everything.</h4>
+    <p>A well-designed project gives Claude a role, a goal, and clear rules, so responses stop drifting, stop being too long, and start feeling like they were written for you.</p>
+    <p>This playbook shows you how to build one. We will use a real worked example: a <strong>Job Coach project</strong> for your job search. By the end, you will have a reusable template and four copy-paste prompts.</p>
+    <div class="concept-analogy">"A good project doesn't try to do everything. It does a few important things very well."</div>
+  </div>
+
+  <div class="concept fade">
+    <div class="concept-label">Principle one of three</div>
+    <h4>Role before task.</h4>
+    <p>Tell Claude <em>who it is</em> before you tell it what to do. "Act as my Job Coach for the DACH market" unlocks sharper answers than "help me with jobs." The role gives Claude a frame of reference for every response it writes.</p>
+    <div class="concept-analogy">"You would not brief a consultant without explaining who they are working for, what they know, and what success looks like. Same logic applies here."</div>
+  </div>
+
+  <div class="concept fade">
+    <div class="concept-label">Principle two of three</div>
+    <h4>Context beats cleverness.</h4>
+    <p>Your country, target roles, languages, what you <strong>don't</strong> want: context is free and it is the single biggest quality lever you have. A prompt with five lines of context will consistently outperform a clever prompt with none.</p>
+    <div class="concept-analogy">"Context is not extra. It is the work. The model is ready; your job is to give it something real to work with."</div>
+  </div>
+
+  <div class="concept fade">
+    <div class="concept-label">Principle three of three</div>
+    <h4>One prompt, one job.</h4>
+    <p>Do not use the same prompt for interviews, cover letters, and offer reviews. One prompt per task. Each one becomes sharper with use. Mixing tasks in one prompt forces Claude to guess your priority, and it will guess wrong.</p>
+    <div class="concept-analogy">"If Claude's answer feels off, the problem is almost always the prompt, not the model. Simplify, or split into two smaller prompts."</div>
+  </div>
+
+  <div class="check-block fade">
+    <div class="check-icon">✓</div>
+    <div class="check-body">
+      <strong>Ready to move on when:</strong>
+      <ul>
+        <li>You understand that setup quality determines output quality, not the model.</li>
+        <li>You can explain the difference between role, context, and task.</li>
+        <li>You know why one project should not handle multiple unrelated tasks.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ LESSON 01 ═══ -->
+<section class="lesson" id="lesson1">
+<div class="wrap">
+  <div class="lesson-header fade">
+    <div class="lesson-badge l1">01</div>
+    <div class="lesson-header-text">
+      <div class="lesson-eyebrow">Lesson one · Build your project</div>
+      <h2>Anatomy of a project,<br>built <em>in five steps.</em></h2>
+    </div>
+  </div>
+  <p class="lesson-lede fade">Every well-designed project separates information into three distinct blocks. Mixing them is the most common mistake. Get the structure right once, and every future project builds on the same template.</p>
+
+  <div class="concept fade">
+    <div class="concept-label">The structure</div>
+    <h4>Three blocks. Each one has a different job.</h4>
+    <p>Projects fail when people confuse instructions, goals, and task prompts: mixing all three into one long block. The separation is what makes the system work.</p>
+  </div>
+
+  <div class="anatomy-grid fade">
+    <div class="anat-card">
+      <div class="anat-k">Block one</div>
+      <h5>Instructions</h5>
+      <p>How Claude should behave. Tone, language, level of detail, priorities, and what not to do. This block does most of the heavy lifting.</p>
+    </div>
+    <div class="anat-card">
+      <div class="anat-k">Block two</div>
+      <h5>The Goal</h5>
+      <p>One short sentence. The main thing you are trying to achieve. No more. It anchors every conversation to a purpose.</p>
+    </div>
+    <div class="anat-card">
+      <div class="anat-k">Block three</div>
+      <h5>Task prompts</h5>
+      <p>A specific prompt for each situation: reviewing an offer, writing a cover letter, prepping an interview. One per task.</p>
+    </div>
+  </div>
+
+  <div class="concept fade" style="margin-top:0">
+    <div class="concept-label">Why separation matters</div>
+    <h4>Mixing them forces Claude to guess.</h4>
+    <p>If your instructions say "be concise" and your task prompt says "write a detailed breakdown," Claude has to guess which rule wins. Keep the <em>how</em> separate from the <em>what</em> and this ambiguity disappears completely.</p>
+  </div>
+
+  <div class="steps-title fade">Build your Job Coach project: step by step</div>
+  <div class="step-list fade">
+    <div class="step-item">
+      <div class="step-dot">1</div>
+      <div class="step-content">
+        <strong>Go to claude.ai and create a new Project.</strong>
+        <p>In the left sidebar, find the <span class="ui-path">Projects</span> section. Click <span class="ui-path">+ Create project</span>. Name it clearly, for example <em>Job Coach · DACH</em>. Specific names prevent confusion if you create more projects later.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">2</div>
+      <div class="step-content">
+        <strong>Write your Instructions: Block one.</strong>
+        <p>Inside the project, click <span class="ui-path">Edit project instructions</span>. Paste your instructions block here. This is where you define Claude's role, your market, your language preference, your target roles, and what you do <em>not</em> want.</p>
+        <div class="step-note"><strong>Example:</strong> "You are my Job Coach for the DACH and EMEA job market. Help me review job offers, write applications, and practice interviews. Be direct. Do not invent information. Reply in English by default; in German if the input is German. Target roles: Senior CSM, Account Management. Not interested in: pure sales, relocation outside DACH."</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">3</div>
+      <div class="step-content">
+        <strong>Add knowledge files: your context layer.</strong>
+        <p>Under <span class="ui-path">Project knowledge</span>, click <span class="ui-path">Add content</span>. Drop in your CV, a list of target companies, or tone-of-voice notes. Claude will reference these automatically in every conversation inside this project, without you having to paste them each time.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">4</div>
+      <div class="step-content">
+        <strong>Start a conversation: Claude already knows you.</strong>
+        <p>Open a <span class="ui-path">New chat</span> inside the project. Paste a job description and ask for a review. Notice that Claude does not ask who you are or what your target market is. The project carries that context automatically into every conversation.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot done">✓</div>
+      <div class="step-content">
+        <strong>Keep iterating. Projects are living documents.</strong>
+        <p>If an answer feels off, edit your instructions rather than rewriting the same prompt every time. Refine every few weeks as you learn what works. The best projects are edited more than they are written.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="check-block fade">
+    <div class="check-icon">✓</div>
+    <div class="check-body">
+      <strong>Ready to move on when:</strong>
+      <ul>
+        <li>You have created at least one project with instructions and a knowledge file.</li>
+        <li>You have run a conversation inside the project and noticed it remembered your context.</li>
+        <li>You understand that instructions, knowledge, and task prompts are three separate things.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ LESSON 02 ═══ -->
+<section class="lesson" id="lesson2">
+<div class="wrap">
+  <div class="lesson-header fade">
+    <div class="lesson-badge l2">02</div>
+    <div class="lesson-header-text">
+      <div class="lesson-eyebrow">Lesson two · Styles &amp; preferences</div>
+      <h2>The settings nobody<br>touches, <em>but should.</em></h2>
+    </div>
+  </div>
+  <p class="lesson-lede fade">Almost no one configures these. They are the single easiest way to stop responses sounding like AI. Set them once and they apply across every project and chat you ever open.</p>
+
+  <div class="concept fade">
+    <div class="concept-label">Where to find them</div>
+    <h4>Profile &amp; preferences: two controls that matter.</h4>
+    <p>Inside Claude's settings panel, go to <span class="ui-path">Profile</span>. You will find fields for your name, your role, the traits you want Claude to have, and your default response style.</p>
+    <p>Think of these as your <strong>personal defaults</strong>. Project instructions are the job-specific overrides. The two layers stack, and together they eliminate generic, impersonal output.</p>
+    <div class="concept-analogy">"These settings apply everywhere, on top of your project instructions. Fill them once. Benefit from them in every future chat, forever."</div>
+  </div>
+
+  <div class="steps-title fade">Configure the two levers that matter most</div>
+  <div class="step-list fade">
+    <div class="step-item">
+      <div class="step-dot">i</div>
+      <div class="step-content">
+        <strong>Traits: this is where you kill the AI voice.</strong>
+        <p>Describe the kind of colleague you want Claude to be. Be specific and blunt. This is not a place for politeness; it is a place for precision.</p>
+        <div class="step-note"><strong>Example:</strong> "Direct. Push back when I'm wrong. Short sentences. No 'I'd be happy to help.' Use examples from Customer Success and EdTech when possible."</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">ii</div>
+      <div class="step-content">
+        <strong>Response style: pick Concise as your default.</strong>
+        <p>You can always ask for depth in the moment, but you cannot un-read a 2,000-word answer you did not want. Set it to Concise and switch temporarily when you need a long-form draft.</p>
+        <div class="step-note">Tip: if you are writing a cover letter or long document, switch to Explanatory for that session, then switch back to Concise afterward.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot done">✓</div>
+      <div class="step-content">
+        <strong>Save and notice the difference immediately.</strong>
+        <p>Open a new chat and ask Claude something simple. The difference in tone will be immediate. Your name, your background, and your preferences will shape the response without any extra setup on your part.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="practice fade">
+    <div class="practice-label">Practice exercise</div>
+    <h4>Configure your preferences now, before lesson three.</h4>
+    <p>Go to <span class="ui-path">claude.ai → Profile → Preferences</span>. Fill in your name, your role, your traits, and your response style. Write the traits the way you would brief a real colleague, not the way you would describe yourself in a job application.</p>
+    <div class="practice-task">
+      <strong>What to notice after saving:</strong>
+      Start a fresh chat outside any project and ask a work-related question. Notice whether the tone matches what you asked for. If it still feels generic, your traits description is too vague; make it more specific.
+    </div>
+  </div>
+
+  <div class="check-block fade">
+    <div class="check-icon">✓</div>
+    <div class="check-body">
+      <strong>Ready to move on when:</strong>
+      <ul>
+        <li>Your Profile is filled in with a name, role description, and specific traits.</li>
+        <li>Your default response style is set to Concise.</li>
+        <li>You have tested the difference with a real question.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ LESSON 03 ═══ -->
+<section class="lesson" id="lesson3">
+<div class="wrap">
+  <div class="lesson-header fade">
+    <div class="lesson-badge l3">03</div>
+    <div class="lesson-header-text">
+      <div class="lesson-eyebrow">Lesson three · Prompts</div>
+      <h2>Four prompts<br>to <em>copy today.</em></h2>
+    </div>
+  </div>
+  <p class="lesson-lede fade">Same goal, same model, radically different results. The difference is five extra lines of context. Here is the before and after, then four ready-to-use prompts for your job search.</p>
+
+  <div class="concept fade">
+    <div class="concept-label">Before &amp; after: the same request, two outcomes</div>
+    <h4>Context is the work. Not the phrasing.</h4>
+    <p>The prompt below left has a goal. The prompt below right has a goal <em>and</em> a role, a market, a scope, a tone, and permission to push back. That is the entire difference.</p>
+  </div>
+
+  <div class="compare-wrap fade">
+    <div class="c-card bad">
+      <div class="c-tag bad">✗ Too vague</div>
+      <h5>No role, no context, no rules</h5>
+      <p>Claude has no market, no seniority, no language, no boundaries. The answer applies to everyone, and therefore to no one.</p>
+      <code>"Help me with my job search."</code>
+    </div>
+    <div class="c-card good">
+      <div class="c-tag good">✓ What you want</div>
+      <h5>Role, context, rules, and boundaries</h5>
+      <p>Claude now has a role, a market, a scope, a tone, and a permission to be direct. Every answer will be more useful without extra typing next time.</p>
+      <code>"Act as my Job Coach for the German and European market. Help me review offers, write applications, and prep interviews. Be direct and realistic. If a role doesn't fit, say so."</code>
+    </div>
+  </div>
+
+  <div class="steps-title fade">Four prompts: paste these into your Job Coach project</div>
+
+  <div class="skill-block fade">
+    <div class="skill-block-label">Prompt 01 · Use when: you are deciding whether to apply</div>
+    <div class="skill-block-title">Reviewing a job offer</div>
+    <div class="skill-code" id="code1">Here is a job post. Tell me:
+
+· Fit score (0–10) with one-line reason
+· Top 3 strengths I should highlight
+· Top 3 gaps and how to address them
+· Red flags in the posting itself
+· Your final recommendation: apply, skip, or clarify first
+
+[Paste JD below]<button class="copy-btn" onclick="copyCode('code1',this)">Copy</button></div>
+    <div class="skill-block-note">→ Run this before you write a single word of a cover letter. Five minutes of honest evaluation saves two hours of wasted effort.</div>
+  </div>
+
+  <div class="skill-block fade">
+    <div class="skill-block-label">Prompt 02 · Use when: you have decided to apply</div>
+    <div class="skill-block-title">Writing a cover letter</div>
+    <div class="skill-code" id="code2">Draft a cover letter for this role. Rules:
+
+· Match the language of the job post
+· Professional but human tone, no clichés
+· Max 250 words
+· Open with a sharp hook, not "I am writing to apply"
+· Close with a concrete next step
+
+[Paste JD + link to my CV]<button class="copy-btn" onclick="copyCode('code2',this)">Copy</button></div>
+    <div class="skill-block-note">→ Your project instructions are already set. This prompt can stay short because Claude already knows your background and tone preferences.</div>
+  </div>
+
+  <div class="skill-block fade">
+    <div class="skill-block-label">Prompt 03 · Use when: you have an interview booked</div>
+    <div class="skill-block-title">Preparing for an interview</div>
+    <div class="skill-code" id="code3">I have an interview for [role] at [company]. Prepare me:
+
+· 8 likely questions (mix behavioural + role-specific)
+· Sample STAR answers using my CV
+· 3 weak points they might probe + how I'd handle them
+· 3 sharp questions I should ask them
+
+Stage: [screening / hiring manager / final]<button class="copy-btn" onclick="copyCode('code3',this)">Copy</button></div>
+    <div class="skill-block-note">→ Always specify the stage. "First call with HR" and "final panel" need completely different preparation.</div>
+  </div>
+
+  <div class="skill-block fade">
+    <div class="skill-block-label">Prompt 04 · Use when: you want a warm intro or informational chat</div>
+    <div class="skill-block-title">Networking outreach</div>
+    <div class="skill-code" id="code4">Write a networking message to [person, role, company]. Rules:
+
+· Under 80 words
+· Clear purpose (what I want, what I offer)
+· Warm but not sycophantic
+· Give me one LinkedIn version and one email version
+
+Context on why I'm reaching out: [1–2 lines]<button class="copy-btn" onclick="copyCode('code4',this)">Copy</button></div>
+    <div class="skill-block-note">→ In DACH, try German even when the job is advertised in English. Local recruiters respond at a significantly higher rate.</div>
+  </div>
+
+  <div class="output-preview fade">
+    <div class="output-label">What makes these prompts work</div>
+    <div class="output-item"><div class="dot"></div><span><strong>They stay short</strong> because your project instructions carry the context. You do not repeat yourself; Claude already knows your background.</span></div>
+    <div class="output-item"><div class="dot"></div><span><strong>They give Claude a structure</strong> to follow (bullet points, word limits, explicit rules), so the output is predictable and usable without heavy editing.</span></div>
+    <div class="output-item"><div class="dot"></div><span><strong>They have boundaries</strong> ("no clichés", "do not invent information", "say so if it doesn't fit"), which is how you prevent generic, over-enthusiastic output.</span></div>
+    <div class="output-item"><div class="dot"></div><span><strong>One prompt, one job.</strong> Each prompt covers a single task. Mixing tasks in one prompt forces Claude to guess your priority, and it will guess wrong.</span></div>
+  </div>
+
+  <div class="check-block fade">
+    <div class="check-icon">✓</div>
+    <div class="check-body">
+      <strong>Ready to move on when:</strong>
+      <ul>
+        <li>You have copied at least one prompt into your Job Coach project.</li>
+        <li>You understand why these prompts work without being long.</li>
+        <li>You have seen the difference between a vague and a structured prompt in practice.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ LESSON 04 ═══ -->
+<section class="lesson" id="lesson4">
+<div class="wrap">
+  <div class="lesson-header fade">
+    <div class="lesson-badge l4">04</div>
+    <div class="lesson-header-text">
+      <div class="lesson-eyebrow">Lesson four · Troubleshoot &amp; template</div>
+      <h2>When things go wrong,<br>and your <em>starter kit.</em></h2>
+    </div>
+  </div>
+  <p class="lesson-lede fade">If Claude's output feels generic, confused, or too long, the model is almost never the problem. Run through this checklist before you give up; then copy the template below to start your next project in minutes.</p>
+
+  <div class="concept fade">
+    <div class="concept-label">The troubleshooting principle</div>
+    <h4>Bad output is almost always a setup problem.</h4>
+    <p>The single most common mistake is a vague or contradictory instructions block. Before assuming the model is wrong, check whether the issue is in your setup. The checklist below covers the eight most frequent causes of poor output.</p>
+    <div class="concept-analogy">"If you are on turn 10 of the same conversation and things are drifting, start a fresh chat. Long threads accumulate noise. Your project instructions will still be there."</div>
+  </div>
+
+  <div class="steps-title fade">Troubleshooting checklist: click to tick off</div>
+  <div class="checklist fade" id="checklist">
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">Is the <strong>role</strong> clear? (Coach, reviewer, editor, strategist?)</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">Is the <strong>goal</strong> stated in one sentence?</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">Is the <strong>language</strong> defined? (English? German? match the input?)</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">Is the <strong>tone</strong> defined? (direct? warm? formal?)</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">Did you tell Claude what you <strong>don't want?</strong></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">Are tasks <strong>separated,</strong> or jammed into one prompt?</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">Are there <strong>contradictions</strong> between instructions and the prompt?</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="check-text">If all else fails: <strong>simplify,</strong> or split into two smaller prompts.</div>
+    </div>
+  </div>
+
+  <div class="concept fade" style="margin-top:32px">
+    <div class="concept-label">Your copy-paste starter kit</div>
+    <h4>Three blocks. Edit the brackets. Done.</h4>
+    <p>The template below is all you need to start a new project. Paste Block one into Project Instructions, Block two into the goal field, and use the four prompts from Lesson 03 as your task prompts.</p>
+    <p>You do not need a perfect project on day one. <strong>Start rough, use it for a week, then refine.</strong></p>
+  </div>
+
+  <div class="skill-block fade">
+    <div class="skill-block-label">Block one · Paste into Project Instructions</div>
+    <div class="skill-block-title">Instructions template: edit the bracketed parts</div>
+    <div class="skill-code" id="tpl1">You are my Job Coach for the [DACH / EMEA / your market] job market.
+
+Help me review job offers, prepare applications, write messages, and practice interviews.
+
+Be direct, clear, and realistic. Do not invent information. If something does not fit, tell me tactfully but honestly.
+
+Reply in [English] by default. If the input is in [German], reply in [German].
+
+Target roles: [list your target roles].
+Not interested in: [list what you want to avoid].<button class="copy-btn" onclick="copyCode('tpl1',this)">Copy</button></div>
+    <div class="skill-block-note">→ This is Block one. Edit the brackets. Paste the entire block into Project Instructions.</div>
+  </div>
+
+  <div class="skill-block fade">
+    <div class="skill-block-label">Block two · Paste into "What are you trying to achieve"</div>
+    <div class="skill-block-title">Goal statement</div>
+    <div class="skill-code" id="tpl2">Helping me search for jobs more efficiently: analyse offers, adapt my CV, write cover letters and outreach, prep interviews, and prioritise where to spend my energy.<button class="copy-btn" onclick="copyCode('tpl2',this)">Copy</button></div>
+    <div class="skill-block-note">→ One sentence. That is all this field needs. Do not write a paragraph here.</div>
+  </div>
+
+  <div class="practice fade">
+    <div class="practice-label">Final exercise</div>
+    <h4>Set up your first complete project using this template.</h4>
+    <p>Create a new project, paste Block one into Instructions, add Block two as the goal, drop in your CV as a knowledge file, and run the job review prompt from Lesson 03 with a real job description.</p>
+    <div class="practice-task">
+      <strong>The complete setup takes under ten minutes.</strong>
+      After that, every conversation inside this project starts with your full context already loaded. You never have to explain yourself again.
+    </div>
+  </div>
+
+  <div class="check-block fade">
+    <div class="check-icon">✓</div>
+    <div class="check-body">
+      <strong>You have completed the playbook when:</strong>
+      <ul>
+        <li>You have a Job Coach project set up with Instructions, a Goal, and at least one knowledge file.</li>
+        <li>You have run all four task prompts at least once with real content.</li>
+        <li>Your Profile is configured with specific Traits and Concise as the default response style.</li>
+        <li>You know which checklist item to check first when output is not what you wanted.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="f-brand">
+      <em>AI Lab</em><span class="sep">·</span>mlcardosa.space
+    </div>
+    <div class="f-quote">"A good project doesn't try to do everything. It does a few important things very well."</div>
+  </div>
+  <div class="f-meta">
+    <strong>The Claude Playbook</strong><br>
+    v1.0 · May 2026<br>
+    María Luisa Cardosa Heredia<br>
+    Confidential · Not for redistribution
+  </div>
+</footer>
+
+<script>
+  // ── COPY ──
+  function copyCode(id, btn) {
+    const el = document.getElementById(id);
+    const text = el.innerText.replace(/^Copy\n?|^✓ Copied\n?/g,'').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent = '✓ Copied'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+
+  // ── CHECKLIST ──
+  function toggleCheck(el) { el.classList.toggle('done'); }
+
+  // ── FADE IN ──
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

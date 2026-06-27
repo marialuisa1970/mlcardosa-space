@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Why connection still beats the algorithm · Field Notes · mlcardosa.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --obsidian: #0a0a0a;
+  --orange: #ff6b2b;
+  --aqua: #5bc4c5;
+  --cream: #f5f5f0;
+  --offwhite: #f8f8f5;
+  --bg: var(--offwhite);
+  --fg: var(--obsidian);
+  --muted: rgba(0,0,0,0.62);
+  --soft: rgba(0,0,0,0.45);
+  --line: rgba(0,0,0,0.12);
+  --serif: "Instrument Serif", "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --max: 1440px;
+  --pad: clamp(20px, 4vw, 64px);
+  --read: 66ch;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+p { margin: 0; }
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px var(--pad);
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+.nav-brand { font-family: var(--serif); font-style: italic; font-size: 22px; letter-spacing: -0.01em; }
+.nav-brand .dot { color: var(--orange); }
+.nav-back {
+  font-family: var(--mono); text-transform: uppercase; font-size: 11px;
+  letter-spacing: 0.14em; color: var(--muted);
+  display: inline-flex; gap: 10px; align-items: center; transition: color 200ms;
+}
+.nav-back:hover { color: var(--fg); }
+
+/* ARTICLE */
+.article { max-width: var(--max); margin: 0 auto; padding: clamp(48px, 9vw, 120px) var(--pad) 0; }
+.art-eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--mono); text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.16em; color: var(--muted);
+  margin-bottom: 32px;
+}
+.art-eyebrow .bar { width: 36px; height: 1px; background: var(--orange); }
+.art-title {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(44px, 7vw, 104px); line-height: 0.98; letter-spacing: -0.025em;
+  max-width: 18ch;
+}
+.art-title .accent { color: var(--orange); }
+.art-meta {
+  display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline;
+  margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line);
+  font-family: var(--mono); text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.14em; color: var(--soft);
+}
+.art-meta .by { color: var(--fg); }
+
+/* BODY */
+.art-body {
+  max-width: var(--read); margin: clamp(48px, 7vw, 96px) auto 0;
+  padding: 0 var(--pad);
+}
+.lede {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(24px, 3vw, 34px); line-height: 1.4; letter-spacing: -0.01em;
+  color: var(--fg); margin-bottom: 44px;
+}
+.art-body p {
+  font-family: var(--mono); font-size: 16px; line-height: 1.85;
+  color: var(--muted); margin-bottom: 26px;
+}
+.art-body p strong { color: var(--fg); font-weight: 500; }
+.art-body h2 {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--fg); margin: 56px 0 22px;
+}
+.pull {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(26px, 3.4vw, 40px); line-height: 1.3; letter-spacing: -0.01em;
+  color: var(--fg); margin: 52px 0; padding-left: 28px;
+  border-left: 2px solid var(--orange);
+}
+.art-end {
+  margin: 56px 0 0; padding-top: 26px; border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--soft);
+}
+.art-end .mark { color: var(--orange); }
+
+/* NEWSLETTER / NEXT */
+.tail { max-width: var(--read); margin: clamp(64px, 9vw, 120px) auto 0; padding: 0 var(--pad); }
+.tail-card {
+  background: var(--obsidian); color: var(--offwhite);
+  border-radius: 18px; padding: clamp(32px, 5vw, 56px);
+}
+.tail-card h3 {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(28px, 3.6vw, 44px); line-height: 1.05; letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.tail-card h3 em { color: var(--aqua); }
+.tail-card p { font-family: var(--mono); font-size: 13px; line-height: 1.7; color: rgba(255,255,255,.66); max-width: 44ch; margin-bottom: 26px; }
+.tail-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.tail-form input {
+  flex: 1; min-width: 220px; padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,.2); border-radius: 999px;
+  background: transparent; color: var(--offwhite);
+  font-family: var(--mono); font-size: 13px;
+}
+.tail-form input:focus { outline: none; border-color: var(--aqua); }
+.tail-form input::placeholder { color: rgba(255,255,255,.4); }
+.tail-form button {
+  padding: 14px 26px; border-radius: 999px; border: 1px solid var(--orange);
+  background: var(--orange); color: #fff; cursor: pointer;
+  font-family: var(--mono); text-transform: uppercase; font-size: 11px; letter-spacing: 0.14em;
+  transition: background 200ms;
+}
+.tail-form button:hover { background: #fff; color: var(--obsidian); border-color: #fff; }
+.tail-ack { margin-top: 14px; font-family: var(--mono); font-size: 12px; color: var(--aqua); opacity: 0; transition: opacity 200ms; }
+.tail-ack.show { opacity: 1; }
+
+/* FOOTER */
+.foot {
+  margin-top: clamp(64px, 9vw, 120px);
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 28px var(--pad);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.foot-brand { font-family: var(--serif); font-style: italic; font-size: 18px; }
+.foot-brand .dot { color: var(--orange); }
+.foot p { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.foot a { color: rgba(255,255,255,.7); }
+.foot a:hover { color: var(--orange); }
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#f8f8f5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f8f8f5"/>
+    <text x="600" y="400" font-family="Georgia, serif" font-size="110" fill="#1a1a1a" text-anchor="middle" dominant-baseline="middle">Field Notes.</text>
+  </svg>
+</template>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">mlcardosa<span class="dot">.</span>space</a>
+  <a class="nav-back" href="index.html#writing">← All writing</a>
+</nav>
+
+<article>
+  <header class="article">
+    <div class="art-eyebrow"><span class="bar"></span> Field Notes · 01 · Essay</div>
+    <h1 class="art-title">Why <span class="accent">connection</span> still beats the algorithm.</h1>
+    <div class="art-meta">
+      <span class="by">María Luisa Cardosa</span>
+      <span>Düsseldorf · 2026</span>
+      <span>6 min read</span>
+    </div>
+  </header>
+
+  <div class="art-body">
+    <p class="lede">
+      We keep asking what AI will replace. I think the more useful question is what it can never touch — and why that is exactly where we should be spending our attention.
+    </p>
+
+    <p>
+      I spend my days between two worlds. In one, I coach people through change — a career shift, a return to work, the quiet fear of starting something new at fifty. In the other, I teach those same people how to use artificial intelligence. The two feel like opposites. They are not.
+    </p>
+    <p>
+      The most common thing I hear, from learners of every age, is some version of: <strong>"Will this make me unnecessary?"</strong> It is a real fear and it deserves a real answer. So here is mine.
+    </p>
+
+    <h2>What the tool is good at</h2>
+    <p>
+      A model can draft, summarise, translate, and tirelessly explain the same idea five different ways until one of them lands. That last part matters more than people admit — patience at scale is genuinely new, and for a learner it can be a gift.
+    </p>
+    <p>
+      But notice what is missing. The model does not know that you cried in the car before the interview. It does not remember that this is your third attempt, or why the second one broke your confidence. It has no stake in whether you actually grow.
+    </p>
+
+    <div class="pull">
+      AI can accompany you, listen, and think alongside you — but it cannot give you what another person gives you.
+    </div>
+
+    <h2>Where connection lives</h2>
+    <p>
+      Learning sticks when someone believes in you slightly before you believe in yourself. That belief is not information; it cannot be retrieved or generated. It is built, slowly, in the space between two people who have decided to pay attention to each other.
+    </p>
+    <p>
+      So I have stopped treating AI as a rival to that work. I treat it as a tool that clears the busywork — the drafts, the repetition, the first ninety percent — so that the human part has more room, not less. The goal was never to automate connection. It was to protect it.
+    </p>
+  </div>
+</article>
+
+<section class="tail">
+  <div class="tail-card">
+    <h3>A <em>slow letter,</em><br>once a month.</h3>
+    <p>Field Notes by email — one essay-shaped thought on learning, motivation, and AI. No tracking, no tricks. Reply to anything.</p>
+    <form class="tail-form" onsubmit="event.preventDefault(); if(this.email.value){ document.getElementById('ack').classList.add('show'); this.reset(); }">
+      <input name="email" type="email" required placeholder="you@somewhere.email" />
+      <button type="submit">Subscribe</button>
+    </form>
+    <div class="tail-ack" id="ack">✓ You're in. Check your inbox for a soft hello.</div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-brand">mlcardosa<span class="dot">.</span>space</div>
+  <p>© 2026 · María Luisa Cardosa Heredia · <a href="index.html">Back to home</a></p>
+</footer>
+
+</body>
+</html>

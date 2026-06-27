@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bloom Sessions · Build it live with AI · mlcardosa.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --white:#fff; --obsidian:#0a0a0a; --offwhite:#f8f8f5; --cream:#f5f5f0;
+  --accent:#ff6bd2;        /* Bloom Sessions accent */
+  --accent-dk:#c0277f;
+  --orange:#ff6b2b;
+  --lime:#c9ff6b;
+  --black-85:rgba(0,0,0,.85); --black-75:rgba(0,0,0,.75); --black-55:rgba(0,0,0,.55); --black-40:rgba(0,0,0,.4); --black-12:rgba(0,0,0,.12); --black-06:rgba(0,0,0,.06);
+
+  --bg:var(--offwhite); --fg:var(--obsidian);
+  --muted:var(--black-75); --soft:var(--black-55); --line:var(--black-12); --card:var(--white);
+
+  --serif:"Instrument Serif","DM Serif Display","Times New Roman",serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,monospace;
+
+  --max:1440px; --pad:clamp(20px,4vw,64px);
+  --gap-lg:clamp(48px,8vw,112px);
+  --r-sm:4px; --r-md:10px; --r-lg:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--mono);font-size:14px;line-height:1.6;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p{margin:0}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-0.01em}
+.label{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--muted)}
+.container{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.section{padding:var(--gap-lg) 0}
+.divider{height:1px;background:var(--line)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--pad);backdrop-filter:blur(10px);
+  background:color-mix(in oklab,var(--bg) 88%,transparent);
+  border-bottom:1px solid var(--line)}
+.nav-brand{font-family:var(--serif);font-style:italic;font-size:22px;letter-spacing:-0.01em}
+.nav-brand .dot{color:var(--accent-dk)}
+.nav-brand small{font-family:var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--soft);margin-left:10px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.14em;color:var(--muted);cursor:pointer;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;
+  padding:12px 22px;border-radius:999px;border:1px solid var(--fg);
+  background:transparent;color:var(--fg);transition:all .2s}
+.btn:hover{background:var(--fg);color:var(--bg)}
+.btn-primary{background:var(--fg);color:var(--bg)}
+.btn-primary:hover{background:var(--accent-dk);border-color:var(--accent-dk)}
+.btn-accent{background:var(--accent);color:var(--obsidian);border-color:var(--accent)}
+.btn-accent:hover{background:var(--accent-dk);border-color:var(--accent-dk);color:var(--white)}
+.btn-soft{border-color:var(--line);color:var(--muted)}
+.btn-soft:hover{background:transparent;color:var(--fg);border-color:var(--fg)}
+.btn-w{width:100%}
+.btn-sm{padding:9px 18px;font-size:10px}
+
+/* HERO */
+.hero{min-height:88vh;padding:64px var(--pad) 48px;display:grid;grid-template-rows:1fr auto;gap:48px;position:relative;overflow:hidden}
+.hero-inner{max-width:var(--max);margin:0 auto;width:100%;display:grid;grid-template-columns:1.15fr 0.85fr;gap:clamp(32px,5vw,80px);align-items:end}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.16em;color:var(--muted);margin-bottom:24px}
+.hero-eyebrow .bar{width:36px;height:1px;background:var(--fg)}
+.hero-eyebrow .live{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero-title{font-family:var(--serif);font-style:italic;font-size:clamp(56px,9vw,132px);line-height:0.95;letter-spacing:-0.025em}
+.hero-title .accent-c{color:var(--accent-dk)}
+.hero-title .accent-orange{color:var(--orange)}
+.hero-side{display:flex;flex-direction:column;gap:28px;padding-bottom:8px;max-width:38ch}
+.hero-blurb{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--muted)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-quote{max-width:var(--max);margin:0 auto;width:100%;border-top:1px solid var(--line);padding-top:24px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:clamp(32px,5vw,80px)}
+.hero-quote q{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.45;color:var(--fg);display:block;quotes:none;max-width:34ch}
+.hero-quote cite{display:block;font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.16em;color:var(--soft);font-style:normal;margin-top:12px}
+.hero-meta-row{max-width:var(--max);margin:32px auto 0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding-top:20px}
+.hero-meta-row > div{padding-right:20px}
+.hero-meta-row .val{font-family:var(--mono);font-size:12px;color:var(--fg);display:block;margin-top:6px}
+.hero-bg{position:absolute;right:-8vw;top:18%;width:50vw;height:50vw;max-width:720px;max-height:720px;border-radius:50%;background:radial-gradient(circle at 30% 30%,color-mix(in oklab,var(--accent) 60%,transparent),transparent 65%);filter:blur(40px);opacity:.5;pointer-events:none}
+
+/* STATS BAND */
+.stats{background:var(--obsidian);color:var(--offwhite);padding:28px var(--pad);display:flex;justify-content:center;gap:clamp(32px,6vw,96px);border-top:1px solid rgba(255,255,255,.08)}
+.st{text-align:center}
+.st-n{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1;color:var(--accent)}
+.st-l{font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.16em;color:rgba(255,255,255,.55);margin-top:6px}
+
+/* SECTION HEAD */
+.sec-head{display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(32px,5vw,80px);align-items:end;margin-bottom:56px}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.sec-title{font-family:var(--serif);font-style:italic;font-size:clamp(40px,5.5vw,72px);line-height:1.05;letter-spacing:-0.02em}
+.sec-title em{color:var(--accent-dk)}
+.sec-sub{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--muted);max-width:42ch}
+
+/* METHOD: 3 principles */
+.princ{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.princ-c{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 32px 44px;background:var(--card)}
+.princ-n{font-family:var(--serif);font-style:italic;font-size:64px;color:var(--accent-dk);line-height:1;margin-bottom:28px}
+.princ-t{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1.1;margin-bottom:10px}
+.princ-d{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7}
+
+/* BUILDS (session types) */
+.builds{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.build{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 28px 32px;background:var(--card);display:flex;flex-direction:column;gap:16px;transition:background .25s;cursor:pointer;position:relative;overflow:hidden}
+.build:hover{background:var(--cream)}
+.build-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.build-lvl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-dk)}
+.build-st{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.build-st.live{color:var(--accent-dk);border-color:var(--accent-dk)}
+.build-st.soon{color:var(--soft)}
+.build h3{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1.1;letter-spacing:-0.01em;margin-top:8px}
+.build-d{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7;flex:1}
+.build-meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;font-family:var(--mono);font-size:11px;color:var(--soft)}
+.build-meta .out{color:var(--fg)}
+.build .arr{position:absolute;top:24px;right:24px;font-family:var(--mono);font-size:14px;color:var(--soft);transition:transform .25s,color .25s}
+.build:hover .arr{color:var(--accent-dk);transform:translate(2px,-2px)}
+
+/* SESSIONS */
+.sess-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:32px}
+.sess-tab{padding:14px 24px 14px 0;margin-right:24px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sess-tab.on{color:var(--fg);border-bottom-color:var(--accent-dk)}
+.live-list{display:flex;flex-direction:column}
+.live-row{display:grid;grid-template-columns:90px 1fr auto;gap:24px;align-items:center;padding:24px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s;padding-left:8px;padding-right:8px;margin-left:-8px;margin-right:-8px;border-radius:6px}
+.live-row:hover{background:var(--card)}
+.live-row:last-child{border-bottom:1px solid var(--line)}
+.live-date{text-align:center}
+.live-d{font-family:var(--serif);font-style:italic;font-size:36px;line-height:1;color:var(--accent-dk)}
+.live-m{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-top:4px}
+.live-info h4{font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.2;margin-bottom:4px}
+.live-info .live-meta{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.live-info p{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.6;max-width:60ch}
+
+/* INDEX (who it's for) */
+.index{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px)}
+.idx-block h4{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1.1;margin-bottom:18px}
+.idx-list{list-style:none;padding:0;border-top:1px solid var(--line)}
+.idx-list li{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7;padding:14px 0 14px 26px;border-bottom:1px solid var(--line);position:relative}
+.idx-list li::before{content:"—";position:absolute;left:0;color:var(--accent-dk)}
+.idx-list li.no::before{content:"×";color:var(--soft)}
+.idx-list li em{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--fg);font-weight:400;letter-spacing:-0.01em}
+
+/* NEWSLETTER */
+.news{background:var(--obsidian);color:var(--offwhite);border-radius:var(--r-lg);padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative;overflow:hidden}
+.news::before{content:"";position:absolute;right:-10%;top:30%;width:50%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,color-mix(in oklab,var(--accent) 50%,transparent),transparent 65%);filter:blur(30px);opacity:.5}
+.news-l{position:relative}
+.news-l h3{font-family:var(--serif);font-style:italic;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px}
+.news-l h3 em{color:var(--accent)}
+.news-l p{font-family:var(--mono);font-size:13px;line-height:1.7;color:rgba(255,255,255,.75);max-width:42ch}
+.news-r{position:relative;display:flex;flex-direction:column;gap:14px}
+.news-input{display:flex;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px;align-items:center}
+.news-input input{flex:1;background:transparent;border:none;color:var(--offwhite);padding:10px 16px;font-family:var(--mono);font-size:13px;outline:none}
+.news-input input::placeholder{color:rgba(255,255,255,.4)}
+.news-input button{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:10px;background:var(--accent);color:var(--obsidian);border:none;border-radius:999px;padding:10px 18px;cursor:pointer;transition:background .2s}
+.news-input button:hover{background:var(--white)}
+.news-r .fineprint{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+
+/* CTA BAND */
+.cta-band{background:var(--cream);padding:var(--gap-lg) var(--pad);text-align:center}
+.cta-band h2{font-family:var(--serif);font-style:italic;font-size:clamp(48px,7vw,96px);line-height:1;letter-spacing:-0.02em;margin-bottom:18px}
+.cta-band h2 em{color:var(--accent-dk)}
+.cta-band p{font-family:var(--mono);font-size:14px;color:var(--muted);max-width:46ch;margin:0 auto 32px}
+.cta-band .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+.foot{background:var(--obsidian);color:var(--offwhite);padding:28px var(--pad);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-brand{font-family:var(--serif);font-style:italic;font-size:18px}
+.foot-brand .dot{color:var(--accent)}
+.foot-brand small{font-family:var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:rgba(255,255,255,.5);margin-left:12px}
+.foot p{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.foot a{color:rgba(255,255,255,.7)}
+.foot a:hover{color:var(--accent)}
+
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(10,10,10,.55);backdrop-filter:blur(4px);z-index:90;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-ov.show{display:flex;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}}
+.modal{background:var(--bg);border-radius:var(--r-lg);width:100%;max-width:640px;max-height:88vh;overflow-y:auto;border:1px solid var(--line)}
+.modal-head{background:var(--obsidian);color:var(--offwhite);padding:32px 36px;border-radius:var(--r-lg) var(--r-lg) 0 0;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:var(--offwhite);font-size:16px;cursor:pointer}
+.modal-close:hover{background:rgba(255,255,255,.2)}
+.modal-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.modal-title{font-family:var(--serif);font-style:italic;font-size:36px;line-height:1.1;letter-spacing:-0.01em}
+.modal-body{padding:32px 36px}
+.modal-body p{font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--muted);margin-bottom:14px}
+.modal-body h5{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-dk);margin:24px 0 10px}
+.modal-body ul{list-style:none;padding:0;margin:0 0 18px}
+.modal-body li{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.75;padding:6px 0 6px 22px;position:relative}
+.modal-body li::before{content:"—";position:absolute;left:0;color:var(--accent-dk)}
+.modal-foot{padding:20px 36px;border-top:1px solid var(--line);display:flex;gap:10px}
+
+/* TOAST */
+.toast{position:fixed;top:88px;right:var(--pad);background:var(--obsidian);color:var(--offwhite);padding:14px 22px;border-radius:var(--r-md);font-family:var(--mono);font-size:12px;letter-spacing:.06em;display:none;z-index:200;max-width:360px;border:1px solid rgba(255,255,255,.1)}
+.toast.show{display:flex;align-items:center;gap:12px;animation:slideIn .25s ease}
+.toast::before{content:"✓";color:var(--accent)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-quote{grid-template-columns:1fr}
+  .hero-meta-row{grid-template-columns:1fr 1fr;gap:16px}
+  .sec-head{grid-template-columns:1fr;gap:16px}
+  .princ{grid-template-columns:1fr}
+  .builds{grid-template-columns:1fr 1fr}
+  .index{grid-template-columns:1fr;gap:48px}
+  .news{grid-template-columns:1fr;padding:36px}
+  .stats{flex-wrap:wrap;gap:32px}
+}
+@media(max-width:600px){
+  .builds{grid-template-columns:1fr}
+  .live-row{grid-template-columns:60px 1fr}
+  .live-row .btn{grid-column:2}
+}
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#f8f8f5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f8f8f5"/>
+    <text x="600" y="400" font-family="Georgia, serif" font-size="92" fill="#1a1a1a" text-anchor="middle" dominant-baseline="middle">Bloom Sessions<tspan fill="#c0277f">.</tspan></text>
+  </svg>
+</template>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    Bloom Sessions<span class="dot">.</span>
+    <small>← mlcardosa.space</small>
+  </a>
+  <div class="nav-links">
+    <a onclick="scrollTo2('sec-format')">Format</a>
+    <a onclick="scrollTo2('sec-builds')">What we build</a>
+    <a onclick="scrollTo2('sec-sessions')">Upcoming</a>
+    <a onclick="scrollTo2('sec-who')">Who it's for</a>
+    <a onclick="scrollTo2('sec-news')">Newsletter</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-soft btn-sm" onclick="scrollTo2('sec-news')">Subscribe</button>
+    <button class="btn btn-accent btn-sm" onclick="scrollTo2('sec-sessions')">Join a session →</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span class="bar"></span><span class="live"></span> Bloom Sessions · Live practice · 2026</div>
+      <h1 class="hero-title">
+        Learn by<br>
+        <span class="accent-c">building</span><br>
+        it live<span class="accent-orange">.</span>
+      </h1>
+    </div>
+    <div class="hero-side">
+      <p class="hero-blurb">
+        Hands-on group sessions where we don't just talk about AI tools — we open them and build something real, together, in real time. You show up with a question; you leave with a thing that runs, and the muscle memory to do it again.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-accent" onclick="scrollTo2('sec-sessions')">See upcoming sessions →</button>
+        <button class="btn" onclick="scrollTo2('sec-format')">How it works</button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-quote">
+    <q>Reading about a tool teaches you that the tool exists. Building with it — live, alongside someone — teaches you to trust your own hands.</q>
+    <div></div>
+    <cite>The Bloom idea · 2026</cite>
+  </div>
+  <div class="hero-meta-row">
+    <div><span class="label">Currently</span><span class="val">Weekly · open seats</span></div>
+    <div><span class="label">Format</span><span class="val">Live · screens on · build-along</span></div>
+    <div><span class="label">Length</span><span class="val">75–90 minutes</span></div>
+    <div><span class="label">Group size</span><span class="val">Small · max 12</span></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="st"><div class="st-n">12</div><div class="st-l">Max per session</div></div>
+  <div class="st"><div class="st-n">8</div><div class="st-l">Build tracks</div></div>
+  <div class="st"><div class="st-n">90</div><div class="st-l">Minutes, hands-on</div></div>
+  <div class="st"><div class="st-n">1</div><div class="st-l">Thing you keep</div></div>
+</div>
+
+<!-- FORMAT -->
+<section class="section container" id="sec-format">
+  <div class="sec-head">
+    <div><div class="sec-num">— 01 / Format</div></div>
+    <div>
+      <h2 class="sec-title">Three things <em>happen.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">No lectures, no slide decks. Every Bloom Session follows the same simple shape — so you always know what you're walking into.</p>
+    </div>
+  </div>
+  <div class="princ">
+    <div class="princ-c">
+      <div class="princ-n">01</div>
+      <h3 class="princ-t">Show up.</h3>
+      <p class="princ-d">No prep required. Bring a laptop and one real task you'd like to get done — that becomes what we build.</p>
+    </div>
+    <div class="princ-c">
+      <div class="princ-n">02</div>
+      <h3 class="princ-t">Build live.</h3>
+      <p class="princ-d">We share screens and build the same thing at the same time, step by step. You're never just watching — you're doing it too.</p>
+    </div>
+    <div class="princ-c">
+      <div class="princ-n">03</div>
+      <h3 class="princ-t">Leave with a thing.</h3>
+      <p class="princ-d">Every session ends with something that actually runs — an agent, an automation, a page, a workflow. Yours to keep.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BAND -->
+<div style="background: url('uploads/quino-al--3KfR1GVKXY-unsplash-ac0eaa97.jpg') center center / cover no-repeat; height: clamp(280px, 38vw, 520px); width: 100%;"></div>
+
+<!-- BUILDS -->
+<section class="section container" id="sec-builds">
+  <div class="sec-head">
+    <div><div class="sec-num">— 02 / What we build</div></div>
+    <div>
+      <h2 class="sec-title">Pick a <em>thing</em> to build.</h2>
+      <p class="sec-sub" style="margin-top:18px">Each track is one focused build, sized to fit a single live session. Come for one, or work through the whole set.</p>
+    </div>
+  </div>
+  <div class="builds" id="builds-grid"></div>
+</section>
+
+<!-- SESSIONS -->
+<section class="section container" id="sec-sessions">
+  <div class="sec-head">
+    <div><div class="sec-num">— 03 / Upcoming</div></div>
+    <div>
+      <h2 class="sec-title">Grab a <em>seat.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">Sessions are small on purpose. When a date is full, join the waitlist and you'll get first pick of the next one.</p>
+    </div>
+  </div>
+  <div class="sess-tabs">
+    <button class="sess-tab on" data-sess="live">Upcoming</button>
+    <button class="sess-tab" data-sess="past">Past sessions</button>
+  </div>
+  <div id="sess-live" class="live-list"></div>
+  <div id="sess-past" class="live-list" style="display:none"></div>
+</section>
+
+<!-- WHO -->
+<section class="section container" id="sec-who">
+  <div class="sec-head">
+    <div><div class="sec-num">— 04 / Who it's for</div></div>
+    <div>
+      <h2 class="sec-title">Made for <em>doers,</em> not spectators.</h2>
+      <p class="sec-sub" style="margin-top:18px">Bloom is a practice space. If you learn best by making something with your own hands, you'll feel at home.</p>
+    </div>
+  </div>
+  <div class="index">
+    <div class="idx-block">
+      <h4>This is for you if…</h4>
+      <ul class="idx-list">
+        <li>You've read enough <em>about</em> AI and want to actually <em>use</em> it.</li>
+        <li>You learn by doing, with someone who can answer in the moment.</li>
+        <li>You want a small, friendly room — not a webinar with 500 people.</li>
+        <li>You'd rather leave with one working thing than ten bookmarked tabs.</li>
+      </ul>
+    </div>
+    <div class="idx-block">
+      <h4>Maybe not, if…</h4>
+      <ul class="idx-list">
+        <li class="no">You want a passive lecture to watch later on 2× speed.</li>
+        <li class="no">You're after deep code — Bloom is practical, not engineering-heavy.</li>
+        <li class="no">You can't make a live slot. <em>Replays come later, but the room is the point.</em></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="container" id="sec-news" style="padding-bottom:var(--gap-lg)">
+  <div class="news">
+    <div class="news-l">
+      <h3>Sessions, <em>in your inbox.</em></h3>
+      <p>A short note when new dates open, plus the occasional build you can try on your own. No spam, unsubscribe anytime.</p>
+    </div>
+    <div class="news-r">
+      <form class="news-input" onsubmit="subscribe(event)">
+        <input type="email" required placeholder="your@email.com" id="news-email" />
+        <button type="submit">Subscribe →</button>
+      </form>
+      <div class="fineprint">— Or write to mlcardosa@mlcardosa.space</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Things grow by <em>doing.</em></h2>
+  <p>Pick a build, grab a seat, and make something this week. The room is small and the kettle's always on.</p>
+  <div class="actions">
+    <button class="btn btn-accent" onclick="scrollTo2('sec-sessions')">Join the next session →</button>
+    <button class="btn" onclick="showToast('Added to the waitlist — you\'ll get first pick of new dates')">Join the waitlist</button>
+    <a class="btn btn-soft" href="mailto:mlcardosa@mlcardosa.space">Ask a question</a>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="foot-brand">Bloom Sessions<span class="dot">.</span><small>· mlcardosa.space</small></div>
+  <p>© 2026 · prototype · <a href="index.html">Back to mlcardosa.space</a></p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal-ov" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="modal-eyebrow" id="m-eyebrow"></div>
+      <h3 class="modal-title" id="m-title"></h3>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+    <div class="modal-foot" id="m-foot"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<script>
+const BUILDS=[
+  {id:'b1',lvl:'Starter',title:'Your first AI agent',desc:'Build a small assistant that does one real job for you — drafts a reply, triages a list, answers from your notes.',out:'A working agent',time:'90 min',status:'Open',stKey:'live',learn:['What an "agent" actually is, in plain terms','Giving it instructions it follows reliably','Connecting it to one real task you do weekly','Testing it so you can trust the output']},
+  {id:'b2',lvl:'Starter',title:'Automate a boring task',desc:'Take one repetitive thing you do every week and wire it up so it mostly runs itself.',out:'One automation',time:'90 min',status:'Open',stKey:'live',learn:['Spotting which tasks are worth automating','Connecting tools you already use','Building it step by step, live','A safe way to let it run without surprises']},
+  {id:'b3',lvl:'Starter',title:'Prototype a page in an afternoon',desc:'Go from a rough idea to a real, clickable web page — no code background needed.',out:'A live page',time:'90 min',status:'Open',stKey:'live',learn:['Describing what you want so AI builds it','Iterating on layout and copy fast','Making it look intentional, not generic','Sharing a link by the end of the session']},
+  {id:'b4',lvl:'Practical',title:'A research workflow that doesn\'t lie',desc:'Set up a repeatable way to read, map and summarise a topic — with the citation checks that keep it honest.',out:'A research setup',time:'90 min',status:'Open',stKey:'live',learn:['Mapping a topic with AI without hallucinations','The manual citation check you can\'t skip','Saving sources you can actually find again','Turning notes into your own words']},
+  {id:'b5',lvl:'Practical',title:'Write with AI, keep your voice',desc:'Build a drafting-and-editing loop that helps you write faster without flattening how you sound.',out:'A writing loop',time:'90 min',status:'Cohort · soon',stKey:'soon',learn:['Drafting without losing your own voice','Using AI as your toughest editor','Spotting when it\'s rewriting you','A reusable prompt for your own writing']},
+  {id:'b6',lvl:'Practical',title:'Make a custom project',desc:'Set up a reusable Claude or GPT project that knows your context, so you stop re-explaining yourself.',out:'A saved project',time:'90 min',status:'Cohort · soon',stKey:'soon',learn:['What to put in a project (and what to leave out)','Loading your own docs and context','Saving prompts you re-use constantly','Sharing it with a teammate']}
+];
+
+const SESSIONS_LIVE=[
+  {d:'14',m:'May',title:'Build your first AI agent',meta:'Live · Zoom · 90 min · 12 seats',desc:'Hands-on. By the end you have a small assistant doing one real job. Total beginners welcome.'},
+  {d:'21',m:'May',title:'Automate a boring task',meta:'Live · Zoom · 90 min · 12 seats',desc:'Bring one repetitive weekly task. We wire it up together so it mostly runs itself.'},
+  {d:'28',m:'May',title:'Prototype a page in an afternoon',meta:'Live · Zoom · 90 min · 10 seats',desc:'From rough idea to a real, shareable web page — no code background needed.'},
+  {d:'04',m:'Jun',title:'A research workflow that doesn\'t lie',meta:'Live · Zoom · 90 min · 12 seats',desc:'Set up a repeatable, honest way to read and map a topic, with citation checks built in.'}
+];
+
+const SESSIONS_PAST=[
+  {d:'30',m:'Apr',title:'Build your first AI agent',meta:'12 attended · notes shared',desc:'Our most-requested track. Everyone left with a working assistant.'},
+  {d:'23',m:'Apr',title:'Prototype a page in an afternoon',meta:'10 attended · recording for guests',desc:'Eight live pages shipped in 90 minutes. Replay available on request.'},
+  {d:'16',m:'Apr',title:'Automate a boring task',meta:'11 attended · templates shared',desc:'Inbox triage, weekly reports, and a calendar tidy-up — all automated live.'}
+];
+
+// RENDER
+function renderBuilds(){
+  document.getElementById('builds-grid').innerHTML=BUILDS.map(b=>`
+    <div class="build" onclick="openBuild('${b.id}')">
+      <div class="arr">↗</div>
+      <div class="build-top">
+        <span class="build-lvl">${b.lvl}</span>
+        <span class="build-st ${b.stKey}">${b.status}</span>
+      </div>
+      <h3>${b.title}</h3>
+      <p class="build-d">${b.desc}</p>
+      <div class="build-meta">
+        <span class="out">→ ${b.out}</span>
+        <span>${b.time}</span>
+      </div>
+    </div>`).join('');
+}
+function renderLive(){
+  document.getElementById('sess-live').innerHTML=SESSIONS_LIVE.map((s,i)=>`
+    <div class="live-row" onclick="openLive(${i})">
+      <div class="live-date"><div class="live-d">${s.d}</div><div class="live-m">${s.m}</div></div>
+      <div class="live-info">
+        <h4>${s.title}</h4>
+        <div class="live-meta">${s.meta}</div>
+        <p>${s.desc}</p>
+      </div>
+      <button class="btn btn-sm" onclick="event.stopPropagation();showToast('Seat saved — confirmation sent to your inbox')">Save my seat →</button>
+    </div>`).join('');
+}
+function renderPast(){
+  document.getElementById('sess-past').innerHTML=SESSIONS_PAST.map((s,i)=>`
+    <div class="live-row" onclick="showToast('Replays open to newsletter subscribers — subscribe below')">
+      <div class="live-date"><div class="live-d">${s.d}</div><div class="live-m">${s.m}</div></div>
+      <div class="live-info">
+        <h4>${s.title}</h4>
+        <div class="live-meta">${s.meta}</div>
+        <p>${s.desc}</p>
+      </div>
+      <button class="btn btn-sm btn-soft" onclick="event.stopPropagation();scrollTo2('sec-news')">Get the replay →</button>
+    </div>`).join('');
+}
+
+// MODAL
+function openModal(eyebrow,title,bodyHtml,footHtml){
+  document.getElementById('m-eyebrow').textContent=eyebrow;
+  document.getElementById('m-title').innerHTML=title;
+  document.getElementById('m-body').innerHTML=bodyHtml;
+  document.getElementById('m-foot').innerHTML=footHtml;
+  document.getElementById('modal-ov').classList.add('show');
+}
+function closeModal(){document.getElementById('modal-ov').classList.remove('show')}
+function openBuild(id){
+  const b=BUILDS.find(x=>x.id===id);
+  openModal(`${b.lvl} · ${b.time} · → ${b.out}`,b.title,
+    `<p>${b.desc}</p><h5>What we'll do together</h5><ul>${b.learn.map(l=>'<li>'+l+'</li>').join('')}</ul><h5>Format</h5><p>Live on Zoom, cameras on, small group. We build the same thing at the same time — you're doing it, not just watching. You leave with ${b.out.toLowerCase()}.</p>`,
+    `<button class="btn btn-accent btn-w" onclick="closeModal();scrollTo2('sec-sessions')">${b.stKey==='live'?'Find a date →':'Join the waitlist →'}</button>`
+  );
+}
+function openLive(i){
+  const s=SESSIONS_LIVE[i];
+  openModal(`${s.d} ${s.m} · ${s.meta}`,s.title,
+    `<p>${s.desc}</p><h5>How it runs</h5><p>Live on Zoom, screens on, small group. No slides — we work on real material and build together, step by step. You leave with something that runs.</p><h5>What to bring</h5><p>A laptop, one real task or idea, and your questions. No prep, no level required.</p>`,
+    `<button class="btn btn-accent btn-w" onclick="closeModal();showToast('Seat saved — confirmation in your inbox')">Save my seat →</button>`
+  );
+}
+
+// INTERACTIONS
+document.querySelectorAll('.sess-tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.sess-tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');
+  const live=t.dataset.sess==='live';
+  document.getElementById('sess-live').style.display=live?'flex':'none';
+  document.getElementById('sess-past').style.display=live?'none':'flex';
+}));
+function scrollTo2(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+function subscribe(e){e.preventDefault();const v=document.getElementById('news-email').value;if(v){document.getElementById('news-email').value='';showToast('You\'re in — new dates land in your inbox first')}}
+function showToast(m){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// init
+renderBuilds();renderLive();renderPast();
+</script>
+</body>
+</html>

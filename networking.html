@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Networking · mlcardosa.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --white:#fff;
+  --obsidian:#0a0a0a;
+  --offwhite:#f8f8f5;
+  --cream:#f5f5f0;
+  --lime:#c9ff6b;
+  --lime-dk:#557a00;
+  --orange:#ff6b2b;
+  --aqua:#5bc4c5;
+  --black-75:rgba(0,0,0,.75);
+  --black-55:rgba(0,0,0,.55);
+  --black-40:rgba(0,0,0,.4);
+  --black-12:rgba(0,0,0,.12);
+  --bg:var(--offwhite);
+  --fg:var(--obsidian);
+  --muted:var(--black-75);
+  --soft:var(--black-55);
+  --line:var(--black-12);
+  --card:var(--white);
+  --serif:"Instrument Serif","Times New Roman",serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --max:1440px;
+  --pad:clamp(20px,4vw,64px);
+  --gap-lg:clamp(48px,8vw,112px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--mono);font-size:14px;line-height:1.6;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p{margin:0}
+button{font-family:inherit;cursor:pointer;border:none}
+
+/* ── ATOMS ──────────────────────────────────────── */
+.label{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--muted)}
+.section{padding:var(--gap-lg) 0;position:relative}
+
+/* ── NAV ────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--pad);
+  backdrop-filter:blur(12px);
+  background:color-mix(in oklab,var(--bg) 88%,transparent);
+  border-bottom:1px solid var(--line)
+}
+.nav-back{
+  font-family:var(--mono);text-transform:uppercase;font-size:11px;
+  letter-spacing:.14em;color:var(--muted);
+  display:flex;align-items:center;gap:8px;transition:color .2s
+}
+.nav-back:hover{color:var(--fg)}
+.nav-brand{
+  font-family:var(--serif);font-style:italic;font-size:20px;
+  letter-spacing:-0.01em
+}
+.nav-brand .dot{color:var(--lime-dk)}
+.nav-pill{
+  background:var(--lime);color:var(--obsidian);
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.14em;
+  padding:9px 20px;border-radius:999px;
+  transition:background .2s;cursor:pointer
+}
+.nav-pill:hover{background:var(--lime-dk);color:var(--white)}
+
+/* ── HERO ───────────────────────────────────────── */
+.hero-wrap{position:relative;overflow:hidden}
+.hero-bg{
+  position:absolute;right:-8vw;top:12%;
+  width:56vw;height:56vw;max-width:820px;max-height:820px;
+  border-radius:50%;
+  background:radial-gradient(circle at 32% 32%,color-mix(in oklab,var(--lime) 62%,transparent),transparent 65%);
+  filter:blur(48px);opacity:.5;
+  pointer-events:none;
+  animation:drift 18s ease-in-out infinite alternate
+}
+@keyframes drift{to{transform:translate(-40px,28px) scale(1.08)}}
+.hero{
+  min-height:90vh;
+  padding:72px var(--pad) 48px;
+  display:grid;grid-template-rows:1fr auto;gap:48px;
+  max-width:var(--max);margin:0 auto;width:100%;
+  position:relative
+}
+.hero-inner{
+  display:grid;grid-template-columns:1.2fr 0.8fr;
+  gap:clamp(32px,5vw,80px);align-items:end
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--mono);text-transform:uppercase;font-size:11px;
+  letter-spacing:.16em;color:var(--muted);margin-bottom:24px
+}
+.hero-eyebrow .bar{width:36px;height:1px;background:var(--fg)}
+.hero-eyebrow .dot-live{
+  width:7px;height:7px;border-radius:50%;background:var(--lime);
+  animation:pulse 2s infinite
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(52px,8.5vw,128px);
+  line-height:.94;letter-spacing:-0.025em
+}
+.hero-title .accent{color:var(--lime-dk)}
+.hero-side{display:flex;flex-direction:column;gap:28px;padding-bottom:8px}
+.hero-blurb{font-size:15px;line-height:1.7;color:var(--muted);max-width:38ch}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;
+  padding-bottom:6px;border-bottom:1px solid var(--fg);
+  width:max-content;transition:gap .2s;cursor:pointer
+}
+.hero-cta:hover{gap:18px}
+.hero-meta{
+  border-top:1px solid var(--line);padding-top:20px;
+  display:grid;grid-template-columns:repeat(4,1fr)
+}
+.hero-meta > div{padding-right:20px}
+.hero-meta .val{font-size:12px;color:var(--fg);display:block;margin-top:6px}
+
+/* ── STATS ──────────────────────────────────────── */
+.stats{
+  background:var(--obsidian);color:var(--offwhite);
+  padding:28px var(--pad);
+  display:flex;justify-content:center;gap:clamp(32px,6vw,96px);
+  border-top:1px solid rgba(255,255,255,.06)
+}
+.st{text-align:center}
+.st-n{
+  font-family:var(--serif);font-style:italic;
+  font-size:34px;line-height:1;color:var(--lime)
+}
+.st-l{
+  font-family:var(--mono);text-transform:uppercase;
+  font-size:10px;letter-spacing:.16em;
+  color:rgba(255,255,255,.5);margin-top:6px
+}
+
+/* ── SECTION HEAD ───────────────────────────────── */
+.sec-head{
+  display:grid;grid-template-columns:240px 1fr;
+  gap:48px;align-items:end;
+  padding:0 var(--pad);max-width:var(--max);
+  margin:0 auto 56px
+}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.sec-title{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(40px,5.5vw,72px);line-height:1.05;letter-spacing:-0.02em
+}
+.sec-title em{color:var(--lime-dk)}
+.sec-title em.inv{color:var(--lime)}
+.sec-sub{font-size:14px;line-height:1.7;color:var(--muted);max-width:44ch;margin-top:14px}
+
+/* ── ABOUT ──────────────────────────────────────── */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(32px,6vw,96px);
+  padding:0 var(--pad);max-width:var(--max);margin:0 auto
+}
+.about-text p{
+  font-size:15px;line-height:1.75;color:var(--fg);
+  margin-bottom:18px;max-width:50ch
+}
+.about-text p strong{
+  font-weight:400;
+  background:linear-gradient(transparent 60%,color-mix(in oklab,var(--lime) 68%,transparent) 60%);
+  padding:0 2px
+}
+.about-pillars{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  border-top:1px solid var(--line);margin-top:32px;padding-top:28px
+}
+.pillar-n{
+  font-family:var(--serif);font-style:italic;
+  font-size:40px;line-height:1;color:var(--lime-dk)
+}
+.pillar-name{
+  font-family:var(--mono);text-transform:uppercase;
+  font-size:10px;letter-spacing:.16em;color:var(--muted);margin-top:8px
+}
+.pillar-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-top:4px}
+.about-img{
+  position:relative;
+  background:#000;
+  border-radius:2px;min-height:480px;
+  display:flex;align-items:flex-end;overflow:hidden;
+  background-size:cover;background-position:center center
+}
+.about-img::before{ display:none }
+.about-img-lbl{
+  position:relative;padding:16px;
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;
+  letter-spacing:.14em;color:rgba(255,255,255,.5)
+}
+
+/* ── EVENTS ─────────────────────────────────────── */
+.events-section{background:var(--cream)}
+.events-list{padding:0 var(--pad);max-width:var(--max);margin:0 auto}
+.event-row{
+  display:grid;grid-template-columns:80px 1fr auto;
+  gap:28px;align-items:center;
+  padding:24px 10px;
+  border-top:1px solid var(--line);
+  border-radius:6px;
+  margin:0 -10px;
+  cursor:pointer;
+  transition:background .2s,padding-left .2s
+}
+.event-row:last-child{border-bottom:1px solid var(--line)}
+.event-row:hover{background:var(--card);padding-left:22px}
+.event-date{text-align:center;flex-shrink:0}
+.event-d{
+  font-family:var(--serif);font-style:italic;
+  font-size:38px;line-height:1;color:var(--lime-dk)
+}
+.event-m{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--soft);margin-top:4px
+}
+.event-info h4{
+  font-family:var(--serif);font-style:italic;
+  font-size:24px;line-height:1.2;margin-bottom:6px
+}
+.event-meta{
+  display:flex;gap:10px;align-items:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px
+}
+.badge{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;
+  border:1px solid var(--lime-dk);color:var(--lime-dk);flex-shrink:0
+}
+.badge.online{border-color:var(--aqua);color:var(--aqua)}
+.event-info p{font-size:13px;color:var(--muted);line-height:1.6;max-width:58ch}
+.event-btn{
+  font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.14em;
+  padding:10px 20px;border:1px solid var(--fg);border-radius:999px;
+  background:transparent;color:var(--fg);
+  transition:all .2s;white-space:nowrap;flex-shrink:0;cursor:pointer
+}
+.event-btn:hover{background:var(--fg);color:var(--bg)}
+
+/* ── WHO ────────────────────────────────────────── */
+.who-grid{
+  display:grid;grid-template-columns:0.85fr 1.15fr;
+  gap:clamp(32px,6vw,96px);
+  padding:0 var(--pad);max-width:var(--max);margin:0 auto;align-items:center
+}
+.who-portrait{
+  aspect-ratio:4/5;
+  background:#000;
+  border-radius:2px;position:relative;overflow:hidden;
+  background-size:cover;background-position:center center
+}
+.who-portrait::before{ display:none }
+.who-portrait .ph-lbl{
+  position:absolute;bottom:16px;left:16px;
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;
+  letter-spacing:.14em;color:rgba(255,255,255,.45)
+}
+.who-content{display:flex;flex-direction:column;gap:22px}
+.who-eyebrow{
+  font-family:var(--mono);text-transform:uppercase;
+  font-size:11px;letter-spacing:.18em;color:var(--soft)
+}
+.who-name{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(40px,5vw,64px);line-height:.95;letter-spacing:-0.02em
+}
+.who-name .accent{color:var(--lime-dk)}
+.who-bio{
+  font-size:15px;line-height:1.75;color:var(--muted);max-width:46ch
+}
+.who-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;
+  padding-bottom:6px;border-bottom:1px solid var(--fg);
+  width:max-content;transition:gap .2s
+}
+.who-cta:hover{gap:18px}
+
+/* ── TESTIMONIALS ───────────────────────────────── */
+.testi-section{background:var(--obsidian);color:var(--offwhite)}
+.testi-section .sec-title{color:var(--offwhite)}
+.testi-section .sec-num{color:rgba(255,255,255,.4)}
+.testi-section .sec-sub{color:rgba(255,255,255,.6)}
+.testi-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-top:1px solid rgba(255,255,255,.1);
+  border-left:1px solid rgba(255,255,255,.1);
+  max-width:var(--max);margin:0 auto;
+  padding:0 var(--pad)
+}
+.testi-card{
+  border-right:1px solid rgba(255,255,255,.1);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  padding:48px 40px;position:relative
+}
+.testi-q{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(19px,2.1vw,25px);
+  line-height:1.45;color:var(--offwhite);
+  max-width:36ch;margin-bottom:32px
+}
+.testi-who{display:flex;align-items:center;gap:14px}
+.testi-av{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--lime),color-mix(in oklab,var(--lime) 50%,var(--aqua)))
+}
+.testi-name{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.9)}
+.testi-role{
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;
+  letter-spacing:.12em;color:rgba(255,255,255,.45);margin-top:2px
+}
+.testi-gen{
+  position:absolute;top:22px;right:22px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  padding:3px 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.45)
+}
+.testi-gen.senior{border-color:var(--lime);color:var(--lime)}
+
+/* ── JOIN ───────────────────────────────────────── */
+.join{
+  background:var(--lime);color:var(--obsidian);
+  padding:clamp(64px,10vw,128px) var(--pad);
+  text-align:center
+}
+.join h2{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(48px,8vw,108px);
+  line-height:.93;letter-spacing:-0.025em;margin-bottom:20px
+}
+.join p{
+  font-size:15px;line-height:1.65;color:var(--black-75);
+  max-width:44ch;margin:0 auto 36px
+}
+.join-form{
+  display:inline-flex;gap:0;
+  background:var(--obsidian);border-radius:999px;
+  padding:6px;align-items:center;max-width:480px;width:100%
+}
+.join-form input{
+  flex:1;background:transparent;border:none;
+  color:var(--offwhite);padding:10px 16px;
+  font-family:var(--mono);font-size:13px;outline:none;min-width:0
+}
+.join-form input::placeholder{color:rgba(255,255,255,.38)}
+.join-form button{
+  background:var(--lime);color:var(--obsidian);
+  border:none;border-radius:999px;
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:10px;
+  padding:10px 20px;cursor:pointer;white-space:nowrap;
+  transition:background .2s
+}
+.join-form button:hover{background:var(--white)}
+.join-note{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black-55);margin-top:14px
+}
+
+/* ── FOOTER ─────────────────────────────────────── */
+.foot{
+  background:var(--obsidian);color:var(--offwhite);
+  padding:28px var(--pad);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px
+}
+.foot-brand{font-family:var(--serif);font-style:italic;font-size:18px}
+.foot-brand .dot{color:var(--lime)}
+.foot-brand small{
+  font-family:var(--mono);font-style:normal;text-transform:uppercase;
+  letter-spacing:.16em;font-size:10px;color:rgba(255,255,255,.45);margin-left:10px
+}
+.foot p{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.foot a{color:rgba(255,255,255,.65)}
+.foot a:hover{color:var(--lime)}
+
+/* ── TOAST ──────────────────────────────────────── */
+.toast{
+  position:fixed;top:84px;right:var(--pad);
+  background:var(--obsidian);color:var(--offwhite);
+  padding:14px 22px;border-radius:10px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.05em;
+  display:none;z-index:200;border:1px solid rgba(255,255,255,.1)
+}
+.toast.show{display:flex;align-items:center;gap:10px;animation:slideIn .25s ease}
+.toast::before{content:"✓";color:var(--lime)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}}
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:980px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-meta{grid-template-columns:1fr 1fr;gap:16px}
+  .sec-head{grid-template-columns:1fr;gap:14px;margin-bottom:36px}
+  .about-grid{grid-template-columns:1fr}
+  .who-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr;border-left:none;padding:0}
+  .testi-card{border-right:none;border-left:1px solid rgba(255,255,255,.1);padding:36px var(--pad)}
+  .stats{flex-wrap:wrap;gap:32px}
+}
+@media(max-width:600px){
+  .event-row{grid-template-columns:58px 1fr;gap:16px}
+  .event-btn{display:none}
+  .about-pillars{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#f8f8f5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f8f8f5"/>
+    <text x="600" y="400" font-family="Georgia, serif" font-size="110" fill="#1a1a1a" text-anchor="middle" dominant-baseline="middle">Networking.</text>
+  </svg>
+</template>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-back">← mlcardosa.space</a>
+  <div class="nav-brand">Networking<span class="dot">.</span></div>
+  <button class="nav-pill" onclick="scrollSm('join')">Join the network →</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero-bg"></div>
+  <div class="hero" id="top">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="bar" style="width:36px;height:1px;background:var(--fg);display:inline-block"></span>
+          <span class="dot-live"></span>
+          Networking · mlcardosa.space · 2026
+        </div>
+        <h1 class="hero-title">
+          Two<br>
+          <span class="accent">generations.</span><br>
+          One<br>
+          conversation.
+        </h1>
+      </div>
+      <div class="hero-side">
+        <p class="hero-blurb">A space where women share what they know, ask what they don't, and build the kind of connections that change careers — and sometimes, perspectives.</p>
+        <span class="hero-cta" onclick="scrollSm('events')">See upcoming events →</span>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div><span class="label">Format</span><span class="val">Online + presencial</span></div>
+      <div><span class="label">Generations</span><span class="val">20–30s · 50s–60s+</span></div>
+      <div><span class="label">Based in</span><span class="val">Düsseldorf &amp; remote</span></div>
+      <div><span class="label">Next event</span><span class="val">22 May · Online · Free</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="st"><div class="st-n">2</div><div class="st-l">Generations</div></div>
+  <div class="st"><div class="st-n">∞</div><div class="st-l">Conversations</div></div>
+  <div class="st"><div class="st-n">0</div><div class="st-l">Hierarchies</div></div>
+  <div class="st"><div class="st-n">1</div><div class="st-l">Community</div></div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="sec-head">
+    <div><div class="sec-num">— 01 / About</div></div>
+    <div>
+      <h2 class="sec-title">Not mentorship.<br><em>Exchange.</em></h2>
+      <p class="sec-sub">The most valuable knowledge doesn't flow in one direction. It lives between people, across the table.</p>
+    </div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>What happens when a woman with <strong>30 years of hard-won experience</strong> sits down with one just starting out — and both of them are expected to listen? Something that rarely happens in formal mentoring programs.</p>
+      <p>The Networking Space is built on one belief: that <strong>every generation holds something the other needs</strong>. Older women carry the texture of experience — decisions made under pressure, the things they'd undo, the clarity that only comes with time. Younger women carry something just as rare: a fresh angle, digital fluency, and the kind of honesty that doesn't yet know it should stay quiet.</p>
+      <p>We bring them together. Not on a stage. <strong>At a table, or on a screen, face to face.</strong></p>
+      <div class="about-pillars">
+        <div>
+          <div class="pillar-n">01</div>
+          <div class="pillar-name">Real exchange</div>
+          <div class="pillar-desc">Not advice-giving. Mutual listening. Both sides share; both sides leave with something new.</div>
+        </div>
+        <div>
+          <div class="pillar-n">02</div>
+          <div class="pillar-name">Small groups</div>
+          <div class="pillar-desc">8–12 people per session. Enough to spark. Small enough to go deep.</div>
+        </div>
+        <div>
+          <div class="pillar-n">03</div>
+          <div class="pillar-name">No hierarchy</div>
+          <div class="pillar-desc">No keynotes, no panels. Everyone introduces themselves the same way.</div>
+        </div>
+        <div>
+          <div class="pillar-n">04</div>
+          <div class="pillar-name">Ongoing</div>
+          <div class="pillar-desc">A community, not a one-off event. The real conversations happen the second time.</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-img" style="background-image:url('uploads/quino-al--3KfR1GVKXY-unsplash.jpg')">
+      <div class="about-img-lbl">Portrait of a conversation · Networking Space · 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="section events-section" id="events">
+  <div class="sec-head">
+    <div><div class="sec-num">— 02 / Events</div></div>
+    <div>
+      <h2 class="sec-title">Upcoming <em>sessions.</em></h2>
+      <p class="sec-sub">A mix of online conversations and in-person gatherings. Small, intentional, open to all.</p>
+    </div>
+  </div>
+  <div class="events-list">
+
+    <div class="event-row">
+      <div class="event-date">
+        <div class="event-d">22</div>
+        <div class="event-m">May</div>
+      </div>
+      <div class="event-info">
+        <h4>Career pivots after 50 — what the data doesn't tell you</h4>
+        <div class="event-meta">
+          <span class="badge online">Online</span>
+          <span>Zoom · 90 min · Free</span>
+        </div>
+        <p>A candid conversation between women who've changed direction mid-career and those deciding whether to. What they wish someone had said earlier.</p>
+      </div>
+      <button class="event-btn" onclick="showToast('Seat saved — confirmation on its way')">RSVP →</button>
+    </div>
+
+    <div class="event-row">
+      <div class="event-date">
+        <div class="event-d">05</div>
+        <div class="event-m">Jun</div>
+      </div>
+      <div class="event-info">
+        <h4>Frühstücksrunde — the questions no one asks at work</h4>
+        <div class="event-meta">
+          <span class="badge">Presencial</span>
+          <span>Düsseldorf · 2 h · €15</span>
+        </div>
+        <p>A breakfast roundtable in Düsseldorf. We explore the questions that never make it into performance reviews — about ambition, regret, and what success actually means to you now.</p>
+      </div>
+      <button class="event-btn" onclick="showToast('Seat saved — see you in Düsseldorf')">RSVP →</button>
+    </div>
+
+    <div class="event-row">
+      <div class="event-date">
+        <div class="event-d">19</div>
+        <div class="event-m">Jun</div>
+      </div>
+      <div class="event-info">
+        <h4>Digital confidence for every decade</h4>
+        <div class="event-meta">
+          <span class="badge online">Online</span>
+          <span>Zoom · 60 min · Free</span>
+        </div>
+        <p>A cross-generational conversation about technology, imposter syndrome, and the surprising things older and younger women can learn from each other about navigating digital life.</p>
+      </div>
+      <button class="event-btn" onclick="showToast('Seat saved — confirmation on its way')">RSVP →</button>
+    </div>
+
+    <div class="event-row">
+      <div class="event-date">
+        <div class="event-d">03</div>
+        <div class="event-m">Jul</div>
+      </div>
+      <div class="event-info">
+        <h4>Sommergespräch — open doors session</h4>
+        <div class="event-meta">
+          <span class="badge">Presencial</span>
+          <span>Düsseldorf · 3 h · Free for members</span>
+        </div>
+        <p>An open afternoon for anyone curious about the Networking Space. Come as you are. Meet the community. No agenda — just the conversation that happens.</p>
+      </div>
+      <button class="event-btn" onclick="showToast('Seat saved — see you in July')">RSVP →</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="section" id="who">
+  <div class="sec-head">
+    <div><div class="sec-num">— 03 / Who's behind it</div></div>
+    <div>
+      <h2 class="sec-title">The person <em>in the room.</em></h2>
+    </div>
+  </div>
+  <div class="who-grid">
+    <div class="who-portrait" style="background-image:url('uploads/quino-al-BlMj6RYy3c0-unsplash.jpg');background-position:center 30%">
+      <div class="ph-lbl">María Luisa · Düsseldorf · 2026</div>
+    </div>
+    <div class="who-content">
+      <div class="who-eyebrow">Founder · Educator · Connector</div>
+      <h2 class="who-name">María Luisa<br><span class="accent">Cardosa.</span></h2>
+      <p class="who-bio">For over 20 years, I've watched generations sit in the same room and still manage to miss each other. The older women holding back the hard-won things they know. The younger ones afraid to ask the questions that actually matter.</p>
+      <p class="who-bio">I built the Networking Space because that waste is avoidable. I'm an educator and coach based in Düsseldorf, working at the intersection of learning, communication, and what AI can — and can't — do for human connection.</p>
+      <a class="who-cta" href="index.html">Meet the full practice →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testi-section" id="testimonials">
+  <div class="sec-head">
+    <div><div class="sec-num">— 04 / Voices</div></div>
+    <div>
+      <h2 class="sec-title">What they <em class="inv">say.</em></h2>
+      <p class="sec-sub">From women who've been in the room — on both sides of the conversation.</p>
+    </div>
+  </div>
+  <div class="testi-grid">
+
+    <div class="testi-card">
+      <div class="testi-gen senior">50+</div>
+      <p class="testi-q">"I came expecting to give advice. I left with a new perspective on my entire career. Julia asked me a question nobody my age ever thinks to ask."</p>
+      <div class="testi-who">
+        <div class="testi-av"></div>
+        <div>
+          <div class="testi-name">Renata M.</div>
+          <div class="testi-role">58 · HR Director · Cologne</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-gen">20–30s</div>
+      <p class="testi-q">"Talking to Renata changed how I think about the long game. I've never had that kind of honesty from someone with her experience. It's not something LinkedIn can give you."</p>
+      <div class="testi-who">
+        <div class="testi-av" style="background:linear-gradient(135deg,var(--aqua),var(--lime))"></div>
+        <div>
+          <div class="testi-name">Julia K.</div>
+          <div class="testi-role">29 · Product Designer · Berlin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-gen senior">50+</div>
+      <p class="testi-q">"The only room where I don't feel like either the youngest or the oldest person — and where both of those things stop mattering after the first five minutes."</p>
+      <div class="testi-who">
+        <div class="testi-av" style="background:linear-gradient(135deg,var(--lime),var(--orange))"></div>
+        <div>
+          <div class="testi-name">Carmen V.</div>
+          <div class="testi-role">54 · Educator · Düsseldorf</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-gen">20–30s</div>
+      <p class="testi-q">"I expected a networking event. I got a real conversation. María Luisa has somehow created a space where it's safe to not have it all figured out — at any age."</p>
+      <div class="testi-who">
+        <div class="testi-av" style="background:linear-gradient(135deg,var(--orange),var(--aqua))"></div>
+        <div>
+          <div class="testi-name">Sara B.</div>
+          <div class="testi-role">31 · Founder · Frankfurt</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- JOIN -->
+<section class="join" id="join">
+  <h2>Join the<br>conversation.</h2>
+  <p>Sign up to hear about upcoming sessions, get early access to new formats, and become part of the community.</p>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+    <form class="join-form" onsubmit="handleJoin(event)">
+      <input type="email" required placeholder="your@email.com" id="join-email" />
+      <button type="submit">Join →</button>
+    </form>
+    <div class="join-note">— No spam · Unsubscribe anytime · For women of all generations</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="foot-brand">
+    Networking<span class="dot">.</span>
+    <small>· mlcardosa.space</small>
+  </div>
+  <p>© 2026 · <a href="index.html">← Back to mlcardosa.space</a></p>
+</footer>
+
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<script>
+function scrollSm(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    const top = el.getBoundingClientRect().top + window.pageYOffset - 72;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+function handleJoin(e) {
+  e.preventDefault();
+  const el = document.getElementById('join-email');
+  if (el.value) {
+    el.value = '';
+    showToast('Welcome — first update arrives soon');
+  }
+}
+</script>
+</body>
+</html>

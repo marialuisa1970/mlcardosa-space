@@ -1,0 +1,1356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NextStep50 · Smart Match · mlcardosa.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+/* ====== TOKENS — same vocabulary as mlcardosa.space ====== */
+:root {
+  --white: #ffffff;
+  --obsidian: #0a0a0a;
+  --lime: #c9ff6b;
+  --orange: #ff6b2b;
+  --aqua: #5bc4c5;
+  --cream: #f5f5f0;
+  --offwhite: #f8f8f5;
+  --black-85: rgba(0,0,0,0.85);
+  --black-75: rgba(0,0,0,0.75);
+  --black-55: rgba(0,0,0,0.55);
+  --black-40: rgba(0,0,0,0.40);
+  --black-12: rgba(0,0,0,0.12);
+  --black-06: rgba(0,0,0,0.06);
+
+  --bg: var(--offwhite);
+  --fg: var(--obsidian);
+  --muted: var(--black-75);
+  --soft: var(--black-55);
+  --line: var(--black-12);
+  --card: var(--white);
+
+  --serif: "Instrument Serif", "DM Serif Display", "Times New Roman", serif;
+  --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --max: 1440px;
+  --pad: clamp(20px, 4vw, 64px);
+  --gap-lg: clamp(48px, 8vw, 112px);
+  --r-sm: 4px;
+  --r-md: 10px;
+  --r-lg: 18px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+input, select, textarea { font-family: inherit; }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; }
+p { margin: 0; }
+
+/* Typography helpers */
+.serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+.mono { font-family: var(--mono); }
+.label {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+.section { padding: var(--gap-lg) 0; }
+.divider { height: 1px; background: var(--line); }
+
+.hidden { display: none !important; }
+
+/* ====== NAV ====== */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px var(--pad);
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+.nav-brand {
+  font-family: var(--serif); font-style: italic; font-size: 22px; letter-spacing: -0.01em;
+}
+.nav-brand .dot { color: var(--orange); }
+.nav-brand small {
+  font-family: var(--mono); font-style: normal;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  font-size: 10px; color: var(--soft); margin-left: 10px;
+}
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a, .nav-links span {
+  font-family: var(--mono); text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.14em; color: var(--muted);
+  cursor: pointer; transition: color 200ms;
+}
+.nav-links a:hover, .nav-links span:hover { color: var(--fg); }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.nav-user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  cursor: pointer;
+  transition: border-color 200ms;
+}
+.nav-user:hover { border-color: var(--fg); }
+.nav-av {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; font-weight: 500;
+}
+.nav-av.w { background: rgba(255,107,43,.12); color: var(--orange); }
+.nav-av.c { background: var(--obsidian); color: var(--lime); border-radius: 6px; }
+.nav-uname { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+.dd {
+  position: absolute; top: 64px; right: var(--pad);
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 6px 0; min-width: 180px;
+  display: none; z-index: 80;
+}
+.dd.show { display: block; }
+.dd-i { padding: 10px 18px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+.dd-i:hover { color: var(--fg); background: var(--black-06); }
+.dd-i.red { color: var(--orange); }
+.dd-sep { height: 1px; background: var(--line); margin: 4px 0; }
+
+@media (max-width: 820px) {
+  .nav-links { display: none; }
+}
+
+/* ====== BUTTONS ====== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.14em;
+  font-size: 11px; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--fg);
+  background: transparent; color: var(--fg); transition: all 200ms;
+}
+.btn:hover { background: var(--fg); color: var(--bg); }
+.btn-primary {
+  background: var(--fg); color: var(--bg); border-color: var(--fg);
+}
+.btn-primary:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.btn-soft {
+  border-color: var(--line); color: var(--muted);
+}
+.btn-soft:hover { background: transparent; color: var(--fg); border-color: var(--fg); }
+.btn-w { width: 100%; }
+.btn-sm { padding: 9px 18px; font-size: 10px; }
+
+.cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.14em; font-size: 11px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--fg);
+  cursor: pointer; transition: gap 200ms;
+}
+.cta:hover { gap: 18px; }
+
+/* ====== PAGES (router) ====== */
+.pg { display: none; }
+.pg.on { display: block; animation: fadeUp .5s ease-out; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* ====== HERO ====== */
+.hero {
+  min-height: 86vh;
+  padding: 64px var(--pad) 48px;
+  display: grid; grid-template-rows: 1fr auto; gap: 48px;
+  position: relative; overflow: hidden;
+}
+.hero-inner {
+  max-width: var(--max); margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(32px, 5vw, 80px); align-items: end;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--mono); text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.16em; color: var(--muted);
+  margin-bottom: 24px;
+}
+.hero-eyebrow .bar { width: 36px; height: 1px; background: var(--fg); }
+.hero-eyebrow .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+.hero-eyebrow .eyebrow-text { display: inline; } .hero-eyebrow .ns-fifty { color: var(--orange); font-style: italic; display: inline-block; margin-left: -0.16em; }
+
+.hero-title {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(56px, 9vw, 132px);
+  line-height: 0.95; letter-spacing: -0.025em;
+}
+.hero-title .accent-orange { color: var(--orange); }
+.hero-title .accent-aqua { color: var(--aqua); }
+.hero-side {
+  display: flex; flex-direction: column; gap: 28px;
+  padding-bottom: 8px; max-width: 38ch;
+}
+.hero-blurb { font-family: var(--mono); font-size: 14px; line-height: 1.7; color: var(--muted); }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.hero-quote {
+  max-width: var(--max); margin: 0 auto; width: 100%;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(32px, 5vw, 80px);
+}
+.hero-quote q {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(20px, 2.4vw, 28px); line-height: 1.45;
+  color: var(--fg); display: block; quotes: none;
+  max-width: 32ch;
+}
+.hero-quote cite {
+  display: block;
+  font-family: var(--mono); text-transform: uppercase;
+  font-size: 10px; letter-spacing: 0.16em; color: var(--soft);
+  font-style: normal; margin-top: 12px;
+}
+.hero-meta-row {
+  max-width: var(--max); margin: 32px auto 0;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.hero-meta-row > div { padding-right: 20px; }
+.hero-meta-row .val { font-family: var(--mono); font-size: 12px; color: var(--fg); display: block; margin-top: 6px; }
+
+.hero-bg {
+  position: absolute; right: -8vw; top: 18%;
+  width: 50vw; height: 50vw; max-width: 720px; max-height: 720px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--orange) 65%, transparent), transparent 65%);
+  filter: blur(40px); opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ====== STATS BAND ====== */
+.stats {
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 28px var(--pad);
+  display: flex; justify-content: center; gap: clamp(32px, 6vw, 96px);
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.st { text-align: center; }
+.st-n { font-family: var(--serif); font-style: italic; font-size: 32px; line-height: 1; color: var(--lime); }
+.st-l { font-family: var(--mono); text-transform: uppercase; font-size: 10px; letter-spacing: 0.16em; color: rgba(255,255,255,.55); margin-top: 6px; }
+
+/* ====== SECTION TITLE ====== */
+.sec-head { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 5vw, 80px); align-items: end; margin-bottom: 56px; }
+.sec-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--soft); }
+.sec-title { font-family: var(--serif); font-style: italic; font-size: clamp(40px, 5.5vw, 72px); line-height: 1.05; letter-spacing: -0.02em; }
+.sec-title em { font-style: italic; color: var(--orange); }
+.sec-sub { font-family: var(--mono); font-size: 14px; line-height: 1.7; color: var(--muted); max-width: 42ch; }
+
+/* ====== HOW (3 steps) ====== */
+.how {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.how-s {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 36px 32px 44px;
+  background: var(--card);
+}
+.how-n { font-family: var(--serif); font-style: italic; font-size: 64px; color: var(--orange); line-height: 1; margin-bottom: 28px; }
+.how-t { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.2; margin-bottom: 10px; }
+.how-d { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* ====== ACCORDION ====== */
+.acc {
+  border-top: 1px solid var(--line);
+}
+.acc:last-of-type { border-bottom: 1px solid var(--line); }
+.acc-h {
+  padding: 24px 0; display: flex; justify-content: space-between; align-items: baseline;
+  cursor: pointer; gap: 32px;
+}
+.acc-h h4 { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.2; }
+.acc-h .badge {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--soft); margin-left: 16px;
+}
+.acc-arr { font-family: var(--mono); font-size: 14px; color: var(--soft); transition: transform .3s; }
+.acc.open .acc-arr { transform: rotate(45deg); color: var(--orange); }
+.acc-b { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.acc.open .acc-b { max-height: 600px; }
+.acc-bi { padding: 0 0 28px; max-width: 64ch; }
+.acc-bi p { font-family: var(--mono); font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+.acc-bi ul { list-style: none; padding: 0; }
+.acc-bi li {
+  font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.7;
+  padding: 6px 0 6px 22px; position: relative;
+}
+.acc-bi li::before { content: "—"; position: absolute; left: 0; color: var(--orange); }
+
+/* ====== PILLARS (4 cards) ====== */
+.pils {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.pil {
+  background: var(--card); padding: 36px 28px 40px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: background .3s;
+}
+.pil:hover { background: var(--cream); }
+.pil-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: var(--orange); }
+.pil h3 { font-family: var(--serif); font-style: italic; font-size: 28px; line-height: 1.1; }
+.pil p { font-family: var(--mono); font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+
+/* ====== TWO-COL (companies) ====== */
+.twocol { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
+.co-list { list-style: none; padding: 0; margin-top: 32px; border-top: 1px solid var(--line); }
+.co-list li {
+  font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.7;
+  padding: 14px 0 14px 22px; border-bottom: 1px solid var(--line); position: relative;
+}
+.co-list li::before { content: "+"; position: absolute; left: 0; color: var(--orange); font-family: var(--mono); }
+.co-box {
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 36px; border-radius: var(--r-lg);
+}
+.co-box h3 { font-family: var(--serif); font-style: italic; font-size: 32px; line-height: 1.15; margin-bottom: 14px; color: var(--lime); }
+.co-box p { font-family: var(--mono); font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.7; margin-bottom: 20px; }
+.co-note {
+  font-family: var(--mono); font-size: 12px; line-height: 1.65;
+  color: rgba(255,255,255,.6); padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,.16); border-radius: var(--r-sm);
+  margin-bottom: 20px;
+}
+.co-box .btn { color: var(--obsidian); background: var(--lime); border-color: var(--lime); }
+.co-box .btn:hover { background: var(--white); border-color: var(--white); }
+.co-box .btn-ghost {
+  background: transparent; color: rgba(255,255,255,.7);
+  border-color: rgba(255,255,255,.2);
+}
+.co-box .btn-ghost:hover { color: var(--lime); border-color: var(--lime); background: transparent; }
+
+/* ====== CTA BAND ====== */
+.cta-band {
+  background: var(--cream);
+  padding: var(--gap-lg) var(--pad);
+  text-align: center;
+}
+.cta-band h2 {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(48px, 7vw, 96px); line-height: 1; letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+.cta-band h2 em { color: var(--orange); }
+.cta-band p {
+  font-family: var(--mono); font-size: 14px; color: var(--muted);
+  max-width: 44ch; margin: 0 auto 32px;
+}
+.cta-band .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ====== FOOTER ====== */
+.foot {
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 28px var(--pad);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.foot-brand { font-family: var(--serif); font-style: italic; font-size: 18px; }
+.foot-brand .dot { color: var(--lime); }
+.foot-brand small { font-family: var(--mono); font-style: normal; text-transform: uppercase; letter-spacing: 0.16em; font-size: 10px; color: rgba(255,255,255,.5); margin-left: 12px; }
+.foot p { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.foot a { color: rgba(255,255,255,.7); }
+.foot a:hover { color: var(--lime); }
+
+/* ====== AUTH ====== */
+.auth { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+.auth-l {
+  padding: clamp(32px, 6vw, 80px);
+  display: flex; flex-direction: column; justify-content: center;
+  max-width: 600px; width: 100%;
+}
+.auth-r {
+  background: var(--obsidian); color: var(--offwhite);
+  padding: clamp(32px, 6vw, 80px);
+  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+  position: relative; overflow: hidden;
+}
+.auth-r::before {
+  content: ""; position: absolute; right: -10%; top: 30%;
+  width: 60%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--orange) 55%, transparent), transparent 65%);
+  filter: blur(30px); opacity: .4;
+}
+.auth-r-inner { position: relative; max-width: 38ch; }
+.auth-r q {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(22px, 2.4vw, 32px); line-height: 1.35;
+  color: var(--offwhite); display: block; quotes: none;
+}
+.auth-r cite {
+  display: block; margin-top: 16px; font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  font-style: normal; color: rgba(255,255,255,.55);
+}
+.auth-back {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 32px; display: inline-flex; gap: 10px; align-items: center;
+}
+.auth-back:hover { color: var(--fg); }
+.auth-t {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.auth-st { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-bottom: 36px; line-height: 1.7; }
+.auth-tg { margin-top: 28px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.auth-tg a { color: var(--orange); cursor: pointer; }
+.auth-tg a:hover { text-decoration: underline; }
+.auth-sw {
+  display: flex; gap: 0; margin-bottom: 28px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px;
+}
+.auth-sw-b {
+  flex: 1; padding: 10px 16px; font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  border: none; background: transparent; color: var(--muted); border-radius: 999px;
+  transition: all 200ms;
+}
+.auth-sw-b.on { background: var(--obsidian); color: var(--offwhite); }
+
+@media (max-width: 820px) { .auth { grid-template-columns: 1fr; } .auth-r { display: none; } }
+
+/* ====== FORMS ====== */
+.fld { margin-bottom: 18px; }
+.fld label {
+  display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--soft); margin-bottom: 8px;
+}
+.fld input, .fld select, .fld textarea {
+  width: 100%; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--card); color: var(--fg);
+  font-family: var(--mono); font-size: 13px;
+  transition: border-color 200ms;
+}
+.fld input:focus, .fld select:focus, .fld textarea:focus {
+  outline: none; border-color: var(--orange);
+}
+.fld textarea { min-height: 88px; resize: vertical; }
+.fld-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer; transition: all 200ms;
+}
+.chip:hover { border-color: var(--fg); color: var(--fg); }
+.chip.on { background: var(--obsidian); color: var(--offwhite); border-color: var(--obsidian); }
+
+.subform-card {
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 24px; margin-bottom: 18px; background: var(--cream);
+}
+.subform-card .label { color: var(--orange); margin-bottom: 14px; display: block; }
+
+/* ====== DASHBOARD ====== */
+.dash { padding: 56px var(--pad) 96px; max-width: var(--max); margin: 0 auto; }
+.dash-top { display: flex; justify-content: space-between; align-items: end; margin-bottom: 40px; gap: 24px; flex-wrap: wrap; }
+.dash-gr { font-family: var(--serif); font-style: italic; font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px; }
+.dash-sub { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+.metrics {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--line); border: 1px solid var(--line);
+  border-radius: var(--r-md); overflow: hidden;
+  margin-bottom: 56px;
+}
+.metric {
+  background: var(--card); padding: 24px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.metric-l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--soft); }
+.metric-v { font-family: var(--serif); font-style: italic; font-size: 44px; line-height: 1; }
+.metric-n { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+.section-h {
+  display: flex; align-items: baseline; gap: 16px;
+  font-family: var(--serif); font-style: italic; font-size: 32px; line-height: 1.1;
+  margin-bottom: 20px;
+}
+.section-h .cnt {
+  font-family: var(--mono); font-style: normal;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--soft);
+}
+
+/* match cards */
+.mlist { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+.mc {
+  display: grid; grid-template-columns: 56px 1fr auto;
+  gap: 20px; padding: 24px 8px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer; transition: background .2s;
+  align-items: center;
+}
+.mc:hover { background: var(--cream); }
+.mc-av {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+}
+.mc-av.w { background: rgba(255,107,43,.12); color: var(--orange); }
+.mc-av.co { background: var(--obsidian); color: var(--lime); border-radius: 6px; }
+.mc-info { min-width: 0; }
+.mc-name { font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1.15; margin-bottom: 4px; }
+.mc-role { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.mc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tg {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted);
+}
+.tg.g { color: var(--orange); border-color: var(--orange); }
+.mc-sc { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 100px; }
+.mc-sn { font-family: var(--serif); font-style: italic; font-size: 36px; line-height: 1; }
+.mc-sl { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--soft); }
+.mc-sl.done { color: var(--orange); }
+.mc-bar { width: 80px; height: 2px; background: var(--line); border-radius: 1px; overflow: hidden; }
+.mc-bf { height: 100%; background: var(--orange); transition: width .5s; }
+
+/* blur */
+.blur { filter: blur(5px); user-select: none; transition: filter .4s; }
+.blur.clear { filter: none; }
+
+/* ====== DETAIL PANEL ====== */
+.dp-ov {
+  position: fixed; inset: 0; background: rgba(10,10,10,.5);
+  backdrop-filter: blur(2px);
+  z-index: 90; display: none;
+}
+.dp-ov.show { display: block; }
+.dp {
+  position: fixed; top: 0; right: -640px; height: 100vh; width: 600px; max-width: 92vw;
+  background: var(--bg); z-index: 100;
+  display: flex; flex-direction: column;
+  border-left: 1px solid var(--line);
+  transition: right .4s ease;
+  overflow: hidden;
+}
+.dp.open { right: 0; }
+.dp-head {
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 32px 32px 28px;
+  position: relative;
+}
+.dp-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.1); border: none; color: var(--offwhite);
+  font-size: 16px; cursor: pointer; transition: background .2s;
+}
+.dp-close:hover { background: rgba(255,255,255,.2); }
+.dp-eyebrow {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--lime); margin-bottom: 8px;
+}
+.dp-title { font-family: var(--serif); font-style: italic; font-size: 36px; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 6px; }
+.dp-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.dp-body { flex: 1; overflow-y: auto; padding: 28px 32px; }
+.dp-desc { font-family: var(--mono); font-size: 13px; line-height: 1.75; color: var(--muted); margin-bottom: 28px; }
+.dp-sec { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; margin-top: 24px; }
+.dp-sec:first-child { margin-top: 0; }
+
+.meter {
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+}
+.meter-h {
+  display: flex; justify-content: space-between;
+  font-family: var(--mono); font-size: 12px; color: var(--fg);
+  margin-bottom: 8px;
+}
+.meter-h span:last-child { color: var(--orange); font-weight: 500; }
+.meter-t { height: 2px; background: var(--line); border-radius: 1px; overflow: hidden; }
+.meter-f { height: 100%; background: var(--orange); transition: width .6s; }
+
+.dp-cta {
+  background: var(--cream); border-radius: var(--r-md);
+  padding: 24px; margin-top: 28px; text-align: left;
+}
+.dp-cta h4 { font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1.2; margin-bottom: 6px; }
+.dp-cta p { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
+.dp-connected {
+  background: var(--lime); padding: 24px; border-radius: var(--r-md); margin-top: 28px;
+}
+.dp-connected h4 { font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1.15; color: var(--obsidian); margin-bottom: 4px; }
+.dp-connected p { font-family: var(--mono); font-size: 12px; color: var(--obsidian); line-height: 1.7; }
+
+.dp-foot { padding: 16px 32px; border-top: 1px solid var(--line); display: flex; gap: 10px; }
+
+/* ====== TOAST ====== */
+.toast {
+  position: fixed; top: 88px; right: var(--pad);
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 14px 22px; border-radius: var(--r-md);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em;
+  display: none; z-index: 200; max-width: 360px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.toast.show { display: flex; align-items: center; gap: 12px; animation: slideIn .25s ease; }
+.toast::before { content: "✓"; color: var(--lime); font-family: var(--mono); }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } }
+
+/* ====== OVERLAY (about / profile) ====== */
+.ov {
+  position: fixed; inset: 0; background: rgba(10,10,10,.55);
+  backdrop-filter: blur(4px); z-index: 110;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.ov.show { display: flex; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; } }
+.ov-box {
+  background: var(--bg); border-radius: var(--r-lg);
+  width: 100%; max-width: 560px; max-height: 88vh; overflow-y: auto;
+  border: 1px solid var(--line);
+}
+.ov-pad { padding: 36px; }
+.ov-t { font-family: var(--serif); font-style: italic; font-size: 36px; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 8px; }
+.ov-st { font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--muted); margin-bottom: 24px; }
+.ov-block { margin-bottom: 18px; }
+.ov-block .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+.ov-block p { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+.prof-head {
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 36px;
+  display: flex; gap: 24px; align-items: center;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.prof-av {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 18px;
+}
+.prof-av.w { background: rgba(255,107,43,.18); color: var(--orange); }
+.prof-av.co { background: rgba(201,255,107,.15); color: var(--lime); border-radius: 10px; }
+.prof-name { font-family: var(--serif); font-style: italic; font-size: 30px; line-height: 1.1; letter-spacing: -0.01em; }
+.prof-role { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: 6px; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-quote { grid-template-columns: 1fr; }
+  .hero-meta-row { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sec-head { grid-template-columns: 1fr; gap: 16px; }
+  .how { grid-template-columns: 1fr; }
+  .pils { grid-template-columns: 1fr 1fr; }
+  .twocol { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .stats { flex-wrap: wrap; gap: 32px; }
+  .mc { grid-template-columns: 48px 1fr; }
+  .mc-sc { grid-column: 2; align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .pils { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#0a0a0a">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0a0a0a"/>
+    <text x="600" y="400" font-family="Georgia, serif" font-size="100" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">NextStep<tspan fill="#FF6B2B">.</tspan>50</text>
+  </svg>
+</template>
+
+<!-- ===== NAV ===== -->
+<nav class="nav" id="nav">
+  <a class="nav-brand" href="index.html">
+    NextStep<span class="dot">.</span>50
+    <small>← mlcardosa.space</small>
+  </a>
+  <div class="nav-links" id="nav-mid">
+    <span onclick="scrollSec('how')">How it works</span>
+    <span onclick="scrollSec('why')">Why</span>
+    <span onclick="scrollSec('companies')">For Companies</span>
+  </div>
+  <div class="nav-actions" id="nav-right">
+    <button class="btn btn-soft btn-sm" onclick="go('login')">Log in</button>
+    <button class="btn btn-primary btn-sm" onclick="go('register')">Sign up</button>
+  </div>
+</nav>
+
+<!-- ===== LANDING ===== -->
+<div class="pg on" id="pg-landing">
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow"><span class="bar"></span><span class="live-dot"></span><span class="eyebrow-text">NextStep<span class="ns-fifty">50</span> · Smart Match · 2026</span></div>
+        <h1 class="hero-title">
+          Experience deserves<br>
+          a <span class="accent-orange">second</span><br>
+          <span class="accent-aqua">stage.</span>
+        </h1>
+      </div>
+      <div class="hero-side">
+        <p class="hero-blurb">
+          NextStep50 connects women over 50, with AI expertise, leadership experience and multilingual skills, with companies that need exactly that.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="go('register')">Sign up now →</button>
+          <button class="btn" onclick="showOv('ov-about')">About NextStep50</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-quote">
+      <q>I have over 30 years of international experience, speak six languages, and have upskilled in AI. Why am I not getting invited to any interviews?</q>
+      <div></div>
+      <cite>Senior Strategic CSM, EMEA · 54</cite>
+    </div>
+
+    <div class="hero-meta-row">
+      <div><span class="label">Currently</span><span class="val">Beta · DACH 2026</span></div>
+      <div><span class="label">Focus</span><span class="val">EdTech · Digital Health</span></div>
+      <div><span class="label">Languages</span><span class="val">6 · DE · EN · ES · FR · IT · CA</span></div>
+      <div><span class="label">Index</span><span class="val">vol. 01 · smart match</span></div>
+    </div>
+  </section>
+
+  <!-- stats -->
+  <div class="stats">
+    <div class="st"><div class="st-n">30+</div><div class="st-l">Years of experience</div></div>
+    <div class="st"><div class="st-n">6</div><div class="st-l">Languages</div></div>
+    <div class="st"><div class="st-n">DACH</div><div class="st-l">EMEA Focus</div></div>
+    <div class="st"><div class="st-n">DSGVO</div><div class="st-l">Compliant</div></div>
+  </div>
+
+  <!-- HOW -->
+  <section class="section container" id="sec-how">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">— 01 / Method</div>
+      </div>
+      <div>
+        <h2 class="sec-title">Three Steps to a <em>Smart Match.</em></h2>
+        <p class="sec-sub" style="margin-top:18px">Our system analyses values, expertise and language profile — and connects you with companies that are looking for exactly that.</p>
+      </div>
+    </div>
+
+    <div class="how">
+      <div class="how-s">
+        <div class="how-n">01</div>
+        <h3 class="how-t">Build your profile</h3>
+        <p class="how-d">Expertise, languages, AI skills. No age field, no career-gap penalty.</p>
+      </div>
+      <div class="how-s">
+        <div class="how-n">02</div>
+        <h3 class="how-t">Receive matches</h3>
+        <p class="how-d">Relevant roles with a transparent score. You always know why you match.</p>
+      </div>
+      <div class="how-s">
+        <div class="how-n">03</div>
+        <h3 class="how-t">Connect</h3>
+        <p class="how-d">Your profile goes directly to the hiring team. No cold applying — only warm introductions.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:40px">
+      <div class="acc" onclick="toggleAcc(this)">
+        <div class="acc-h"><h4>Step 1 <span class="badge">Profile</span></h4><span class="acc-arr">+</span></div>
+        <div class="acc-b"><div class="acc-bi">
+          <p>Your profile shows what you can do, how you work and where you thrive.</p>
+          <ul>
+            <li>Expertise and industry experience</li>
+            <li>Language skills and EMEA coverage</li>
+            <li>AI skills and tools</li>
+            <li>Work preferences and certifications</li>
+          </ul>
+        </div></div>
+      </div>
+      <div class="acc" onclick="toggleAcc(this)">
+        <div class="acc-h"><h4>Step 2 <span class="badge">Matching</span></h4><span class="acc-arr">+</span></div>
+        <div class="acc-b"><div class="acc-bi">
+          <p>Four dimensions, full transparency.</p>
+          <ul>
+            <li>Professional fit: industry, role, responsibility</li>
+            <li>Language coverage</li>
+            <li>AI maturity of the company</li>
+            <li>Values fit: culture, work model, seniority</li>
+          </ul>
+        </div></div>
+      </div>
+      <div class="acc" onclick="toggleAcc(this)">
+        <div class="acc-h"><h4>Step 3 <span class="badge">Connect</span></h4><span class="acc-arr">+</span></div>
+        <div class="acc-b"><div class="acc-bi">
+          <p>Direct path to the hiring manager — personally guided.</p>
+          <ul>
+            <li>Direct forwarding to the point of contact</li>
+            <li>Personal introduction by the NextStep50 team</li>
+            <li>Response within 5 business days</li>
+            <li>GDPR-compliant and discreet</li>
+          </ul>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BAND -->
+  <div class="photo-band" style="background: url('uploads/quino-al-BlMj6RYy3c0-unsplash-7eb570c9.jpg') center 40% / cover no-repeat; height: clamp(280px, 38vw, 520px); width: 100%;"></div>
+
+  <!-- WHY (pillars) -->
+  <section class="section container" id="sec-why" style="background:var(--cream); padding-left: var(--pad); padding-right: var(--pad); border-radius: var(--r-lg);">
+    <div class="sec-head">
+      <div><div class="sec-num">— 02 / Principles</div></div>
+      <div>
+        <h2 class="sec-title">Why <em>NextStep50.</em></h2>
+        <p class="sec-sub" style="margin-top:18px">Women over 50 are actively upskilling in AI — and are underrepresented in hiring pipelines. Four things we do differently.</p>
+      </div>
+    </div>
+    <div class="pils">
+      <div class="pil">
+        <span class="pil-num">01</span>
+        <h3>Visibility</h3>
+        <p>Your profile reaches companies actively seeking senior talent.</p>
+      </div>
+      <div class="pil">
+        <span class="pil-num">02</span>
+        <h3>Smart Fit</h3>
+        <p>AI matches skills and values — not just keywords.</p>
+      </div>
+      <div class="pil">
+        <span class="pil-num">03</span>
+        <h3>Dignity</h3>
+        <p>No age filter. Your career story is your strength.</p>
+      </div>
+      <div class="pil">
+        <span class="pil-num">04</span>
+        <h3>Community</h3>
+        <p>Like-minded peers across EMEA, industries and languages.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANIES -->
+  <section class="section container" id="sec-companies">
+    <div class="sec-head">
+      <div><div class="sec-num">— 03 / For Companies</div></div>
+      <div>
+        <h2 class="sec-title">The <em>experience</em> your team is missing.</h2>
+        <p class="sec-sub" style="margin-top:18px">Access to senior professionals — multilingual, AI-qualified, ready from day one.</p>
+      </div>
+    </div>
+
+    <div class="twocol">
+      <div>
+        <ul class="co-list">
+          <li>15–25+ years of B2B experience in EMEA</li>
+          <li>Filtered by language, domain and AI level</li>
+          <li>Warm-matched — no ATS filters</li>
+          <li>Focus on EdTech &amp; Digital Health DACH</li>
+          <li>Verified AI upskilling</li>
+          <li>GDPR-compliant and discreet</li>
+        </ul>
+      </div>
+      <div>
+        <div class="co-box">
+          <h3>Become a partner.</h3>
+          <p>Get access to pre-matched senior profiles with personal guidance from our team.</p>
+          <div class="co-note">You receive curated profiles matching your open positions — including a match score and personal introduction.</div>
+          <button class="btn btn-w" style="margin-bottom:10px" onclick="go('register');setTimeout(()=>setRegType('company'),50)">Register as a company →</button>
+          <button class="btn btn-ghost btn-w" onclick="showOv('ov-about')">Learn more</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Ready for your <em>Smart Match?</em></h2>
+    <p>Sign up and discover which companies match your profile.</p>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="go('register')">Sign up now →</button>
+      <button class="btn" onclick="showOv('ov-about')">About NextStep50</button>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="foot-brand">NextStep<span class="dot">.</span>50<small>· Smart Match · mlcardosa.space</small></div>
+    <p>© 2026 · Prototype · <a href="index.html">Back to mlcardosa.space</a></p>
+  </footer>
+</div>
+
+<!-- ===== LOGIN ===== -->
+<div class="pg" id="pg-login">
+  <div class="auth">
+    <div class="auth-l">
+      <a class="auth-back" onclick="go('landing')">← Back</a>
+      <h1 class="auth-t">Welcome<br>back.</h1>
+      <p class="auth-st">Log in to see your matches.</p>
+      <div class="fld"><label>E-Mail</label><input type="email" id="login-email" placeholder="your@email.com"></div>
+      <div class="fld"><label>Password</label><input type="password" placeholder="••••••••"></div>
+      <button class="btn btn-primary btn-w" onclick="doLogin()" style="margin-top:8px">Log in →</button>
+      <p class="auth-tg">No account yet? <a onclick="go('register')">Sign up now</a></p>
+    </div>
+    <div class="auth-r">
+      <div class="auth-r-inner">
+        <q>After 22 years in B2B sales, I have more to offer than ever before.</q>
+        <cite>Senior Profile · Munich</cite>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REGISTER ===== -->
+<div class="pg" id="pg-register">
+  <div class="auth">
+    <div class="auth-l" style="max-width: 640px">
+      <a class="auth-back" onclick="go('landing')">← Back</a>
+      <h1 class="auth-t">Create<br>account.</h1>
+      <p class="auth-st">Choose your profile — candidate or company.</p>
+      <div class="auth-sw" id="reg-sw">
+        <button class="auth-sw-b on" onclick="setRegType('woman')">Candidate</button>
+        <button class="auth-sw-b" onclick="setRegType('company')">Company</button>
+      </div>
+
+      <!-- WOMAN -->
+      <div id="reg-woman">
+        <div class="fld-row">
+          <div class="fld"><label>First name</label><input placeholder="e.g. Claudia"></div>
+          <div class="fld"><label>Last name</label><input placeholder="e.g. Weber"></div>
+        </div>
+        <div class="fld"><label>E-Mail</label><input type="email" placeholder="claudia@email.com"></div>
+        <div class="fld"><label>Password</label><input type="password" placeholder="Min. 8 characters"></div>
+        <div class="fld"><label>Current / last job title</label><input placeholder="e.g. Senior Customer Success Manager"></div>
+        <div class="fld"><label>Main area of expertise</label><select><option>Customer Success &amp; Account Management</option><option>Project Management</option><option>EdTech &amp; Learning Design</option><option>Digital Health</option><option>Marketing &amp; Communications</option><option>HR &amp; People Operations</option></select></div>
+        <div class="fld-row">
+          <div class="fld"><label>Professional experience</label><select><option>10–15 years</option><option>15–20 years</option><option selected>20–25 years</option><option>25+ years</option></select></div>
+          <div class="fld"><label>Location</label><input placeholder="e.g. Munich"></div>
+        </div>
+        <div class="fld"><label>Languages</label>
+          <div class="chips">
+            <div class="chip on" onclick="this.classList.toggle('on')">German</div>
+            <div class="chip on" onclick="this.classList.toggle('on')">English</div>
+            <div class="chip" onclick="this.classList.toggle('on')">Spanish</div>
+            <div class="chip" onclick="this.classList.toggle('on')">French</div>
+            <div class="chip" onclick="this.classList.toggle('on')">Italian</div>
+            <div class="chip" onclick="this.classList.toggle('on')">Portuguese</div>
+          </div>
+        </div>
+        <div class="fld"><label>AI Skills</label>
+          <div class="chips">
+            <div class="chip on" onclick="this.classList.toggle('on')">Prompt Engineering</div>
+            <div class="chip" onclick="this.classList.toggle('on')">AI Project Management</div>
+            <div class="chip" onclick="this.classList.toggle('on')">Automation</div>
+            <div class="chip" onclick="this.classList.toggle('on')">Data Analysis</div>
+            <div class="chip" onclick="this.classList.toggle('on')">ChatGPT / Claude</div>
+          </div>
+        </div>
+        <div class="fld"><label>Work preference</label>
+          <div class="chips">
+            <div class="chip on" onclick="selOne(this)">Remote</div>
+            <div class="chip" onclick="selOne(this)">Hybrid</div>
+            <div class="chip" onclick="selOne(this)">On-site</div>
+          </div>
+        </div>
+        <div class="fld"><label>Short bio (optional)</label><textarea placeholder="What are you looking for? What drives you?"></textarea></div>
+        <button class="btn btn-primary btn-w" onclick="doRegister('woman')" style="margin-top:8px">Create profile →</button>
+      </div>
+
+      <!-- COMPANY -->
+      <div id="reg-company" class="hidden">
+        <div class="fld"><label>Company name</label><input placeholder="e.g. LinguaEdge GmbH"></div>
+        <div class="fld"><label>Contact person</label><input placeholder="First and last name"></div>
+        <div class="fld"><label>E-Mail</label><input type="email" placeholder="hr@company.com"></div>
+        <div class="fld"><label>Password</label><input type="password" placeholder="Min. 8 characters"></div>
+        <div class="fld-row">
+          <div class="fld"><label>Industry</label><select><option>EdTech</option><option>Digital Health</option><option>SaaS / B2B</option><option>HR Tech</option></select></div>
+          <div class="fld"><label>Size</label><select><option>10–50</option><option>50–200</option><option>200–1000</option><option>1000+</option></select></div>
+        </div>
+        <div class="fld"><label>Location(s)</label><input placeholder="e.g. Berlin, Munich, Remote"></div>
+        <div class="subform-card">
+          <span class="label">Open position 1</span>
+          <div class="fld"><label>Job title</label><input placeholder="e.g. Senior Customer Success Manager"></div>
+          <div class="fld-row">
+            <div class="fld"><label>Department</label><input placeholder="e.g. Customer Success"></div>
+            <div class="fld"><label>Work model</label><select><option>Remote</option><option>Hybrid</option><option>On-site</option></select></div>
+          </div>
+          <div class="fld"><label>Required languages</label>
+            <div class="chips">
+              <div class="chip on" onclick="this.classList.toggle('on')">German</div>
+              <div class="chip on" onclick="this.classList.toggle('on')">English</div>
+              <div class="chip" onclick="this.classList.toggle('on')">Spanish</div>
+              <div class="chip" onclick="this.classList.toggle('on')">French</div>
+            </div>
+          </div>
+          <div class="fld" style="margin-bottom:0"><label>Brief description</label><textarea placeholder="What are you looking for in this role?"></textarea></div>
+        </div>
+        <div id="extra-positions"></div>
+        <button class="btn btn-soft btn-w" style="margin-bottom:18px" onclick="addPosition()">+ Add another position</button>
+        <button class="btn btn-primary btn-w" onclick="doRegister('company')">Register company →</button>
+      </div>
+
+      <p class="auth-tg">Already registered? <a onclick="go('login')">Log in</a></p>
+    </div>
+    <div class="auth-r">
+      <div class="auth-r-inner">
+        <q>We spent six months looking for a multilingual senior profile. NextStep50 delivered within a week.</q>
+        <cite>Company Partner · Berlin</cite>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DASH WOMAN ===== -->
+<div class="pg" id="pg-dash-w">
+  <div class="dash">
+    <div class="dash-top">
+      <div>
+        <h2 class="dash-gr" id="dash-w-name">Hello.</h2>
+        <p class="dash-sub">Your current matches and profile status.</p>
+      </div>
+      <button class="btn btn-soft btn-sm" onclick="showOv('ov-profile-w')">My Profile →</button>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-l">— Matches</div><div class="metric-v">5</div><div class="metric-n">Companies matched</div></div>
+      <div class="metric"><div class="metric-l">— Score Ø</div><div class="metric-v">89</div><div class="metric-n">Average</div></div>
+      <div class="metric"><div class="metric-l">— Sent</div><div class="metric-v">0</div><div class="metric-n">Connections</div></div>
+      <div class="metric"><div class="metric-l">— Profile strength</div><div class="metric-v">92%</div><div class="metric-n">Complete</div></div>
+    </div>
+    <h3 class="section-h">Your Matches <span class="cnt">— 5 positions</span></h3>
+    <div class="mlist" id="woman-matches"></div>
+  </div>
+</div>
+
+<!-- ===== DASH COMPANY ===== -->
+<div class="pg" id="pg-dash-c">
+  <div class="dash">
+    <div class="dash-top">
+      <div>
+        <h2 class="dash-gr" id="dash-c-name">Welcome.</h2>
+        <p class="dash-sub">Your matched candidates.</p>
+      </div>
+      <button class="btn btn-soft btn-sm" onclick="showOv('ov-profile-c')">Company Profile →</button>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-l">— Candidates</div><div class="metric-v">6</div><div class="metric-n">Matched profiles</div></div>
+      <div class="metric"><div class="metric-l">— Score Ø</div><div class="metric-v">87</div><div class="metric-n">Average</div></div>
+      <div class="metric"><div class="metric-l">— Positions</div><div class="metric-v">3</div><div class="metric-n">Active</div></div>
+      <div class="metric"><div class="metric-l">— Connections</div><div class="metric-v">0</div><div class="metric-n">Made</div></div>
+    </div>
+    <h3 class="section-h">Matched Candidates <span class="cnt">— 6 profiles</span></h3>
+    <div class="mlist" id="company-matches"></div>
+  </div>
+</div>
+
+<!-- ===== DETAIL PANEL ===== -->
+<div class="dp-ov" id="dp-ov" onclick="closeDetail()"></div>
+<div class="dp" id="dp">
+  <div class="dp-head" id="dp-head"></div>
+  <div class="dp-body" id="dp-body"></div>
+  <div class="dp-foot" id="dp-foot"></div>
+</div>
+
+<!-- ===== OVERLAYS ===== -->
+<div class="ov" id="ov-about">
+  <div class="ov-box">
+    <div class="ov-pad">
+      <h3 class="ov-t">About <em style="color:var(--orange)">NextStep50.</em></h3>
+      <p class="ov-st">Smart Match connects experienced women over 50 with companies actively seeking senior expertise, multilingual skills and AI competence.</p>
+      <div class="ov-block"><div class="lbl">Focus</div><p>EdTech, Digital Health and SaaS in the DACH region.</p></div>
+      <div class="ov-block"><div class="lbl">Audience</div><p>Women over 50 with active AI upskilling and senior professional experience.</p></div>
+      <div class="ov-block"><div class="lbl">Core message</div><p>Women over 50 are not a niche — they are a strategic resource.</p></div>
+      <div class="ov-block"><div class="lbl">Technology</div><p>AI-powered matching · Values-based algorithm · GDPR-compliant.</p></div>
+      <button class="btn btn-primary" onclick="hideOv('ov-about')" style="margin-top:8px">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-profile-w"><div class="ov-box" id="ov-profile-w-content"></div></div>
+<div class="ov" id="ov-profile-c"><div class="ov-box" id="ov-profile-c-content"></div></div>
+
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+const WOMEN=[
+  {id:'w1',name:'Claudia Brenner',init:'CB',title:'Senior Customer Success Manager',field:'Customer Success',exp:'22 years',loc:'Munich',langs:['German','English','Spanish'],ai:['Prompt Engineering','ChatGPT / Claude','Automation'],pref:'Remote',bio:'22 years of international B2B experience in EdTech and SaaS. Focus on strategic EMEA accounts.',certs:['AI in Project Management','Scrum Master PSM I']},
+  {id:'w2',name:'Karin Hofstetter',init:'KH',title:'Head of Account Management',field:'Account Management',exp:'25+ years',loc:'Vienna',langs:['German','English','French','Italian'],ai:['AI Project Management','Data Analysis'],pref:'Hybrid',bio:'Leadership experience in the enterprise space. 4 languages, deep understanding of European markets.',certs:['PMP','Google Analytics']},
+  {id:'w3',name:'Susanne Mertens',init:'SM',title:'Digital Project Manager',field:'Project Management',exp:'20 years',loc:'Berlin',langs:['German','English'],ai:['Automation','ChatGPT / Claude'],pref:'Remote',bio:'Digital transformation in healthcare and EdTech. Agile methods, strong stakeholder communication.',certs:['SAFe Agilist','PRINCE2']},
+  {id:'w4',name:'Maria Elena Voss',init:'MV',title:'Learning Design Lead',field:'EdTech & Learning Design',exp:'18 years',loc:'Hamburg',langs:['German','English','Spanish','Portuguese'],ai:['Prompt Engineering','AI Project Management'],pref:'Remote',bio:'Instructional design for international corporate clients. Expertise in blended learning.',certs:['Certified Instructional Designer','AI in Project Management']},
+  {id:'w5',name:'Birgit Schäfer',init:'BS',title:'Senior HR Business Partner',field:'HR & People Operations',exp:'24 years',loc:'Zurich',langs:['German','English','French'],ai:['Data Analysis','Automation'],pref:'Hybrid',bio:'HR strategist focused on talent acquisition and employer branding in DACH.',certs:['SHRM-SCP','Change Management']},
+  {id:'w6',name:'Petra Lindqvist',init:'PL',title:'Marketing Director EMEA',field:'Marketing & Communications',exp:'21 years',loc:'Frankfurt',langs:['German','English','Swedish'],ai:['ChatGPT / Claude','Automation','Data Analysis'],pref:'Remote',bio:'B2B marketing in SaaS and EdTech. Demand generation, content strategy.',certs:['HubSpot Marketing','Google Ads']}
+];
+const COMPANIES=[
+  {id:'c1',name:'LinguaEdge',init:'LE',sector:'EdTech',size:'50–200',loc:'Berlin · Remote',positions:[{title:'Senior Customer Success Manager',dept:'Customer Success',mode:'Remote',langs:['German','English','Spanish'],desc:'Managing strategic EMEA accounts in corporate language learning.'},{title:'Learning Experience Designer',dept:'Product',mode:'Remote',langs:['German','English'],desc:'Developing AI-powered learning formats for international B2B clients.'}]},
+  {id:'c2',name:'MedBridge Health',init:'MB',sector:'Digital Health',size:'200–1000',loc:'Munich · Remote',positions:[{title:'Head of Customer Success DACH',dept:'Customer Success',mode:'Hybrid',langs:['German','English'],desc:'Building and leading the CS team for the DACH market.'},{title:'Senior Projektmanagerin Digital Health',dept:'Operations',mode:'Remote',langs:['German','English','French'],desc:'Leading digital transformation projects in the clinical environment.'}]},
+  {id:'c3',name:'TalentForge',init:'TF',sector:'HR Tech',size:'50–200',loc:'Vienna · Remote',positions:[{title:'Senior Account Executive DACH',dept:'Sales',mode:'Remote',langs:['German','English'],desc:'Selling an AI-powered recruiting platform to enterprise clients.'}]},
+  {id:'c4',name:'SkillPilot',init:'SP',sector:'EdTech',size:'10–50',loc:'Zurich',positions:[{title:'Head of Marketing',dept:'Marketing',mode:'Hybrid',langs:['German','English','French'],desc:'Building the marketing strategy for an AI upskilling marketplace.'},{title:'Customer Success Lead',dept:'Customer Success',mode:'Remote',langs:['German','English'],desc:'First CS hire. Building processes, onboarding, retention.'}]},
+  {id:'c5',name:'CareConnect',init:'CC',sector:'Digital Health',size:'200–1000',loc:'Berlin',positions:[{title:'Senior HR Business Partner',dept:'People',mode:'Hybrid',langs:['German','English'],desc:'Strategic HR partnership for tech and product teams.'}]}
+];
+function matchScore(wId,cId,pIdx){const s=(wId.charCodeAt(1)*31+cId.charCodeAt(1)*17+pIdx*7)%20;return 78+s;}
+
+let currentUser=null,matchedIds=new Set();
+
+function go(page){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  closeDetail();
+  closeDD();
+  if(page==='landing'){currentUser=null;matchedIds.clear()}
+  document.getElementById('pg-'+page).classList.add('on');
+  if(page==='dash-w')renderWomanDash();
+  if(page==='dash-c')renderCompanyDash();
+  updateNav();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function updateNav(){
+  const mid=document.getElementById('nav-mid'),right=document.getElementById('nav-right');
+  if(currentUser){
+    if(currentUser.type==='woman'){
+      mid.innerHTML='<span onclick="go(\'dash-w\')">Dashboard</span><span onclick="showOv(\'ov-profile-w\')">My Profile</span>';
+    } else {
+      mid.innerHTML='<span onclick="go(\'dash-c\')">Dashboard</span><span onclick="showOv(\'ov-profile-c\')">Company Profile</span>';
+    }
+    const d=currentUser.data,ac=currentUser.type==='woman'?'w':'c';
+    right.innerHTML=`<div class="nav-user" onclick="toggleDD(event)"><div class="nav-av ${ac}">${d.init}</div><span class="nav-uname">${currentUser.type==='woman'?d.name.split(' ')[0]:d.name}</span></div>`;
+  } else {
+    mid.innerHTML='<span onclick="scrollSec(\'how\')">How it works</span><span onclick="scrollSec(\'why\')">Why</span><span onclick="scrollSec(\'companies\')">For Companies</span>';
+    right.innerHTML='<button class="btn btn-soft btn-sm" onclick="go(\'login\')">Log in</button><button class="btn btn-primary btn-sm" onclick="go(\'register\')">Sign up</button>';
+  }
+}
+
+function toggleDD(e){
+  if(e)e.stopPropagation();
+  let dd=document.getElementById('user-dd');
+  if(!dd){
+    dd=document.createElement('div');
+    dd.id='user-dd';dd.className='dd show';
+    dd.innerHTML='<div class="dd-i" onclick="showOv(currentUser.type===&quot;woman&quot;?&quot;ov-profile-w&quot;:&quot;ov-profile-c&quot;);closeDD()">View profile</div><div class="dd-sep"></div><div class="dd-i red" onclick="logout()">Log out</div>';
+    document.getElementById('nav').appendChild(dd);
+  } else {dd.classList.toggle('show')}
+}
+function closeDD(){const dd=document.getElementById('user-dd');if(dd)dd.classList.remove('show')}
+document.addEventListener('click',e=>{if(!e.target.closest('.nav-user')&&!e.target.closest('#user-dd'))closeDD()});
+
+function logout(){closeDD();go('landing');showToast('Successfully logged out')}
+function scrollSec(id){const el=document.getElementById('sec-'+id);if(el)el.scrollIntoView({behavior:'smooth'})}
+function setRegType(t){
+  const b=document.querySelectorAll('#reg-sw .auth-sw-b');
+  b.forEach(x=>x.classList.remove('on'));
+  if(t==='woman'){b[0].classList.add('on');document.getElementById('reg-woman').classList.remove('hidden');document.getElementById('reg-company').classList.add('hidden')}
+  else{b[1].classList.add('on');document.getElementById('reg-company').classList.remove('hidden');document.getElementById('reg-woman').classList.add('hidden')}
+}
+function doLogin(){
+  const e=document.getElementById('login-email').value.trim().toLowerCase();
+  if(e.includes('unternehmen')||e.includes('company')||e.includes('firma')||e.includes('hr')){
+    currentUser={type:'company',data:COMPANIES[0]};go('dash-c');showToast('Welcome, '+COMPANIES[0].name);
+  } else {
+    currentUser={type:'woman',data:WOMEN[0]};go('dash-w');showToast('Welcome, '+WOMEN[0].name.split(' ')[0]);
+  }
+}
+function doRegister(t){
+  if(t==='woman'){currentUser={type:'woman',data:WOMEN[0]};go('dash-w');showToast('Profile created — welcome!')}
+  else{currentUser={type:'company',data:COMPANIES[0]};go('dash-c');showToast('Company registered!')}
+}
+
+function renderWomanDash(){
+  if(!currentUser)return;
+  const w=currentUser.data;
+  document.getElementById('dash-w-name').textContent='Guten Tag, '+w.name.split(' ')[0]+'.';
+  const c=document.getElementById('woman-matches');c.innerHTML='';
+  COMPANIES.forEach(co=>{co.positions.forEach((p,pi)=>{
+    const s=matchScore(w.id,co.id,pi),m=matchedIds.has(co.id+'-'+pi);
+    c.innerHTML+=`<div class="mc" onclick="openDetail('w','${co.id}',${pi})">
+      <div class="mc-av co">${co.init}</div>
+      <div class="mc-info">
+        <div class="mc-name">${co.name}</div>
+        <div class="mc-role">${p.title} · ${p.dept}</div>
+        <div class="mc-tags"><span class="tg">${co.sector}</span><span class="tg g">${p.mode}</span></div>
+      </div>
+      <div class="mc-sc">
+        <div class="mc-sn">${s}</div>
+        <div class="mc-sl ${m?'done':''}">${m?'Verbunden':'Match'}</div>
+        <div class="mc-bar"><div class="mc-bf" style="width:${s}%"></div></div>
+      </div>
+    </div>`;
+  })});
+}
+
+function renderCompanyDash(){
+  if(!currentUser)return;
+  const co=currentUser.data;
+  document.getElementById('dash-c-name').textContent='Willkommen, '+co.name+'.';
+  const c=document.getElementById('company-matches');c.innerHTML='';
+  WOMEN.forEach(w=>{
+    const s=matchScore(w.id,co.id,0),m=matchedIds.has(w.id+'-'+co.id);
+    const nameHtml=m?w.name:`<span class="blur" data-wid="${w.id}">${w.name}</span>`;
+    c.innerHTML+=`<div class="mc" onclick="openDetail('c','${w.id}',0)">
+      <div class="mc-av w">${w.init}</div>
+      <div class="mc-info">
+        <div class="mc-name">${nameHtml}</div>
+        <div class="mc-role">${w.title} · ${w.exp}</div>
+        <div class="mc-tags">${w.langs.slice(0,3).map(l=>'<span class="tg">'+l+'</span>').join('')}<span class="tg g">${w.pref}</span></div>
+      </div>
+      <div class="mc-sc">
+        <div class="mc-sn">${s}</div>
+        <div class="mc-sl ${m?'done':''}">${m?'Verbunden':'Match'}</div>
+        <div class="mc-bar"><div class="mc-bf" style="width:${s}%"></div></div>
+      </div>
+    </div>`;
+  });
+}
+
+function openDetail(vt,tid,pi){
+  const h=document.getElementById('dp-head'),b=document.getElementById('dp-body'),f=document.getElementById('dp-foot');
+  if(vt==='w'){
+    const co=COMPANIES.find(x=>x.id===tid),p=co.positions[pi],w=currentUser.data,s=matchScore(w.id,co.id,pi),conn=matchedIds.has(co.id+'-'+pi);
+    const dims=[
+      {l:'Professional Fit',v:Math.min(99,s+3)},
+      {l:'Language Match',v:Math.min(99,s+1)},
+      {l:'Industry Experience',v:Math.min(99,s-2)},
+      {l:'AI Skills',v:Math.min(99,s-4)}
+    ];
+    h.innerHTML=`<button class="dp-close" onclick="closeDetail()">×</button>
+      <div class="dp-eyebrow">${co.name} · ${co.sector} · ${p.mode}</div>
+      <h3 class="dp-title">${p.title}</h3>
+      <div class="dp-meta">${p.dept} · ${co.loc}</div>`;
+    b.innerHTML=`<p class="dp-desc">${p.desc}</p>
+      <div class="dp-sec">— Match Analysis</div>
+      ${dims.map(d=>`<div class="meter"><div class="meter-h"><span>${d.l}</span><span>${d.v}%</span></div><div class="meter-t"><div class="meter-f" style="width:${d.v}%"></div></div></div>`).join('')}
+      <div class="dp-sec">— Required Languages</div>
+      <div class="chips">${p.langs.map(l=>'<span class="chip on" style="cursor:default">'+l+'</span>').join('')}</div>
+      ${conn?'<div class="dp-connected"><h4>Connected.</h4><p>'+co.name+' is reviewing your profile and will get back to you within 5 business days.</p></div>':`<div class="dp-cta"><h4>Ready to connect?</h4><p>Your profile will be sent directly to ${co.name}.</p><button class="btn btn-primary btn-w" onclick="doConnect('${co.id}',${pi})">Send profile →</button></div>`}`;
+    f.innerHTML='<button class="btn btn-soft btn-w" onclick="closeDetail()">← Back to list</button>';
+  } else {
+    const w=WOMEN.find(x=>x.id===tid),co=currentUser.data,s=matchScore(w.id,co.id,0),conn=matchedIds.has(w.id+'-'+co.id);
+    const nameHtml=conn?w.name:'<span class="blur">'+w.name+'</span>';
+    const dims=[
+      {l:'Professional Fit',v:Math.min(99,s+3)},
+      {l:'Language Match',v:Math.min(99,s+1)},
+      {l:'Industry Experience',v:Math.min(99,s-2)},
+      {l:'AI Skills',v:Math.min(99,s-4)}
+    ];
+    h.innerHTML=`<button class="dp-close" onclick="closeDetail()">×</button>
+      <div class="dp-eyebrow">${w.field} · ${w.exp}</div>
+      <h3 class="dp-title">${nameHtml}</h3>
+      <div class="dp-meta">${w.loc} · ${w.pref}</div>`;
+    b.innerHTML=`<p class="dp-desc">${w.bio}</p>
+      <div class="dp-sec">— Match Analysis</div>
+      ${dims.map(d=>`<div class="meter"><div class="meter-h"><span>${d.l}</span><span>${d.v}%</span></div><div class="meter-t"><div class="meter-f" style="width:${d.v}%"></div></div></div>`).join('')}
+      <div class="dp-sec">— Languages</div>
+      <div class="chips">${w.langs.map(l=>'<span class="chip on" style="cursor:default">'+l+'</span>').join('')}</div>
+      <div class="dp-sec">— AI Skills</div>
+      <div class="chips">${w.ai.map(a=>'<span class="chip on" style="cursor:default">'+a+'</span>').join('')}</div>
+      <div class="dp-sec">— Certifications</div>
+      <div class="chips">${w.certs.map(c=>'<span class="tg">'+c+'</span>').join('')}</div>
+      ${conn?'<div class="dp-connected"><h4>Connected.</h4><p>Name unlocked. '+w.name+' has been notified.</p></div>':`<div class="dp-cta"><h4>Request a connection?</h4><p>On match the name becomes visible and you can get in touch.</p><button class="btn btn-primary btn-w" onclick="doConnectCompany('${w.id}')">Request connection →</button></div>`}`;
+    f.innerHTML='<button class="btn btn-soft btn-w" onclick="closeDetail()">← Back to list</button>';
+  }
+  document.getElementById('dp').classList.add('open');
+  document.getElementById('dp-ov').classList.add('show');
+}
+function closeDetail(){document.getElementById('dp').classList.remove('open');document.getElementById('dp-ov').classList.remove('show')}
+function doConnect(cId,pIdx){matchedIds.add(cId+'-'+pIdx);closeDetail();renderWomanDash();showToast('Profile sent — response within 5 business days')}
+function doConnectCompany(wId){const co=currentUser.data;matchedIds.add(wId+'-'+co.id);closeDetail();renderCompanyDash();showToast('Connected — name unlocked')}
+
+function showOv(id){
+  if(id==='ov-profile-w'&&currentUser&&currentUser.type==='woman'){
+    const w=currentUser.data;
+    document.getElementById('ov-profile-w-content').innerHTML=`
+      <div class="prof-head">
+        <div class="prof-av w">${w.init}</div>
+        <div>
+          <div class="prof-name">${w.name}</div>
+          <div class="prof-role">${w.title} · ${w.loc}</div>
+        </div>
+      </div>
+      <div class="ov-pad">
+        <div class="ov-block"><div class="lbl">About me</div><p>${w.bio}</p></div>
+        <div class="ov-block"><div class="lbl">Expertise</div><p>${w.field} · ${w.exp}</p></div>
+        <div class="ov-block"><div class="lbl">Languages</div><div class="chips" style="margin-top:8px">${w.langs.map(l=>'<span class="chip on" style="cursor:default">'+l+'</span>').join('')}</div></div>
+        <div class="ov-block"><div class="lbl">AI Skills</div><div class="chips" style="margin-top:8px">${w.ai.map(a=>'<span class="chip on" style="cursor:default">'+a+'</span>').join('')}</div></div>
+        <div class="ov-block"><div class="lbl">Certifications</div><div class="chips" style="margin-top:8px">${w.certs.map(c=>'<span class="tg">'+c+'</span>').join('')}</div></div>
+        <div class="ov-block"><div class="lbl">Work preference</div><p>${w.pref}</p></div>
+        <button class="btn btn-w" onclick="hideOv('ov-profile-w')" style="margin-top:8px">Close</button>
+      </div>`;
+  }
+  if(id==='ov-profile-c'&&currentUser&&currentUser.type==='company'){
+    const co=currentUser.data;
+    document.getElementById('ov-profile-c-content').innerHTML=`
+      <div class="prof-head">
+        <div class="prof-av co">${co.init}</div>
+        <div>
+          <div class="prof-name">${co.name}</div>
+          <div class="prof-role">${co.sector} · ${co.size} · ${co.loc}</div>
+        </div>
+      </div>
+      <div class="ov-pad">
+        <div class="ov-block"><div class="lbl">Open Positions</div></div>
+        ${co.positions.map(p=>`<div style="border:1px solid var(--line);border-radius:var(--r-sm);padding:18px;margin-bottom:10px;background:var(--card)">
+          <div style="font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.2;margin-bottom:4px">${p.title}</div>
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:8px">${p.dept} · ${p.mode}</div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7">${p.desc}</div>
+        </div>`).join('')}
+        <button class="btn btn-w" onclick="hideOv('ov-profile-c')" style="margin-top:8px">Close</button>
+      </div>`;
+  }
+  document.getElementById(id).classList.add('show');
+}
+function hideOv(id){document.getElementById(id).classList.remove('show')}
+document.querySelectorAll('.ov').forEach(ov=>{ov.addEventListener('click',e=>{if(e.target===ov)ov.classList.remove('show')})});
+
+function toggleAcc(el){el.classList.toggle('open')}
+function addPosition(){
+  const container=document.getElementById('extra-positions');
+  const n=container.querySelectorAll('.subform-card').length+2;
+  const card=document.createElement('div');
+  card.className='subform-card';
+  card.style.position='relative';
+  card.innerHTML=`
+    <button onclick="this.parentElement.remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-family:var(--mono);font-size:14px;color:var(--soft);cursor:pointer;padding:4px 8px;" title="Remove">×</button>
+    <span class="label">Open position ${n}</span>
+    <div class="fld"><label>Job title</label><input placeholder="e.g. Senior Customer Success Manager"></div>
+    <div class="fld-row">
+      <div class="fld"><label>Department</label><input placeholder="e.g. Customer Success"></div>
+      <div class="fld"><label>Work model</label><select><option>Remote</option><option>Hybrid</option><option>On-site</option></select></div>
+    </div>
+    <div class="fld"><label>Required languages</label>
+      <div class="chips">
+        <div class="chip on" onclick="this.classList.toggle('on')">German</div>
+        <div class="chip on" onclick="this.classList.toggle('on')">English</div>
+        <div class="chip" onclick="this.classList.toggle('on')">Spanish</div>
+        <div class="chip" onclick="this.classList.toggle('on')">French</div>
+      </div>
+    </div>
+    <div class="fld" style="margin-bottom:0"><label>Brief description</label><textarea placeholder="What are you looking for in this role?"></textarea></div>`;
+  container.appendChild(card);
+}
+function selOne(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
+function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500)}
+</script>
+</body>
+</html>

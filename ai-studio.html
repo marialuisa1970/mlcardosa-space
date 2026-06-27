@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Studio · AI that does real work for your team · mlcardosa.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --white:#fff; --obsidian:#0a0a0a; --offwhite:#f8f8f5; --cream:#f5f5f0;
+  --accent:#6c92ff;        /* AI Studio accent · cobalt */
+  --accent-dk:#2a4fd0;
+  --orange:#ff6b2b;
+  --lime:#c9ff6b;
+  --black-85:rgba(0,0,0,.85); --black-75:rgba(0,0,0,.75); --black-55:rgba(0,0,0,.55); --black-40:rgba(0,0,0,.4); --black-12:rgba(0,0,0,.12); --black-06:rgba(0,0,0,.06);
+
+  --bg:var(--offwhite); --fg:var(--obsidian);
+  --muted:var(--black-75); --soft:var(--black-55); --line:var(--black-12); --card:var(--white);
+
+  --serif:"Instrument Serif","DM Serif Display","Times New Roman",serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,monospace;
+
+  --max:1440px; --pad:clamp(20px,4vw,64px);
+  --gap-lg:clamp(48px,8vw,112px);
+  --r-sm:4px; --r-md:10px; --r-lg:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--mono);font-size:14px;line-height:1.6;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p{margin:0}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-0.01em}
+.label{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--muted)}
+.container{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.section{padding:var(--gap-lg) 0}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--pad);backdrop-filter:blur(10px);
+  background:color-mix(in oklab,var(--bg) 88%,transparent);
+  border-bottom:1px solid var(--line)}
+.nav-brand{font-family:var(--serif);font-style:italic;font-size:22px;letter-spacing:-0.01em}
+.nav-brand .dot{color:var(--accent-dk)}
+.nav-brand small{font-family:var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--soft);margin-left:10px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.14em;color:var(--muted);cursor:pointer;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;
+  padding:12px 22px;border-radius:999px;border:1px solid var(--fg);
+  background:transparent;color:var(--fg);transition:all .2s}
+.btn:hover{background:var(--fg);color:var(--bg)}
+.btn-accent{background:var(--accent-dk);color:var(--white);border-color:var(--accent-dk)}
+.btn-accent:hover{background:var(--accent);border-color:var(--accent);color:var(--obsidian)}
+.btn-soft{border-color:var(--line);color:var(--muted)}
+.btn-soft:hover{background:transparent;color:var(--fg);border-color:var(--fg)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.25)}
+.btn-ghost:hover{color:var(--obsidian);background:var(--accent);border-color:var(--accent)}
+.btn-w{width:100%}
+.btn-sm{padding:9px 18px;font-size:10px}
+
+/* HERO — dark */
+.hero{background:var(--obsidian);color:var(--offwhite);min-height:90vh;padding:72px var(--pad) 48px;display:grid;grid-template-rows:1fr auto;gap:48px;position:relative;overflow:hidden}
+.hero-inner{max-width:var(--max);margin:0 auto;width:100%;display:grid;grid-template-columns:1.15fr 0.85fr;gap:clamp(32px,5vw,80px);align-items:end;position:relative;z-index:2}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.6);margin-bottom:24px}
+.hero-eyebrow .bar{width:36px;height:1px;background:rgba(255,255,255,.6)}
+.hero-eyebrow .live{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero-title{font-family:var(--serif);font-style:italic;font-size:clamp(52px,8.5vw,124px);line-height:0.95;letter-spacing:-0.025em}
+.hero-title .accent-c{color:var(--accent)}
+.hero-title .accent-orange{color:var(--orange)}
+.hero-side{display:flex;flex-direction:column;gap:28px;padding-bottom:8px;max-width:40ch}
+.hero-blurb{font-family:var(--mono);font-size:14px;line-height:1.75;color:rgba(255,255,255,.7)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-quote{max-width:var(--max);margin:0 auto;width:100%;border-top:1px solid rgba(255,255,255,.14);padding-top:24px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:clamp(32px,5vw,80px);position:relative;z-index:2}
+.hero-quote q{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.45;color:var(--offwhite);display:block;quotes:none;max-width:36ch}
+.hero-quote cite{display:block;font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.16em;color:rgba(255,255,255,.5);font-style:normal;margin-top:12px}
+.hero-bg{position:absolute;right:-8vw;top:10%;width:55vw;height:55vw;max-width:760px;max-height:760px;border-radius:50%;background:radial-gradient(circle at 30% 30%,color-mix(in oklab,var(--accent) 70%,transparent),transparent 62%);filter:blur(50px);opacity:.45;pointer-events:none;z-index:1}
+
+/* META BAND (under dark hero) */
+.meta-band{background:var(--obsidian);color:var(--offwhite);padding:0 var(--pad) 40px}
+.meta-row{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.14);padding-top:20px;position:relative;z-index:2}
+.meta-row > div{padding-right:20px}
+.meta-row .label{color:rgba(255,255,255,.5)}
+.meta-row .val{font-family:var(--mono);font-size:12px;color:var(--offwhite);display:block;margin-top:6px}
+
+/* STATS BAND */
+.stats{background:var(--accent-dk);color:var(--white);padding:30px var(--pad);display:flex;justify-content:center;gap:clamp(32px,6vw,96px)}
+.st{text-align:center}
+.st-n{font-family:var(--serif);font-style:italic;font-size:34px;line-height:1;color:var(--white)}
+.st-l{font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.16em;color:rgba(255,255,255,.7);margin-top:6px}
+
+/* SECTION HEAD */
+.sec-head{display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(32px,5vw,80px);align-items:end;margin-bottom:56px}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.sec-title{font-family:var(--serif);font-style:italic;font-size:clamp(40px,5.5vw,72px);line-height:1.05;letter-spacing:-0.02em}
+.sec-title em{color:var(--accent-dk)}
+.sec-sub{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--muted);max-width:44ch}
+
+/* SERVICES */
+.svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.svc{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:32px 30px 40px;background:var(--card);display:flex;flex-direction:column;gap:14px;transition:background .25s;position:relative}
+.svc:hover{background:var(--cream)}
+.svc-n{font-family:var(--serif);font-style:italic;font-size:48px;color:var(--accent-dk);line-height:1;margin-bottom:6px}
+.svc h3{font-family:var(--serif);font-style:italic;font-size:30px;line-height:1.1;letter-spacing:-0.01em}
+.svc-d{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7;flex:1}
+.svc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.svc-tag{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+
+/* TRAINING (full-width feature) */
+.train{background:var(--cream);border-radius:var(--r-lg);padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
+.train-l h3{font-family:var(--serif);font-style:italic;font-size:clamp(34px,4.5vw,56px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px}
+.train-l h3 em{color:var(--accent-dk)}
+.train-l p{font-family:var(--mono);font-size:14px;line-height:1.75;color:var(--muted);max-width:44ch}
+.train-r{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.train-item{background:var(--card);padding:20px 22px;display:flex;gap:16px;align-items:baseline}
+.train-item .tn{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--accent-dk);min-width:28px}
+.train-item .tt{font-family:var(--mono);font-size:13px;color:var(--fg)}
+.train-item .tt span{display:block;color:var(--soft);font-size:11px;margin-top:3px;line-height:1.6}
+
+/* PROCESS */
+.proc{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.proc-step{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:32px 26px 40px}
+.proc-step:last-child{border-right:none}
+.proc-n{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--accent-dk);margin-bottom:24px}
+.proc-name{font-family:var(--serif);font-style:italic;font-size:30px;line-height:1.1;margin-bottom:10px}
+.proc-desc{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ENGAGEMENTS */
+.eng{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.eng-c{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 26px 32px;background:var(--card);display:flex;flex-direction:column;gap:12px}
+.eng-name{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.1}
+.eng-for{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dk)}
+.eng-d{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7;flex:1}
+.eng-price{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--fg);border-top:1px solid var(--line);padding-top:12px}
+.eng-note{max-width:var(--max);margin:24px auto 0;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 24px}
+.eng-note b{color:var(--fg);font-weight:500}
+
+/* BRIEF (dark contact band) */
+.brief{background:var(--obsidian);color:var(--offwhite);border-radius:var(--r-lg);padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:48px;position:relative;overflow:hidden}
+.brief::before{content:"";position:absolute;right:-10%;top:20%;width:50%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,color-mix(in oklab,var(--accent) 60%,transparent),transparent 62%);filter:blur(40px);opacity:.5}
+.brief-l{position:relative}
+.brief-l h3{font-family:var(--serif);font-style:italic;font-size:clamp(34px,4.5vw,52px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px}
+.brief-l h3 em{color:var(--accent)}
+.brief-l p{font-family:var(--mono);font-size:13px;line-height:1.75;color:rgba(255,255,255,.72);max-width:42ch;margin-bottom:24px}
+.brief-l .quick{display:flex;flex-direction:column;gap:10px}
+.brief-l .quick a{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.85);display:inline-flex;align-items:center;gap:10px}
+.brief-l .quick a:hover{color:var(--accent)}
+.brief-r{position:relative;display:flex;flex-direction:column;gap:12px}
+.brief-r .field{display:flex;flex-direction:column;gap:6px}
+.brief-r label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.brief-r input,.brief-r select,.brief-r textarea{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:var(--r-sm);color:var(--offwhite);padding:11px 14px;font-family:var(--mono);font-size:13px;outline:none}
+.brief-r input::placeholder,.brief-r textarea::placeholder{color:rgba(255,255,255,.4)}
+.brief-r select{appearance:none}
+.brief-r option{color:#111}
+.brief-r textarea{resize:vertical;min-height:70px}
+.brief-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* CTA BAND */
+.cta-band{background:var(--cream);padding:var(--gap-lg) var(--pad);text-align:center}
+.cta-band h2{font-family:var(--serif);font-style:italic;font-size:clamp(48px,7vw,96px);line-height:1;letter-spacing:-0.02em;margin-bottom:18px}
+.cta-band h2 em{color:var(--accent-dk)}
+.cta-band p{font-family:var(--mono);font-size:14px;color:var(--muted);max-width:48ch;margin:0 auto 32px}
+.cta-band .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+.foot{background:var(--obsidian);color:var(--offwhite);padding:28px var(--pad);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-brand{font-family:var(--serif);font-style:italic;font-size:18px}
+.foot-brand .dot{color:var(--accent)}
+.foot-brand small{font-family:var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:rgba(255,255,255,.5);margin-left:12px}
+.foot p{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.foot a{color:rgba(255,255,255,.7)}
+.foot a:hover{color:var(--accent)}
+
+/* TOAST */
+.toast{position:fixed;top:88px;right:var(--pad);background:var(--obsidian);color:var(--offwhite);padding:14px 22px;border-radius:var(--r-md);font-family:var(--mono);font-size:12px;letter-spacing:.06em;display:none;z-index:200;max-width:360px;border:1px solid rgba(255,255,255,.1)}
+.toast.show{display:flex;align-items:center;gap:12px;animation:slideIn .25s ease}
+.toast::before{content:"✓";color:var(--accent)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-quote{grid-template-columns:1fr}
+  .meta-row{grid-template-columns:1fr 1fr;gap:16px}
+  .sec-head{grid-template-columns:1fr;gap:16px}
+  .svcs{grid-template-columns:1fr}
+  .train{grid-template-columns:1fr;padding:36px}
+  .proc{grid-template-columns:1fr 1fr}
+  .eng{grid-template-columns:1fr 1fr}
+  .brief{grid-template-columns:1fr;padding:36px}
+  .stats{flex-wrap:wrap;gap:32px}
+}
+@media(max-width:600px){
+  .proc{grid-template-columns:1fr}
+  .eng{grid-template-columns:1fr}
+  .brief-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#0a0a0a">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0a0a0a"/>
+    <text x="600" y="400" font-family="Georgia, serif" font-size="118" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">AI Studio<tspan fill="#6c92ff">.</tspan></text>
+  </svg>
+</template>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    AI Studio<span class="dot">.</span>
+    <small>← mlcardosa.space</small>
+  </a>
+  <div class="nav-links">
+    <a onclick="scrollTo2('sec-services')">What we do</a>
+    <a onclick="scrollTo2('sec-process')">How we work</a>
+    <a onclick="scrollTo2('sec-training')">Team training</a>
+    <a onclick="scrollTo2('sec-eng')">Engagements</a>
+    <a onclick="scrollTo2('sec-brief')">Start a project</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-soft btn-sm" onclick="scrollTo2('sec-brief')">Book a call</button>
+    <button class="btn btn-accent btn-sm" onclick="scrollTo2('sec-brief')">Start a project →</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span class="bar"></span><span class="live"></span> AI Studio · For organizations · 2026</div>
+      <h1 class="hero-title">
+        AI that does<br>
+        <span class="accent-c">real work</span><br>
+        for your team<span class="accent-orange">.</span>
+      </h1>
+    </div>
+    <div class="hero-side">
+      <p class="hero-blurb">
+        The studio arm of mlcardosa.space — for companies and teams who want AI working in production, not in a slide deck. We automate the repetitive work, build custom agents around the tools you already use, ship working web &amp; app prototypes, and train your people when they want to take the wheel.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-accent" onclick="scrollTo2('sec-brief')">Start a project →</button>
+        <button class="btn btn-ghost" onclick="scrollTo2('sec-brief')">Book a call</button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-quote">
+    <q>Most AI projects die in the demo. We build the boring, reliable version that survives Monday morning.</q>
+    <div></div>
+    <cite>How the studio works · 2026</cite>
+  </div>
+</section>
+<div class="meta-band">
+  <div class="meta-row">
+    <div><span class="label">Engagements</span><span class="val">Sprint · Build · Retainer</span></div>
+    <div><span class="label">Focus</span><span class="val">Automation · Agents · Prototypes</span></div>
+    <div><span class="label">First ship</span><span class="val">In weeks, not quarters</span></div>
+    <div><span class="label">Based in</span><span class="val">Düsseldorf · remote-friendly</span></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="st"><div class="st-n">3</div><div class="st-l">Core capabilities</div></div>
+  <div class="st"><div class="st-n">2–6</div><div class="st-l">Weeks to first ship</div></div>
+  <div class="st"><div class="st-n">1:1</div><div class="st-l">Worked like a project</div></div>
+  <div class="st"><div class="st-n">∞</div><div class="st-l">Tools we connect</div></div>
+</div>
+
+<!-- SERVICES -->
+<section class="section container" id="sec-services">
+  <div class="sec-head">
+    <div><div class="sec-num">— 01 / What we do</div></div>
+    <div>
+      <h2 class="sec-title">Three things, <em>done well.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">No buzzwords, no fifty-slide strategy. We build a small number of things that earn their place in how your team actually works.</p>
+    </div>
+  </div>
+  <div class="svcs">
+    <div class="svc">
+      <div class="svc-n">01</div>
+      <h3>Process automation</h3>
+      <p class="svc-d">Quiet automation for the repetitive work that slows you down — connecting the tools you already use, so your people spend their time on the human part.</p>
+      <div class="svc-tags"><span class="svc-tag">Automation</span><span class="svc-tag">Integrations</span><span class="svc-tag">Ops</span></div>
+    </div>
+    <div class="svc">
+      <div class="svc-n">02</div>
+      <h3>Custom AI agents</h3>
+      <p class="svc-d">Agents that take on real work — research, drafting, triage, support — designed around your stack and your data, with the guardrails to run them safely.</p>
+      <div class="svc-tags"><span class="svc-tag">Custom</span><span class="svc-tag">Workflows</span><span class="svc-tag">Guardrails</span></div>
+    </div>
+    <div class="svc">
+      <div class="svc-n">03</div>
+      <h3>Web &amp; app prototypes</h3>
+      <p class="svc-d">A working prototype of your product idea — built fast, AI-assisted, run like a real project — so you can put it in front of real users before you commit.</p>
+      <div class="svc-tags"><span class="svc-tag">MVP</span><span class="svc-tag">Web</span><span class="svc-tag">App</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section container" id="sec-process">
+  <div class="sec-head">
+    <div><div class="sec-num">— 02 / How we work</div></div>
+    <div>
+      <h2 class="sec-title">From idea to a<br><em>working</em> version.</h2>
+      <p class="sec-sub" style="margin-top:18px">A small, transparent process. You always know what's being built, why, and what comes next.</p>
+    </div>
+  </div>
+  <div class="proc">
+    <div class="proc-step">
+      <div class="proc-n">01</div>
+      <div class="proc-name">Listen</div>
+      <div class="proc-desc">Understand the people and the real problem — not just the brief. We watch how the work actually happens today.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-n">02</div>
+      <div class="proc-name">Frame</div>
+      <div class="proc-desc">One page that names the problem and the choices. Nothing more. We agree on what "done" looks like before we build.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-n">03</div>
+      <div class="proc-name">Prototype</div>
+      <div class="proc-desc">A working version in front of real users, fast. We keep what works and cut what doesn't, in the open.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-n">04</div>
+      <div class="proc-name">Ship</div>
+      <div class="proc-desc">A small, reliable version that earns the right to grow — handed over with the docs your team needs to own it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING -->
+<section class="section container" id="sec-training">
+  <div class="train">
+    <div class="train-l">
+      <h3>And we <em>train your team</em> to take the wheel.</h3>
+      <p>Optional, but it's where the value compounds. When you want your people to own what we build — or to start building their own — we run practical, human-centred training tailored to the way you actually work.</p>
+      <div style="margin-top:24px"><button class="btn btn-accent btn-sm" onclick="scrollTo2('sec-brief')">Add training to a project →</button></div>
+    </div>
+    <div class="train-r">
+      <div class="train-item"><span class="tn">A</span><span class="tt">AI literacy for the whole team<span>What these tools are, where they help, and where they don't — in plain language.</span></span></div>
+      <div class="train-item"><span class="tn">B</span><span class="tt">Hands-on tool practice<span>Working sessions on the exact tools and workflows we built for you.</span></span></div>
+      <div class="train-item"><span class="tn">C</span><span class="tt">Owning what we shipped<span>Your team learns to maintain, adjust and extend the automations and agents.</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGAGEMENTS -->
+<section class="section container" id="sec-eng">
+  <div class="sec-head">
+    <div><div class="sec-num">— 03 / Engagements</div></div>
+    <div>
+      <h2 class="sec-title">Ways to <em>work</em> with the studio.</h2>
+      <p class="sec-sub" style="margin-top:18px">Pick the shape that fits. Every engagement starts with a short, no-obligation call to make sure it's the right one.</p>
+    </div>
+  </div>
+  <div class="eng">
+    <div class="eng-c">
+      <div class="eng-for">Explore</div>
+      <div class="eng-name">Discovery sprint</div>
+      <div class="eng-d">One to two weeks to map a problem, test feasibility, and leave you with a clear plan — build or not.</div>
+      <div class="eng-price">Fixed scope · fixed fee</div>
+    </div>
+    <div class="eng-c">
+      <div class="eng-for">Build</div>
+      <div class="eng-name">Prototype build</div>
+      <div class="eng-d">A working prototype — automation, agent, or app — in front of real users, run like a real project.</div>
+      <div class="eng-price">Per project · scoped together</div>
+    </div>
+    <div class="eng-c">
+      <div class="eng-for">Grow</div>
+      <div class="eng-name">Retainer</div>
+      <div class="eng-d">Ongoing capacity to extend, maintain and add to what we built, as your needs change.</div>
+      <div class="eng-price">Monthly · cancel anytime</div>
+    </div>
+    <div class="eng-c">
+      <div class="eng-for">Enable</div>
+      <div class="eng-name">Team training</div>
+      <div class="eng-d">Tailored AI-literacy and hands-on sessions for your team — on its own or alongside a build.</div>
+      <div class="eng-price">Per cohort · on request</div>
+    </div>
+  </div>
+  <div class="eng-note">
+    <span><b>Note</b></span>
+    <span>Studio work is commercial — not the AZAV-funded courses on mlcardosa.space.</span>
+    <span>Pricing scoped per project after a first call.</span>
+  </div>
+</section>
+
+<!-- BRIEF -->
+<section class="container" id="sec-brief" style="padding-bottom:var(--gap-lg)">
+  <div class="brief">
+    <div class="brief-l">
+      <h3>Start a <em>project.</em></h3>
+      <p>Tell us a little about what you're trying to do. You'll get a reply within two working days with honest next steps — even if that's "this isn't a fit yet."</p>
+      <div class="quick">
+        <a href="mailto:mlcardosa@mlcardosa.space">→ mlcardosa@mlcardosa.space</a>
+        <a onclick="showToast('Booking link opens once details are confirmed')">→ Book a 20-minute call</a>
+        <a href="index.html">→ Back to mlcardosa.space</a>
+      </div>
+    </div>
+    <div class="brief-r">
+      <form onsubmit="sendBrief(event)">
+        <div class="brief-row">
+          <div class="field"><label>Name</label><input type="text" required placeholder="Your name" /></div>
+          <div class="field"><label>Organization</label><input type="text" placeholder="Company / team" /></div>
+        </div>
+        <div class="field"><label>Email</label><input type="email" required placeholder="you@company.com" /></div>
+        <div class="field"><label>What do you need?</label>
+          <select>
+            <option>Process automation</option>
+            <option>A custom AI agent</option>
+            <option>A web or app prototype</option>
+            <option>Team training</option>
+            <option>Not sure yet — let's talk</option>
+          </select>
+        </div>
+        <div class="field"><label>In a sentence or two</label><textarea placeholder="The task, the tool, the timeline — whatever you have."></textarea></div>
+        <button class="btn btn-accent btn-w" type="submit" style="margin-top:6px">Send the brief →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Build the <em>working</em> version.</h2>
+  <p>Skip the year-long roadmap. Start with one real thing, shipped in weeks, that your team can actually use.</p>
+  <div class="actions">
+    <button class="btn btn-accent" onclick="scrollTo2('sec-brief')">Start a project →</button>
+    <button class="btn" onclick="scrollTo2('sec-brief')">Book a call</button>
+    <button class="btn btn-soft" onclick="scrollTo2('sec-services')">See what we do</button>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="foot-brand">AI Studio<span class="dot">.</span><small>· mlcardosa.space</small></div>
+  <p>© 2026 · prototype · <a href="index.html">Back to mlcardosa.space</a></p>
+</footer>
+
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<script>
+function scrollTo2(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+function sendBrief(e){e.preventDefault();e.target.reset();showToast('Brief sent — you\'ll hear back within two working days')}
+function showToast(m){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3800)}
+</script>
+</body>
+</html>

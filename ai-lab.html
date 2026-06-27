@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Lab · Educational coaching for lifelong learners · mlcardosa.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --white:#fff; --obsidian:#0a0a0a; --offwhite:#f8f8f5; --cream:#f5f5f0;
+  --aqua:#5bc4c5;       /* AI Lab accent */
+  --aqua-dk:#2f8485;
+  --orange:#ff6b2b;
+  --lime:#c9ff6b;
+  --black-85:rgba(0,0,0,.85); --black-75:rgba(0,0,0,.75); --black-55:rgba(0,0,0,.55); --black-40:rgba(0,0,0,.4); --black-12:rgba(0,0,0,.12); --black-06:rgba(0,0,0,.06);
+
+  --bg:var(--offwhite); --fg:var(--obsidian);
+  --muted:var(--black-75); --soft:var(--black-55); --line:var(--black-12); --card:var(--white);
+
+  --serif:"Instrument Serif","DM Serif Display","Times New Roman",serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,monospace;
+
+  --max:1440px; --pad:clamp(20px,4vw,64px);
+  --gap-lg:clamp(48px,8vw,112px);
+  --r-sm:4px; --r-md:10px; --r-lg:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--mono);font-size:14px;line-height:1.6;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p{margin:0}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-0.01em}
+.label{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--muted)}
+.container{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.section{padding:var(--gap-lg) 0}
+.divider{height:1px;background:var(--line)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--pad);backdrop-filter:blur(10px);
+  background:color-mix(in oklab,var(--bg) 88%,transparent);
+  border-bottom:1px solid var(--line)}
+.nav-brand{font-family:var(--serif);font-style:italic;font-size:22px;letter-spacing:-0.01em}
+.nav-brand .dot{color:var(--aqua-dk)}
+.nav-brand small{font-family:var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--soft);margin-left:10px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.14em;color:var(--muted);cursor:pointer;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;
+  padding:12px 22px;border-radius:999px;border:1px solid var(--fg);
+  background:transparent;color:var(--fg);transition:all .2s}
+.btn:hover{background:var(--fg);color:var(--bg)}
+.btn-primary{background:var(--fg);color:var(--bg)}
+.btn-primary:hover{background:var(--aqua-dk);border-color:var(--aqua-dk)}
+.btn-aqua{background:var(--aqua);color:var(--obsidian);border-color:var(--aqua)}
+.btn-aqua:hover{background:var(--aqua-dk);border-color:var(--aqua-dk);color:var(--white)}
+.btn-soft{border-color:var(--line);color:var(--muted)}
+.btn-soft:hover{background:transparent;color:var(--fg);border-color:var(--fg)}
+.btn-w{width:100%}
+.btn-sm{padding:9px 18px;font-size:10px}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.2)}
+.btn-ghost:hover{color:var(--aqua);border-color:var(--aqua);background:transparent}
+
+.cta{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;padding-bottom:6px;border-bottom:1px solid var(--fg);cursor:pointer;transition:gap .2s}
+.cta:hover{gap:18px}
+
+/* HERO */
+.hero{min-height:88vh;padding:64px var(--pad) 48px;display:grid;grid-template-rows:1fr auto;gap:48px;position:relative;overflow:hidden}
+.hero-inner{max-width:var(--max);margin:0 auto;width:100%;display:grid;grid-template-columns:1.15fr 0.85fr;gap:clamp(32px,5vw,80px);align-items:end}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.16em;color:var(--muted);margin-bottom:24px}
+.hero-eyebrow .bar{width:36px;height:1px;background:var(--fg)}
+.hero-eyebrow .live{width:6px;height:6px;border-radius:50%;background:var(--aqua);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero-title{font-family:var(--serif);font-style:italic;font-size:clamp(56px,9vw,132px);line-height:0.95;letter-spacing:-0.025em}
+.hero-title .accent-aqua{color:var(--aqua-dk)}
+.hero-title .accent-orange{color:var(--orange)}
+.hero-side{display:flex;flex-direction:column;gap:28px;padding-bottom:8px;max-width:38ch}
+.hero-blurb{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--muted)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-quote{max-width:var(--max);margin:0 auto;width:100%;border-top:1px solid var(--line);padding-top:24px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:clamp(32px,5vw,80px)}
+.hero-quote q{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.45;color:var(--fg);display:block;quotes:none;max-width:34ch}
+.hero-quote cite{display:block;font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.16em;color:var(--soft);font-style:normal;margin-top:12px}
+.hero-meta-row{max-width:var(--max);margin:32px auto 0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding-top:20px}
+.hero-meta-row > div{padding-right:20px}
+.hero-meta-row .val{font-family:var(--mono);font-size:12px;color:var(--fg);display:block;margin-top:6px}
+.hero-bg{position:absolute;right:-8vw;top:18%;width:50vw;height:50vw;max-width:720px;max-height:720px;border-radius:50%;background:radial-gradient(circle at 30% 30%,color-mix(in oklab,var(--aqua) 60%,transparent),transparent 65%);filter:blur(40px);opacity:.55;pointer-events:none}
+
+/* STATS BAND */
+.stats{background:var(--obsidian);color:var(--offwhite);padding:28px var(--pad);display:flex;justify-content:center;gap:clamp(32px,6vw,96px);border-top:1px solid rgba(255,255,255,.08)}
+.st{text-align:center}
+.st-n{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1;color:var(--aqua)}
+.st-l{font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.16em;color:rgba(255,255,255,.55);margin-top:6px}
+
+/* SECTION HEAD */
+.sec-head{display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(32px,5vw,80px);align-items:end;margin-bottom:56px}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.sec-title{font-family:var(--serif);font-style:italic;font-size:clamp(40px,5.5vw,72px);line-height:1.05;letter-spacing:-0.02em}
+.sec-title em{color:var(--aqua-dk)}
+.sec-sub{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--muted);max-width:42ch}
+
+/* METHOD: 3 principles */
+.princ{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.princ-c{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 32px 44px;background:var(--card)}
+.princ-n{font-family:var(--serif);font-style:italic;font-size:64px;color:var(--aqua-dk);line-height:1;margin-bottom:28px}
+.princ-t{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1.1;margin-bottom:10px}
+.princ-d{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7}
+
+/* COURSES */
+.tabs{display:inline-flex;gap:0;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:36px}
+.tab{padding:9px 18px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border:none;background:transparent;color:var(--muted);border-radius:999px;cursor:pointer;transition:all .2s}
+.tab.on{background:var(--obsidian);color:var(--offwhite)}
+.tab:not(.on):hover{color:var(--fg)}
+
+.courses{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.course{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 28px 32px;background:var(--card);display:flex;flex-direction:column;gap:16px;transition:background .25s;cursor:pointer;position:relative;overflow:hidden}
+.course:hover{background:var(--cream)}
+.course-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.course-lvl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua-dk)}
+.course-st{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.course-st.live{color:var(--aqua-dk);border-color:var(--aqua-dk)}
+.course-st.wait{color:var(--orange);border-color:var(--orange)}
+.course-st.soon{color:var(--soft)}
+.course h3{font-family:var(--serif);font-style:italic;font-size:30px;line-height:1.1;letter-spacing:-0.01em;margin-top:8px}
+.course-d{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7;flex:1}
+.course-meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;font-family:var(--mono);font-size:11px;color:var(--soft)}
+.course-meta .price{color:var(--fg);font-weight:500}
+.course .arr{position:absolute;top:24px;right:24px;font-family:var(--mono);font-size:14px;color:var(--soft);transition:transform .25s,color .25s}
+.course:hover .arr{color:var(--aqua-dk);transform:translate(2px,-2px)}
+
+/* PLAYBOOKS */
+.pb-live{border-color:var(--aqua)!important;background:rgba(91,196,197,.04)}
+.pb-live:hover{background:rgba(91,196,197,.08)!important}
+.pb-available{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua-dk);margin-top:6px}
+
+
+.pb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.pb{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line);align-items:start;cursor:pointer;transition:background .2s;padding-left:8px;padding-right:8px;margin-left:-8px;margin-right:-8px;border-radius:6px}
+.pb:hover{background:var(--card)}
+.pb-num{font-family:var(--serif);font-style:italic;font-size:48px;color:var(--aqua-dk);line-height:1}
+.pb-tag{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-top:14px}
+.pb h4{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.2;margin-bottom:8px;letter-spacing:-0.01em}
+.pb p{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.pb-meta{display:flex;gap:12px;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.pb-meta .fmt{color:var(--aqua-dk)}
+.pb-meta .dot{color:var(--soft)}
+.pb-action{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);border-bottom:1px solid var(--fg);padding-bottom:2px;margin-left:auto;transition:color .2s,border-color .2s}
+.pb:hover .pb-action{color:var(--aqua-dk);border-color:var(--aqua-dk)}
+
+/* SESSIONS */
+.sess-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:32px}
+.sess-tab{padding:14px 24px 14px 0;margin-right:24px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sess-tab.on{color:var(--fg);border-bottom-color:var(--aqua-dk)}
+
+.live-list{display:flex;flex-direction:column}
+.live-row{display:grid;grid-template-columns:90px 1fr auto;gap:24px;align-items:center;padding:24px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s;padding-left:8px;padding-right:8px;margin-left:-8px;margin-right:-8px;border-radius:6px}
+.live-row:hover{background:var(--card)}
+.live-row:last-child{border-bottom:1px solid var(--line)}
+.live-date{text-align:center}
+.live-d{font-family:var(--serif);font-style:italic;font-size:36px;line-height:1;color:var(--aqua-dk)}
+.live-m{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-top:4px}
+.live-info h4{font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.2;margin-bottom:4px}
+.live-info .live-meta{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.live-info p{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.6;max-width:60ch}
+
+.replays{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.replay{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;cursor:pointer;transition:transform .25s,border-color .25s}
+.replay:hover{transform:translateY(-3px);border-color:var(--aqua-dk)}
+.replay-thumb{aspect-ratio:16/10;background:var(--obsidian);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.replay-thumb::after{content:"▶";color:var(--aqua);font-size:28px;background:rgba(255,255,255,.06);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.18);transition:background .2s}
+.replay:hover .replay-thumb::after{background:rgba(91,196,197,.2)}
+.replay-thumb .glow{position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,color-mix(in oklab,var(--aqua) 30%,transparent),transparent 60%);opacity:.6}
+.replay-body{padding:18px 20px 20px}
+.replay h5{font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.2;margin-bottom:6px}
+.replay-meta{display:flex;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+
+/* INDEX (now reading / now thinking) */
+.index{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px)}
+.idx-block{}
+.idx-block h4{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1.1;margin-bottom:18px}
+.idx-list{list-style:none;padding:0;border-top:1px solid var(--line)}
+.idx-list li{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7;padding:14px 0 14px 26px;border-bottom:1px solid var(--line);position:relative}
+.idx-list li::before{content:"—";position:absolute;left:0;color:var(--aqua-dk)}
+.idx-list li em{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--fg);font-weight:400;letter-spacing:-0.01em}
+.idx-list li .by{display:block;color:var(--soft);font-size:11px;margin-top:2px}
+
+/* NEWSLETTER */
+.news{background:var(--obsidian);color:var(--offwhite);border-radius:var(--r-lg);padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative;overflow:hidden}
+.news::before{content:"";position:absolute;right:-10%;top:30%;width:50%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,color-mix(in oklab,var(--aqua) 50%,transparent),transparent 65%);filter:blur(30px);opacity:.5}
+.news-l{position:relative}
+.news-l h3{font-family:var(--serif);font-style:italic;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px}
+.news-l h3 em{color:var(--aqua)}
+.news-l p{font-family:var(--mono);font-size:13px;line-height:1.7;color:rgba(255,255,255,.75);max-width:42ch}
+.news-r{position:relative;display:flex;flex-direction:column;gap:14px}
+.news-input{display:flex;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px;align-items:center}
+.news-input input{flex:1;background:transparent;border:none;color:var(--offwhite);padding:10px 16px;font-family:var(--mono);font-size:13px;outline:none}
+.news-input input::placeholder{color:rgba(255,255,255,.4)}
+.news-input button{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:10px;background:var(--aqua);color:var(--obsidian);border:none;border-radius:999px;padding:10px 18px;cursor:pointer;transition:background .2s}
+.news-input button:hover{background:var(--white)}
+.news-r .fineprint{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+
+/* CTA BAND */
+.cta-band{background:var(--cream);padding:var(--gap-lg) var(--pad);text-align:center}
+.cta-band h2{font-family:var(--serif);font-style:italic;font-size:clamp(48px,7vw,96px);line-height:1;letter-spacing:-0.02em;margin-bottom:18px}
+.cta-band h2 em{color:var(--aqua-dk)}
+.cta-band p{font-family:var(--mono);font-size:14px;color:var(--muted);max-width:46ch;margin:0 auto 32px}
+.cta-band .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+.foot{background:var(--obsidian);color:var(--offwhite);padding:28px var(--pad);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-brand{font-family:var(--serif);font-style:italic;font-size:18px}
+.foot-brand .dot{color:var(--aqua)}
+.foot-brand small{font-family:var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:rgba(255,255,255,.5);margin-left:12px}
+.foot p{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.foot a{color:rgba(255,255,255,.7)}
+.foot a:hover{color:var(--aqua)}
+
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(10,10,10,.55);backdrop-filter:blur(4px);z-index:90;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-ov.show{display:flex;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}}
+.modal{background:var(--bg);border-radius:var(--r-lg);width:100%;max-width:640px;max-height:88vh;overflow-y:auto;border:1px solid var(--line)}
+.modal-head{background:var(--obsidian);color:var(--offwhite);padding:32px 36px;border-radius:var(--r-lg) var(--r-lg) 0 0;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:var(--offwhite);font-size:16px;cursor:pointer}
+.modal-close:hover{background:rgba(255,255,255,.2)}
+.modal-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua);margin-bottom:8px}
+.modal-title{font-family:var(--serif);font-style:italic;font-size:36px;line-height:1.1;letter-spacing:-0.01em}
+.modal-body{padding:32px 36px}
+.modal-body p{font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--muted);margin-bottom:14px}
+.modal-body h5{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua-dk);margin:24px 0 10px}
+.modal-body ul{list-style:none;padding:0;margin:0 0 18px}
+.modal-body li{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.75;padding:6px 0 6px 22px;position:relative}
+.modal-body li::before{content:"—";position:absolute;left:0;color:var(--aqua-dk)}
+.modal-foot{padding:20px 36px;border-top:1px solid var(--line);display:flex;gap:10px}
+
+/* TOAST */
+.toast{position:fixed;top:88px;right:var(--pad);background:var(--obsidian);color:var(--offwhite);padding:14px 22px;border-radius:var(--r-md);font-family:var(--mono);font-size:12px;letter-spacing:.06em;display:none;z-index:200;max-width:360px;border:1px solid rgba(255,255,255,.1)}
+.toast.show{display:flex;align-items:center;gap:12px;animation:slideIn .25s ease}
+.toast::before{content:"✓";color:var(--aqua)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-quote{grid-template-columns:1fr}
+  .hero-meta-row{grid-template-columns:1fr 1fr;gap:16px}
+  .sec-head{grid-template-columns:1fr;gap:16px}
+  .princ{grid-template-columns:1fr}
+  .courses{grid-template-columns:1fr 1fr}
+  .pb-grid{grid-template-columns:1fr}
+  .replays{grid-template-columns:1fr 1fr}
+  .index{grid-template-columns:1fr;gap:48px}
+  .news{grid-template-columns:1fr;padding:36px}
+  .stats{flex-wrap:wrap;gap:32px}
+}
+@media(max-width:600px){
+  .courses{grid-template-columns:1fr}
+  .replays{grid-template-columns:1fr}
+  .pb{grid-template-columns:1fr}
+  .pb-num{font-size:36px}
+  .live-row{grid-template-columns:60px 1fr}
+  .live-row .btn{grid-column:2}
+}
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#f8f8f5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f8f8f5"/>
+    <text x="600" y="400" font-family="Georgia, serif" font-size="120" fill="#1a1a1a" text-anchor="middle" dominant-baseline="middle">AI Lab.</text>
+  </svg>
+</template>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    AI Lab<span class="dot">.</span>
+    <small>← mlcardosa.space</small>
+  </a>
+  <div class="nav-links">
+    <a onclick="scrollTo2('sec-method')">Method</a>
+    <a onclick="scrollTo2('sec-courses')">Courses</a>
+    <a onclick="scrollTo2('sec-playbooks')">Playbooks</a>
+    <a onclick="scrollTo2('sec-sessions')">Sessions</a>
+    <a onclick="scrollTo2('sec-news')">Newsletter</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-soft btn-sm" onclick="scrollTo2('sec-news')">Subscribe</button>
+    <button class="btn btn-aqua btn-sm" onclick="scrollTo2('sec-courses')">Browse →</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span class="bar"></span><span class="live"></span> AI Lab · Vol. 01 · 2026</div>
+      <h1 class="hero-title">
+        AI as a<br>
+        <span class="accent-aqua">thinking</span><br>
+        partner<span class="accent-orange">.</span>
+      </h1>
+    </div>
+    <div class="hero-side">
+      <p class="hero-blurb">
+        Educational coaching for lifelong learners &amp; curious minds. For people who want AI as a thinking partner, not a productivity hack. Playbooks, essays, experiments. Slow, specific, practical.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-aqua" onclick="scrollTo2('sec-courses')">Browse courses →</button>
+        <button class="btn" onclick="scrollTo2('sec-playbooks')">Read playbooks</button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-quote">
+    <q>I don't want to type faster. I want to think more clearly. AI is the most patient sparring partner I've ever had — when you teach it to ask, not to answer.</q>
+    <div></div>
+    <cite>From the introduction · vol. 01</cite>
+  </div>
+  <div class="hero-meta-row">
+    <div><span class="label">Currently</span><span class="val">Cohort 02 · open May 2026</span></div>
+    <div><span class="label">Format</span><span class="val">Self-paced · live · written</span></div>
+    <div><span class="label">Length</span><span class="val">2–8 hours per playbook</span></div>
+    <div><span class="label">Index</span><span class="val">vol. 01 · 14 pieces</span></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="st"><div class="st-n">14</div><div class="st-l">Playbooks</div></div>
+  <div class="st"><div class="st-n">06</div><div class="st-l">Courses</div></div>
+  <div class="st"><div class="st-n">42</div><div class="st-l">Replays</div></div>
+  <div class="st"><div class="st-n">∞</div><div class="st-l">Curiosity</div></div>
+</div>
+
+<!-- METHOD -->
+<section class="section container" id="sec-method">
+  <div class="sec-head">
+    <div><div class="sec-num">— 01 / Method</div></div>
+    <div>
+      <h2 class="sec-title">Three words. <em>That's the method.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">Most AI content is loud and shallow. The Lab is the opposite. Three principles, applied to everything we publish.</p>
+    </div>
+  </div>
+  <div class="princ">
+    <div class="princ-c">
+      <div class="princ-n">01</div>
+      <h3 class="princ-t">Slow.</h3>
+      <p class="princ-d">No hot takes, no hacks. We sit with a question until it gets simpler.</p>
+    </div>
+    <div class="princ-c">
+      <div class="princ-n">02</div>
+      <h3 class="princ-t">Specific.</h3>
+      <p class="princ-d">Real prompts. Real outputs. Real mistakes. We show the work, not the highlight reel.</p>
+    </div>
+    <div class="princ-c">
+      <div class="princ-n">03</div>
+      <h3 class="princ-t">Practical.</h3>
+      <p class="princ-d">Every piece ends with something you can try Monday — or decide to skip with reasons.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BAND -->
+<div style="background: url('uploads/quino-al--3KfR1GVKXY-unsplash-ac0eaa97.jpg') center center / cover no-repeat; height: clamp(280px, 38vw, 520px); width: 100%;"></div>
+
+<!-- COURSES -->
+<section class="section container" id="sec-courses">
+  <div class="sec-head">
+    <div><div class="sec-num">— 02 / Courses</div></div>
+    <div>
+      <h2 class="sec-title">Pick your <em>level.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">Six courses, three levels. Self-paced, with live cohort weeks twice a year. No certificates — just better thinking.</p>
+    </div>
+  </div>
+  <div class="tabs" id="course-tabs">
+    <button class="tab on" data-lvl="all">All</button>
+    <button class="tab" data-lvl="foundations">Foundations</button>
+    <button class="tab" data-lvl="intermediate">Intermediate</button>
+    <button class="tab" data-lvl="practice">Practice</button>
+  </div>
+  <div class="courses" id="courses-grid"></div>
+</section>
+
+<!-- PLAYBOOKS -->
+<section class="section container" id="sec-playbooks" style="background:var(--cream);padding-left:var(--pad);padding-right:var(--pad);border-radius:var(--r-lg)">
+  <div class="sec-head">
+    <div><div class="sec-num">— 03 / Playbooks</div></div>
+    <div>
+      <h2 class="sec-title">Field notes for <em>working with AI.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">Short essays with prompts attached. Each playbook is a way of thinking — written down, tested, sharable.</p>
+    </div>
+  </div>
+  <div class="pb-grid" id="pb-grid"></div>
+  <div style="margin-top:48px;text-align:center">
+    <button class="btn" onclick="showToast('Archive opens with newsletter subscription')">Browse the full archive →</button>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section class="section container" id="sec-sessions">
+  <div class="sec-head">
+    <div><div class="sec-num">— 04 / Sessions</div></div>
+    <div>
+      <h2 class="sec-title">Live &amp; <em>recorded.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">Office hours, workshops, conversations with people doing the work. Live attendance is small — replays are open.</p>
+    </div>
+  </div>
+  <div class="sess-tabs">
+    <button class="sess-tab on" data-sess="live">Upcoming Live</button>
+    <button class="sess-tab" data-sess="replays">Replays</button>
+  </div>
+  <div id="sess-live" class="live-list"></div>
+  <div id="sess-replays" class="replays" style="display:none"></div>
+</section>
+
+<!-- INDEX -->
+<section class="section container" id="sec-index">
+  <div class="sec-head">
+    <div><div class="sec-num">— 05 / Index</div></div>
+    <div>
+      <h2 class="sec-title">What I'm <em>thinking about.</em></h2>
+      <p class="sec-sub" style="margin-top:18px">A bibliographic stream — what's open in the browser, what's open in my head. Updated weekly.</p>
+    </div>
+  </div>
+  <div class="index">
+    <div class="idx-block">
+      <h4>Now reading</h4>
+      <ul class="idx-list">
+        <li><em>The Coming Wave</em><span class="by">Mustafa Suleyman · re-read, ch. 4</span></li>
+        <li><em>How to Read a Book</em><span class="by">Adler &amp; Van Doren · for the AI tutoring playbook</span></li>
+        <li><em>Co-Intelligence</em><span class="by">Ethan Mollick · cover to cover</span></li>
+        <li><em>The Anthropic blog, summer 2025</em><span class="by">Constitutional AI, slowly</span></li>
+      </ul>
+    </div>
+    <div class="idx-block">
+      <h4>Now thinking</h4>
+      <ul class="idx-list">
+        <li><em>Voice as a primitive</em><span class="by">draft note · 2,400 words · slow week</span></li>
+        <li><em>Why prompt frameworks fail</em><span class="by">essay outline · stuck on the title</span></li>
+        <li><em>Teaching mom to use Claude</em><span class="by">in progress · changing how I write the docs</span></li>
+        <li><em>The case for boring AI</em><span class="by">opening keynote, AI Lab cohort 02</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="container" id="sec-news" style="padding-bottom:var(--gap-lg)">
+  <div class="news">
+    <div class="news-l">
+      <h3>Letters from <em>the lab.</em></h3>
+      <p>One playbook, one new question, one short note — every other Tuesday. No "5 prompts that will change your life." Promise.</p>
+    </div>
+    <div class="news-r">
+      <form class="news-input" onsubmit="subscribe(event)">
+        <input type="email" required placeholder="your@email.com" id="news-email" />
+        <button type="submit">Subscribe →</button>
+      </form>
+      <div class="fineprint">— No spam · Unsubscribe anytime · GDPR-friendly</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Curious is <em>a practice.</em></h2>
+  <p>Pick a playbook to start, or join the next cohort. The Lab is open whenever you are.</p>
+  <div class="actions">
+    <button class="btn btn-aqua" onclick="scrollTo2('sec-courses')">Start with a course →</button>
+    <button class="btn" onclick="scrollTo2('sec-playbooks')">Read a playbook</button>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="foot-brand">AI Lab<span class="dot">.</span><small>· mlcardosa.space</small></div>
+  <p>© 2026 · prototype · <a href="index.html">Back to mlcardosa.space</a></p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal-ov" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="modal-eyebrow" id="m-eyebrow"></div>
+      <h3 class="modal-title" id="m-title"></h3>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+    <div class="modal-foot" id="m-foot"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<script>
+const COURSES=[
+  {id:'c1',lvl:'Foundations',lvlKey:'foundations',title:'AI as a thinking partner',desc:'Six lessons on using AI to ask better questions, not just answer faster ones.',duration:'4h · 6 lessons',price:'Free',status:'Open',stKey:'live',learn:['What "good prompting" actually means','How to test your own thinking against AI','Building a daily practice — 15 minutes a day','When to trust the answer, when to question it']},
+  {id:'c2',lvl:'Foundations',lvlKey:'foundations',title:'Reading the AI landscape',desc:'A non-technical map. Models, players, capabilities, real limitations.',duration:'2h · 4 lessons',price:'Free',status:'Open',stKey:'live',learn:['Frontier models in plain language','Open-source vs proprietary — what the choice means for you','Where AI breaks (and why that matters)','How the field will probably look in 2027']},
+  {id:'c3',lvl:'Intermediate',lvlKey:'intermediate',title:'The prompting playbook',desc:'Beyond "act as." Frameworks, anti-patterns, and the prompts I actually re-use.',duration:'6h · 8 lessons',price:'€89',status:'Cohort 02 · May',stKey:'wait',learn:['The four prompt archetypes','Why most "frameworks" are theater','Building a personal prompt library','Reviewing your own prompts like code']},
+  {id:'c4',lvl:'Intermediate',lvlKey:'intermediate',title:'Research with AI',desc:'Reading papers, mapping fields, summarising without hallucinating.',duration:'5h · 7 lessons',price:'€89',status:'Open',stKey:'live',learn:['How I read 30 papers a week','Building research maps with Claude Projects','Verifying citations — the manual step you can\'t skip','Synthesising into your own voice']},
+  {id:'c5',lvl:'Practice',lvlKey:'practice',title:'AI for solo operators',desc:'For founders, writers, designers — using AI without losing the thread of your own work.',duration:'8h · 10 lessons',price:'€189',status:'Cohort 02 · May',stKey:'wait',learn:['Building your operating system around AI','When to delegate to AI vs hire','Voice and taste — keeping yours intact','Workflow patterns that don\'t fall apart']},
+  {id:'c6',lvl:'Practice',lvlKey:'practice',title:'Writing with AI, well',desc:'For people who write for a living. Drafting, editing, voice. The honest workflow.',duration:'6h · 8 lessons',price:'€129',status:'Coming · Q3',stKey:'soon',learn:['Drafting without flattening your voice','Using AI as your toughest editor','When AI ruins prose (and how to spot it)','Building feedback loops with your own writing']}
+];
+
+const PLAYBOOKS=[
+  {n:'Vol.01',tag:'Claude · Setup',title:'The Claude Playbook',desc:'How to get the best out of every prompt. A practical guide to building AI projects that give you sharper, more consistent answers — using a real Job Coach project as the worked example.',fmt:'Playbook',time:'~33 min read',url:'The Claude Playbook v3.html'},
+  {n:'Vol.02',tag:'Job Search',title:'My Job Coach Playbook',desc:'A step-by-step guide to setting up four Claude skills for your job search: job review, cover letter, interview prep, and networking. Complete beginner welcome.',fmt:'Playbook',time:'~30 min + setup',url:'My Job Coach Playbook.html'},
+  {n:'Vol.03',tag:'Claude · Design',title:'How to Claude Design',desc:'A hands-on playbook for using Claude as a design thinking partner — from brief to concept, prompts that sharpen visual decisions, and a workflow that keeps your taste intact.',fmt:'Playbook',time:'~25 min read',url:'https://claude.ai/design/p/019e021f-cf99-7ef3-a12f-4a7141cef52f?file=How+to+Claude+Design+Playbook.html'},
+  {n:'04',tag:'Prompting',title:'The four prompt archetypes',desc:'Most prompts fall into one of four categories. Knowing which one you need is half the work.',fmt:'Essay',time:'12 min read'},
+  {n:'04',tag:'Workflows',title:'Building a personal prompt library',desc:'A simple Notion + clipboard system that survived two years of model changes.',fmt:'Playbook',time:'20 min · with templates'},
+  {n:'05',tag:'Research',title:'Reading 30 papers a week',desc:'How I use Claude Projects to map a research field without losing the texture.',fmt:'Walkthrough',time:'15 min · with prompts'},
+  {n:'06',tag:'Voice',title:'Keeping your voice when you co-write',desc:'A diagnostic: when AI is helping you write, and when it\'s rewriting you.',fmt:'Essay',time:'10 min read'},
+  {n:'07',tag:'Practice',title:'15 minutes a day with Claude',desc:'A small habit that, over a month, changes what you can think about.',fmt:'Practice guide',time:'8 min · daily'},
+  {n:'08',tag:'Workflows',title:'Drafting essays, the honest way',desc:'My actual end-to-end flow, from blank page to publish, including where AI helps and where it doesn\'t.',fmt:'Walkthrough',time:'25 min · with screenshots'},
+  {n:'09',tag:'Prompting',title:'Why most prompt "frameworks" fail',desc:'A short polemic. Frameworks promise leverage; mostly they perform expertise.',fmt:'Essay',time:'9 min read'},
+  {n:'10',tag:'Research',title:'Citation hygiene with AI',desc:'AI lies about sources. Here\'s the manual step that catches it every time.',fmt:'Field note',time:'6 min · with checklist'}
+];
+
+const SESSIONS_LIVE=[
+  {d:'12',m:'May',title:'Office hours: prompt critiques',meta:'Live · Zoom · 60 min · €0',desc:'Bring one prompt that\'s not working. We\'ll diagnose it together. Small group, max 12 seats.'},
+  {d:'21',m:'May',title:'Workshop: building your prompt library',meta:'Live · Zoom · 90 min · €29',desc:'Hands-on. By the end, you have a working personal prompt library and a system to maintain it.'},
+  {d:'04',m:'Jun',title:'Conversation: AI in education',meta:'Live · Zoom · 60 min · Free',desc:'A guest conversation with a teacher and a learning designer about AI in real classrooms.'},
+  {d:'18',m:'Jun',title:'Cohort 02 kickoff: AI for solo operators',meta:'Live · Zoom · 90 min · cohort only',desc:'Cohort week 1. Open only to enrolled participants. Recording shared after.'}
+];
+
+const SESSIONS_REPLAYS=[
+  {title:'How I actually use Claude Projects',meta:'42 min · Workflows'},
+  {title:'Reading the GPT-5 release, slowly',meta:'28 min · Landscape'},
+  {title:'Prompt critiques · session 04',meta:'58 min · Office hours'},
+  {title:'Voice and taste with AI',meta:'36 min · Conversation'},
+  {title:'Why I deleted my prompt frameworks doc',meta:'19 min · Essay-talk'},
+  {title:'Teaching my mom to use Claude',meta:'31 min · Field report'}
+];
+
+// RENDER
+function renderCourses(filter='all'){
+  const g=document.getElementById('courses-grid');
+  g.innerHTML=COURSES.filter(c=>filter==='all'||c.lvlKey===filter).map(c=>`
+    <div class="course" onclick="openCourse('${c.id}')">
+      <div class="arr">↗</div>
+      <div class="course-top">
+        <span class="course-lvl">${c.lvl}</span>
+        <span class="course-st ${c.stKey}">${c.status}</span>
+      </div>
+      <h3>${c.title}</h3>
+      <p class="course-d">${c.desc}</p>
+      <div class="course-meta">
+        <span>${c.duration}</span>
+        <span class="price">${c.price}</span>
+      </div>
+    </div>`).join('');
+}
+function renderPB(){
+  document.getElementById('pb-grid').innerHTML=PLAYBOOKS.map((p,i)=>`
+    <div class="pb${p.url?' pb-live':''}" onclick="openPB(${i})">
+      <div>
+        <div class="pb-num">${p.n}</div>
+        <div class="pb-tag">${p.tag}</div>
+        ${p.url?'<div class="pb-available">Available now</div>':''}
+      </div>
+      <div>
+        <h4>${p.title}</h4>
+        <p>${p.desc}</p>
+        <div class="pb-meta">
+          <span class="fmt">${p.fmt}</span>
+          <span class="dot">·</span>
+          <span>${p.time}</span>
+          <span class="pb-action">${p.url?'Open →':'Read →'}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function renderLive(){
+  document.getElementById('sess-live').innerHTML=SESSIONS_LIVE.map((s,i)=>`
+    <div class="live-row" onclick="openLive(${i})">
+      <div class="live-date">
+        <div class="live-d">${s.d}</div>
+        <div class="live-m">${s.m}</div>
+      </div>
+      <div class="live-info">
+        <h4>${s.title}</h4>
+        <div class="live-meta">${s.meta}</div>
+        <p>${s.desc}</p>
+      </div>
+      <button class="btn btn-sm" onclick="event.stopPropagation();showToast('Saved a seat — confirmation sent')">RSVP →</button>
+    </div>`).join('');
+}
+function renderReplays(){
+  document.getElementById('sess-replays').innerHTML=SESSIONS_REPLAYS.map((r,i)=>`
+    <div class="replay" onclick="openReplay(${i})">
+      <div class="replay-thumb"><div class="glow"></div></div>
+      <div class="replay-body">
+        <h5>${r.title}</h5>
+        <div class="replay-meta">${r.meta}</div>
+      </div>
+    </div>`).join('');
+}
+
+// MODAL
+function openModal(eyebrow,title,bodyHtml,footHtml){
+  document.getElementById('m-eyebrow').textContent=eyebrow;
+  document.getElementById('m-title').innerHTML=title;
+  document.getElementById('m-body').innerHTML=bodyHtml;
+  document.getElementById('m-foot').innerHTML=footHtml;
+  document.getElementById('modal-ov').classList.add('show');
+}
+function closeModal(){document.getElementById('modal-ov').classList.remove('show')}
+
+function openCourse(id){
+  const c=COURSES.find(x=>x.id===id);
+  openModal(`${c.lvl} · ${c.duration} · ${c.price}`,c.title,
+    `<p>${c.desc}</p><h5>What you'll learn</h5><ul>${c.learn.map(l=>'<li>'+l+'</li>').join('')}</ul><h5>Format</h5><p>Self-paced video lessons, downloadable prompt templates, and a private discussion thread. Live cohort weeks twice a year for paid courses.</p>`,
+    `<button class="btn btn-aqua btn-w" onclick="closeModal();showToast('Saved — we\\'ll let you know when cohort opens')">${c.stKey==='live'?'Enroll →':c.stKey==='wait'?'Join waitlist →':'Notify me →'}</button>`
+  );
+}
+function openPB(i){
+  const p=PLAYBOOKS[i];
+  if(p.url){ if(p.url.startsWith('http')){window.open(p.url,'_blank')}else{window.location.href=p.url} return; }
+  openModal(`Playbook ${p.n} · ${p.tag} · ${p.fmt} · ${p.time}`,p.title,
+    `<p>${p.desc}</p><h5>Inside</h5><ul><li>The framing: why this matters now</li><li>The walk-through: how I actually do it</li><li>The prompts: copy/paste with notes</li><li>The footnotes: what I'm still figuring out</li></ul><p>Full version is sent to subscribers and unlocks here after subscription.</p>`,
+    `<button class="btn btn-aqua btn-w" onclick="closeModal();scrollTo2('sec-news')">Subscribe to read →</button>`
+  );
+}
+function openLive(i){
+  const s=SESSIONS_LIVE[i];
+  openModal(`${s.d} ${s.m} · ${s.meta}`,s.title,
+    `<p>${s.desc}</p><h5>Format</h5><p>Live on Zoom, cameras on, small group. Recording shared with attendees only. No slides, no decks — we work on real material.</p><h5>Who it's for</h5><p>People who already use AI a little and want to use it better. No level required.</p>`,
+    `<button class="btn btn-aqua btn-w" onclick="closeModal();showToast('Seat saved — confirmation in your inbox')">Save my seat →</button>`
+  );
+}
+function openReplay(i){
+  const r=SESSIONS_REPLAYS[i];
+  openModal(`Replay · ${r.meta}`,r.title,
+    `<div style="aspect-ratio:16/10;background:var(--obsidian);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:var(--aqua);font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase">▶ Video player · placeholder</div><p>Replays unlock with newsletter subscription. Free archive after 90 days.</p>`,
+    `<button class="btn btn-aqua btn-w" onclick="closeModal();scrollTo2('sec-news')">Subscribe to watch →</button>`
+  );
+}
+
+// INTERACTIONS
+document.getElementById('course-tabs').addEventListener('click',e=>{
+  const t=e.target.closest('.tab');if(!t)return;
+  document.querySelectorAll('#course-tabs .tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');renderCourses(t.dataset.lvl);
+});
+document.querySelectorAll('.sess-tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.sess-tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');
+  const live=t.dataset.sess==='live';
+  document.getElementById('sess-live').style.display=live?'flex':'none';
+  document.getElementById('sess-replays').style.display=live?'none':'grid';
+}));
+function scrollTo2(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+function subscribe(e){e.preventDefault();const v=document.getElementById('news-email').value;if(v){document.getElementById('news-email').value='';showToast('Welcome — first letter goes out Tuesday')}}
+function showToast(m){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// init
+renderCourses();renderPB();renderLive();renderReplays();
+</script>
+</body>
+</html>
