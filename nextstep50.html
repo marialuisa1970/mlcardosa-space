@@ -686,10 +686,10 @@ p { margin: 0; }
 
 <!-- ===== NAV ===== -->
 <nav class="nav" id="nav">
-  <a class="nav-brand" href="index.html">
-    NextStep<span class="dot">.</span>50
-    <small>← mlcardosa.space</small>
-  </a>
+  <div class="nav-left" style="display:flex;align-items:center;gap:18px">
+    <a class="nav-back" href="index.html" style="font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.14em;color:var(--muted);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted)'">← Back</a>
+    <span class="nav-brand" style="border-left:1px solid var(--line);padding-left:18px">NextStep<span class="dot">.</span>50</span>
+  </div>
   <div class="nav-links" id="nav-mid">
     <span onclick="scrollSec('how')">How it works</span>
     <span onclick="scrollSec('why')">Why</span>
@@ -1352,5 +1352,205 @@ function addPosition(){
 function selOne(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500)}
 </script>
+
+<script>
+window.SUBPAGE_DICT = {
+  "← Back": "← Zurück",
+  /* nav */
+  "How it works": "So funktioniert's", "Why": "Warum", "For Companies": "Für Unternehmen",
+  "Log in": "Anmelden", "Sign up": "Registrieren",
+  "Dashboard": "Dashboard", "My Profile": "Mein Profil", "Company Profile": "Unternehmensprofil",
+  "View profile": "Profil ansehen", "Log out": "Abmelden",
+  /* hero */
+  "NextStep50 · Smart Match · 2026": "NextStep50 · Smart Match · 2026",
+  "Experience deserves": "Erfahrung verdient", "second": "zweite", "stage.": "Bühne.",
+  "a": "eine",
+  "NextStep50 connects women over 50, with AI expertise, leadership experience and multilingual skills, with companies that need exactly that.":
+    "NextStep50 verbindet Frauen über 50, mit KI-Kompetenz, Führungserfahrung und Mehrsprachigkeit, mit Unternehmen, die genau das brauchen.",
+  "Sign up now →": "Jetzt registrieren →", "About NextStep50": "Über NextStep50",
+  "I have over 30 years of international experience, speak six languages, and have upskilled in AI. Why am I not getting invited to any interviews?":
+    "Ich habe über 30 Jahre internationale Erfahrung, spreche sechs Sprachen und habe mich in KI weitergebildet. Warum werde ich zu keinem Gespräch eingeladen?",
+  "Senior Strategic CSM, EMEA · 54": "Senior Strategic CSM, EMEA · 54",
+  "Currently": "Aktuell", "Beta · DACH 2026": "Beta · DACH 2026",
+  "Focus": "Fokus", "EdTech · Digital Health": "EdTech · Digital Health",
+  "Languages": "Sprachen", "6 · DE · EN · ES · FR · IT · CA": "6 · DE · EN · ES · FR · IT · CA",
+  "Index": "Index", "vol. 01 · smart match": "Vol. 01 · Smart Match",
+  /* stats */
+  "Years of experience": "Jahre Erfahrung", "DACH": "DACH",
+  "EMEA Focus": "EMEA-Fokus", "Compliant": "Konform",
+  /* method */
+  "— 01 / Method": "— 01 / Methode",
+  "Three Steps to a": "Drei Schritte zum", "Smart Match.": "Smart Match.",
+  "Our system analyses values, expertise and language profile — and connects you with companies that are looking for exactly that.":
+    "Unser System analysiert Werte, Expertise und Sprachprofil, und verbindet dich mit Unternehmen, die genau das suchen.",
+  "Build your profile": "Profil erstellen",
+  "Expertise, languages, AI skills. No age field, no career-gap penalty.":
+    "Expertise, Sprachen, KI-Kenntnisse. Kein Altersfeld, keine Strafe für Karrierelücken.",
+  "Receive matches": "Matches erhalten",
+  "Relevant roles with a transparent score. You always know why you match.":
+    "Relevante Rollen mit transparentem Score. Du weißt immer, warum du passt.",
+  "Connect": "Verbinden",
+  "Your profile goes directly to the hiring team. No cold applying — only warm introductions.":
+    "Dein Profil geht direkt ans Hiring-Team. Keine Kaltbewerbung, nur warme Vorstellungen.",
+  "Step 1": "Schritt 1", "Step 2": "Schritt 2", "Step 3": "Schritt 3",
+  "Profile": "Profil", "Matching": "Matching",
+  "Your profile shows what you can do, how you work and where you thrive.":
+    "Dein Profil zeigt, was du kannst, wie du arbeitest und wo du aufblühst.",
+  "Expertise and industry experience": "Expertise und Branchenerfahrung",
+  "Language skills and EMEA coverage": "Sprachkenntnisse und EMEA-Abdeckung",
+  "AI skills and tools": "KI-Kenntnisse und Tools",
+  "Work preferences and certifications": "Arbeitspräferenzen und Zertifikate",
+  "Four dimensions, full transparency.": "Vier Dimensionen, volle Transparenz.",
+  "Professional fit: industry, role, responsibility": "Fachliche Passung: Branche, Rolle, Verantwortung",
+  "Language coverage": "Sprachabdeckung",
+  "AI maturity of the company": "KI-Reife des Unternehmens",
+  "Values fit: culture, work model, seniority": "Werte-Passung: Kultur, Arbeitsmodell, Seniorität",
+  "Direct path to the hiring manager — personally guided.": "Direkter Weg zur Hiring-Managerin, persönlich begleitet.",
+  "Direct forwarding to the point of contact": "Direkte Weiterleitung an die Ansprechperson",
+  "Personal introduction by the NextStep50 team": "Persönliche Vorstellung durch das NextStep50-Team",
+  "Response within 5 business days": "Antwort innerhalb von 5 Werktagen",
+  "GDPR-compliant and discreet": "DSGVO-konform und diskret",
+  /* pillars */
+  "— 02 / Principles": "— 02 / Prinzipien",
+  "NextStep50.": "NextStep50.",
+  "Women over 50 are actively upskilling in AI — and are underrepresented in hiring pipelines. Four things we do differently.":
+    "Frauen über 50 bilden sich aktiv in KI weiter, und sind in Recruiting-Pipelines unterrepräsentiert. Vier Dinge, die wir anders machen.",
+  "Visibility": "Sichtbarkeit",
+  "Your profile reaches companies actively seeking senior talent.":
+    "Dein Profil erreicht Unternehmen, die aktiv erfahrene Talente suchen.",
+  "Smart Fit": "Smart Fit",
+  "AI matches skills and values — not just keywords.":
+    "KI gleicht Fähigkeiten und Werte ab, nicht nur Schlagwörter.",
+  "Dignity": "Würde",
+  "No age filter. Your career story is your strength.":
+    "Kein Altersfilter. Deine Karrieregeschichte ist deine Stärke.",
+  "Community": "Community",
+  "Like-minded peers across EMEA, industries and languages.":
+    "Gleichgesinnte in ganz EMEA, über Branchen und Sprachen hinweg.",
+  /* companies */
+  "— 03 / For Companies": "— 03 / Für Unternehmen",
+  "The": "Die", "experience": "Erfahrung", "your team is missing.": "die eurem Team fehlt.",
+  "Access to senior professionals — multilingual, AI-qualified, ready from day one.":
+    "Zugang zu erfahrenen Fachkräften, mehrsprachig, KI-qualifiziert, einsatzbereit ab Tag eins.",
+  "15–25+ years of B2B experience in EMEA": "15–25+ Jahre B2B-Erfahrung in EMEA",
+  "Filtered by language, domain and AI level": "Gefiltert nach Sprache, Fachgebiet und KI-Niveau",
+  "Warm-matched — no ATS filters": "Warm gematcht, keine ATS-Filter",
+  "Focus on EdTech & Digital Health DACH": "Fokus auf EdTech & Digital Health DACH",
+  "Verified AI upskilling": "Verifizierte KI-Weiterbildung",
+  "Become a partner.": "Partner werden.",
+  "Get access to pre-matched senior profiles with personal guidance from our team.":
+    "Erhalte Zugang zu vorab gematchten Senior-Profilen mit persönlicher Begleitung durch unser Team.",
+  "You receive curated profiles matching your open positions — including a match score and personal introduction.":
+    "Du erhältst kuratierte Profile passend zu deinen offenen Stellen, inklusive Match-Score und persönlicher Vorstellung.",
+  "Register as a company →": "Als Unternehmen registrieren →", "Learn more": "Mehr erfahren",
+  /* CTA */
+  "Ready for your": "Bereit für deinen", "Smart Match?": "Smart Match?",
+  "Sign up and discover which companies match your profile.":
+    "Registriere dich und entdecke, welche Unternehmen zu deinem Profil passen.",
+  "Back to mlcardosa.space": "Zurück zu mlcardosa.space",
+  /* auth */
+  "Welcome": "Willkommen", "back.": "zurück.",
+  "Log in to see your matches.": "Melde dich an, um deine Matches zu sehen.",
+  "E-Mail": "E-Mail", "Password": "Passwort", "Log in →": "Anmelden →",
+  "No account yet?": "Noch kein Konto?", "Sign up now": "Jetzt registrieren",
+  "After 22 years in B2B sales, I have more to offer than ever before.":
+    "Nach 22 Jahren im B2B-Vertrieb habe ich mehr zu bieten als je zuvor.",
+  "Senior Profile · Munich": "Senior-Profil · München",
+  "Create": "Konto", "account.": "erstellen.",
+  "Choose your profile — candidate or company.": "Wähl dein Profil, Kandidatin oder Unternehmen.",
+  "Candidate": "Kandidatin", "Company": "Unternehmen",
+  "First name": "Vorname", "Last name": "Nachname",
+  "Current / last job title": "Aktuelle / letzte Position",
+  "Main area of expertise": "Hauptfachgebiet",
+  "Customer Success & Account Management": "Customer Success & Account Management",
+  "Project Management": "Projektmanagement", "EdTech & Learning Design": "EdTech & Learning Design",
+  "Digital Health": "Digital Health", "Marketing & Communications": "Marketing & Kommunikation",
+  "HR & People Operations": "HR & People Operations",
+  "Professional experience": "Berufserfahrung", "Location": "Standort",
+  "10–15 years": "10–15 Jahre", "15–20 years": "15–20 Jahre",
+  "20–25 years": "20–25 Jahre", "25+ years": "25+ Jahre",
+  "German": "Deutsch", "English": "Englisch", "Spanish": "Spanisch",
+  "French": "Französisch", "Italian": "Italienisch", "Portuguese": "Portugiesisch", "Swedish": "Schwedisch",
+  "AI Skills": "KI-Kenntnisse", "Prompt Engineering": "Prompt Engineering",
+  "AI Project Management": "KI-Projektmanagement", "Automation": "Automatisierung",
+  "Data Analysis": "Datenanalyse", "ChatGPT / Claude": "ChatGPT / Claude",
+  "Work preference": "Arbeitspräferenz", "Remote": "Remote", "Hybrid": "Hybrid", "On-site": "Vor Ort",
+  "Short bio (optional)": "Kurzbio (optional)",
+  "Create profile →": "Profil erstellen →",
+  "Company name": "Firmenname", "Contact person": "Ansprechperson",
+  "Industry": "Branche", "Size": "Größe", "Location(s)": "Standort(e)",
+  "Open position 1": "Offene Stelle 1", "Job title": "Stellentitel",
+  "Department": "Abteilung", "Work model": "Arbeitsmodell",
+  "Required languages": "Erforderliche Sprachen", "Brief description": "Kurzbeschreibung",
+  "+ Add another position": "+ Weitere Stelle hinzufügen",
+  "Register company →": "Unternehmen registrieren →",
+  "Already registered?": "Schon registriert?",
+  "We spent six months looking for a multilingual senior profile. NextStep50 delivered within a week.":
+    "Wir haben sechs Monate ein mehrsprachiges Senior-Profil gesucht. NextStep50 lieferte innerhalb einer Woche.",
+  "Company Partner · Berlin": "Unternehmenspartner · Berlin",
+  "Remove": "Entfernen",
+  /* dashboards */
+  "Hello.": "Hallo.", "Welcome.": "Willkommen.",
+  "Your current matches and profile status.": "Deine aktuellen Matches und dein Profilstatus.",
+  "My Profile →": "Mein Profil →", "Company Profile →": "Unternehmensprofil →",
+  "Your matched candidates.": "Deine gematchten Kandidatinnen.",
+  "— Matches": "— Matches", "Companies matched": "Unternehmen gematcht",
+  "— Score Ø": "— Score Ø", "Average": "Durchschnitt",
+  "— Sent": "— Gesendet", "Connections": "Verbindungen",
+  "— Profile strength": "— Profilstärke", "Complete": "Vollständig",
+  "— Candidates": "— Kandidatinnen", "Matched profiles": "Gematchte Profile",
+  "— Positions": "— Stellen", "Active": "Aktiv",
+  "— Connections": "— Verbindungen", "Made": "Hergestellt",
+  "Your Matches": "Deine Matches", "Matched Candidates": "Gematchte Kandidatinnen",
+  "Match": "Match", "Verbunden": "Verbunden",
+  /* detail panel */
+  "— Match Analysis": "— Match-Analyse",
+  "Professional Fit": "Fachliche Passung", "Language Match": "Sprach-Match",
+  "Industry Experience": "Branchenerfahrung",
+  "— Required Languages": "— Erforderliche Sprachen", "— Languages": "— Sprachen",
+  "— Certifications": "— Zertifikate",
+  "Ready to connect?": "Bereit zu verbinden?",
+  "Send profile →": "Profil senden →", "← Back to list": "← Zurück zur Liste",
+  "Connected.": "Verbunden.",
+  "Request a connection?": "Verbindung anfragen?",
+  "On match the name becomes visible and you can get in touch.":
+    "Beim Match wird der Name sichtbar und du kannst Kontakt aufnehmen.",
+  "Request connection →": "Verbindung anfragen →",
+  /* overlays */
+  "About me": "Über mich", "Expertise": "Expertise", "Close": "Schließen",
+  "Open Positions": "Offene Stellen",
+  "Smart Match connects experienced women over 50 with companies actively seeking senior expertise, multilingual skills and AI competence.":
+    "Smart Match verbindet erfahrene Frauen über 50 mit Unternehmen, die aktiv Senior-Expertise, Mehrsprachigkeit und KI-Kompetenz suchen.",
+  "EdTech, Digital Health and SaaS in the DACH region.": "EdTech, Digital Health und SaaS in der DACH-Region.",
+  "Audience": "Zielgruppe",
+  "Women over 50 with active AI upskilling and senior professional experience.":
+    "Frauen über 50 mit aktiver KI-Weiterbildung und Senior-Berufserfahrung.",
+  "Core message": "Kernbotschaft",
+  "Women over 50 are not a niche — they are a strategic resource.":
+    "Frauen über 50 sind keine Nische, sie sind eine strategische Ressource.",
+  "Technology": "Technologie",
+  "AI-powered matching · Values-based algorithm · GDPR-compliant.":
+    "KI-gestütztes Matching · werteorientierter Algorithmus · DSGVO-konform.",
+  /* toasts */
+  "Successfully logged out": "Erfolgreich abgemeldet",
+  "Profile created — welcome!": "Profil erstellt, willkommen!",
+  "Company registered!": "Unternehmen registriert!",
+  "Profile sent — response within 5 business days": "Profil gesendet, Antwort innerhalb von 5 Werktagen",
+  "Connected — name unlocked": "Verbunden, Name freigeschaltet"
+};
+window.SUBPAGE_ATTR = {
+  "your@email.com": "deine@email.com",
+  "e.g. Claudia": "z. B. Claudia", "e.g. Weber": "z. B. Weber",
+  "claudia@email.com": "claudia@email.com", "Min. 8 characters": "Mind. 8 Zeichen",
+  "e.g. Senior Customer Success Manager": "z. B. Senior Customer Success Manager",
+  "e.g. Munich": "z. B. München", "e.g. LinguaEdge GmbH": "z. B. LinguaEdge GmbH",
+  "First and last name": "Vor- und Nachname", "hr@company.com": "hr@firma.com",
+  "e.g. Berlin, Munich, Remote": "z. B. Berlin, München, Remote",
+  "e.g. Customer Success": "z. B. Customer Success",
+  "What are you looking for? What drives you?": "Wonach suchst du? Was treibt dich an?",
+  "What are you looking for in this role?": "Wonach suchst du für diese Rolle?"
+};
+</script>
+<script src="subpage-i18n.js"></script>
 </body>
 </html>

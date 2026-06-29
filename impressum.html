@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Impressum · mlcardosa.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --obsidian: #0a0a0a;
+  --orange: #ff6b2b;
+  --aqua: #5bc4c5;
+  --cream: #f5f5f0;
+  --offwhite: #f8f8f5;
+  --bg: var(--offwhite);
+  --fg: var(--obsidian);
+  --muted: rgba(0,0,0,0.62);
+  --soft: rgba(0,0,0,0.45);
+  --line: rgba(0,0,0,0.12);
+  --serif: "Instrument Serif", "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --max: 1440px;
+  --pad: clamp(20px, 4vw, 64px);
+  --read: 70ch;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+p { margin: 0; }
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px var(--pad);
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+.nav-brand { font-family: var(--serif); font-style: italic; font-size: 22px; letter-spacing: -0.01em; }
+.nav-brand .dot { color: var(--orange); }
+.nav-back {
+  font-family: var(--mono); text-transform: uppercase; font-size: 11px;
+  letter-spacing: 0.14em; color: var(--muted);
+  display: inline-flex; gap: 10px; align-items: center; transition: color 200ms;
+}
+.nav-back:hover { color: var(--fg); }
+
+/* HEADER */
+.head { max-width: var(--max); margin: 0 auto; padding: clamp(48px, 9vw, 120px) var(--pad) 0; }
+.eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--mono); text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.16em; color: var(--muted);
+  margin-bottom: 28px;
+}
+.eyebrow .bar { width: 36px; height: 1px; background: var(--orange); }
+.title {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(48px, 8vw, 116px); line-height: 0.98; letter-spacing: -0.025em;
+}
+
+/* BODY */
+.legal {
+  max-width: var(--read); margin: clamp(48px, 7vw, 88px) auto 0;
+  padding: 0 var(--pad);
+}
+.legal .lang-label {
+  font-family: var(--mono); text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.16em; color: var(--orange);
+  margin: 0 0 26px; display: flex; align-items: center; gap: 12px;
+}
+.legal .lang-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.legal h2 {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(24px, 3vw, 34px); line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--fg); margin: 48px 0 18px;
+}
+.legal h2:first-of-type { margin-top: 0; }
+.legal p, .legal address {
+  font-family: var(--mono); font-style: normal; font-size: 15px; line-height: 1.85;
+  color: var(--muted); margin-bottom: 18px;
+}
+.legal p strong, .legal address strong { color: var(--fg); font-weight: 500; }
+.legal a.link { color: var(--fg); border-bottom: 1px solid var(--orange); }
+.legal a.link:hover { color: var(--orange); }
+.divider { height: 1px; background: var(--line); margin: clamp(56px, 8vw, 96px) 0; }
+
+/* FOOTER */
+.foot {
+  margin-top: clamp(64px, 9vw, 120px);
+  background: var(--obsidian); color: var(--offwhite);
+  padding: 28px var(--pad);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.foot-brand { font-family: var(--serif); font-style: italic; font-size: 18px; }
+.foot-brand .dot { color: var(--orange); }
+.foot p { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.foot a { color: rgba(255,255,255,.7); }
+.foot a:hover { color: var(--orange); }
+
+/* LANG TOGGLE */
+.lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.lang-opt { background: transparent; border: 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted); cursor: pointer; padding: 6px 12px; transition: background 180ms, color 180ms; }
+.lang-opt + .lang-opt { border-left: 1px solid var(--line); }
+.lang-opt:hover { color: var(--fg); }
+.lang-opt[data-active="true"] { background: var(--fg); color: var(--bg); }
+.nav-right { display: flex; align-items: center; gap: 18px; }
+/* Only the active language is shown */
+[data-lang] { display: none; }
+[data-lang].is-active { display: revert; }
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#f8f8f5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f8f8f5"/>
+    <text x="600" y="400" font-family="Georgia, serif" font-size="120" font-style="italic" fill="#1a1a1a" text-anchor="middle" dominant-baseline="middle">Impressum</text>
+  </svg>
+</template>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">mlcardosa<span class="dot">.</span>space</a>
+  <div class="nav-right">
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button class="lang-opt" type="button" data-set-lang="de">DE</button>
+      <button class="lang-opt" type="button" data-set-lang="en">EN</button>
+    </div>
+    <a class="nav-back" href="index.html"><span data-lang="de" class="is-active">← Zur Startseite</span><span data-lang="en">← Back home</span></a>
+  </div>
+</nav>
+
+<header class="head">
+  <div class="eyebrow"><span class="bar"></span> <span data-lang="de" class="is-active">Rechtliches</span><span data-lang="en">Legal notice</span></div>
+  <h1 class="title">Impressum</h1>
+</header>
+
+<main class="legal">
+
+  <!-- ===================== DEUTSCH ===================== -->
+  <section data-lang="de">
+
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <address>
+    <strong>María Luisa Cardosa Heredia</strong><br />
+    Färberstraße 144<br />
+    40223 Düsseldorf<br />
+    Deutschland
+  </address>
+
+  <h2>Kontakt</h2>
+  <p>
+    Telefon: <strong>+49 151 53552567</strong><br />
+    E-Mail: <a class="link" href="mailto:marialuisa@mlcardosa.space">marialuisa@mlcardosa.space</a>
+  </p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <address>
+    María Luisa Cardosa Heredia<br />
+    Färberstraße 144<br />
+    40223 Düsseldorf
+  </address>
+
+  <h2>Haftung für Inhalte</h2>
+  <p>
+    Als Diensteanbieterin bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten
+    nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als
+    Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
+    Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige
+    Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von
+    Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.
+  </p>
+
+  <h2>Haftung für Links</h2>
+  <p>
+    Mein Angebot enthält ggf. Links zu externen Websites Dritter, auf deren Inhalte ich keinen
+    Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen.
+    Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der
+    Seiten verantwortlich.
+  </p>
+
+  <h2>Urheberrecht</h2>
+  <p>
+    Die durch die Seitenbetreiberin erstellten Inhalte und Werke auf diesen Seiten unterliegen
+    dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Die
+    Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
+    Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung der jeweiligen Autorin
+    bzw. Erstellerin.
+  </p>
+
+  </section>
+
+  <!-- ===================== ENGLISH ===================== -->
+  <section data-lang="en">
+
+  <h2>Information pursuant to § 5 DDG</h2>
+  <address>
+    <strong>María Luisa Cardosa Heredia</strong><br />
+    Färberstraße 144<br />
+    40223 Düsseldorf<br />
+    Germany
+  </address>
+
+  <h2>Contact</h2>
+  <p>
+    Phone: <strong>+49 151 53552567</strong><br />
+    Email: <a class="link" href="mailto:marialuisa@mlcardosa.space">marialuisa@mlcardosa.space</a>
+  </p>
+
+  <h2>Responsible for content (§ 18 (2) MStV)</h2>
+  <address>
+    María Luisa Cardosa Heredia<br />
+    Färberstraße 144<br />
+    40223 Düsseldorf
+  </address>
+
+  <h2>Liability for content</h2>
+  <p>
+    As a service provider, I am responsible for my own content on these pages in accordance with
+    general law (§ 7 (1) DDG). However, under §§ 8 to 10 DDG I am not obliged to monitor
+    transmitted or stored third-party information or to investigate circumstances that indicate
+    illegal activity. Obligations to remove or block the use of information under general law
+    remain unaffected.
+  </p>
+
+  <h2>Liability for links</h2>
+  <p>
+    This website may contain links to external third-party websites over whose content I have no
+    influence. I therefore cannot accept any liability for this external content. The respective
+    provider or operator of the linked pages is always responsible for their content.
+  </p>
+
+  <h2>Copyright</h2>
+  <p>
+    The content and works created by the site operator on these pages are subject to German
+    copyright law. Contributions by third parties are marked as such. Reproduction, editing,
+    distribution and any kind of use beyond the limits of copyright require the written consent
+    of the respective author or creator.
+  </p>
+
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-brand">mlcardosa<span class="dot">.</span>space</div>
+  <p>© 2026 · María Luisa Cardosa Heredia · <a href="index.html"><span data-lang="de" class="is-active">Zur Startseite</span><span data-lang="en">Back home</span></a></p>
+</footer>
+
+<script>
+(function () {
+  var KEY = "mlc-lang";
+  var SUPPORTED = ["de", "en"];
+  function getLang() {
+    try {
+      var s = localStorage.getItem(KEY);
+      if (s && SUPPORTED.indexOf(s) !== -1) return s;
+    } catch (e) {}
+    var nav = (navigator.language || "de").slice(0, 2).toLowerCase();
+    return nav === "en" ? "en" : "de";
+  }
+  function apply(lang) {
+    document.documentElement.setAttribute("lang", lang);
+    document.querySelectorAll("[data-lang]").forEach(function (el) {
+      el.classList.toggle("is-active", el.getAttribute("data-lang") === lang);
+    });
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.setAttribute("data-active", String(b.getAttribute("data-set-lang") === lang));
+    });
+  }
+  function setLang(lang) {
+    if (SUPPORTED.indexOf(lang) === -1) return;
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+    apply(lang);
+  }
+  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+  });
+  // Stay in sync if language is changed in another tab.
+  window.addEventListener("storage", function (e) { if (e.key === KEY) apply(getLang()); });
+  apply(getLang());
+})();
+</script>
+
+</body>
+</html>

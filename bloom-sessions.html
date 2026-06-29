@@ -235,10 +235,10 @@ p{margin:0}
 
 <!-- NAV -->
 <nav class="nav">
-  <a class="nav-brand" href="index.html">
-    Bloom Sessions<span class="dot">.</span>
-    <small>← mlcardosa.space</small>
-  </a>
+  <div class="nav-left" style="display:flex;align-items:center;gap:18px">
+    <a class="nav-back" href="index.html" style="font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.14em;color:var(--muted);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted)'">← Back</a>
+    <span class="nav-brand" style="border-left:1px solid var(--line);padding-left:18px">Bloom Sessions<span class="dot">.</span></span>
+  </div>
   <div class="nav-links">
     <a onclick="scrollTo2('sec-format')">Format</a>
     <a onclick="scrollTo2('sec-builds')">What we build</a>
@@ -397,7 +397,7 @@ p{margin:0}
         <input type="email" required placeholder="your@email.com" id="news-email" />
         <button type="submit">Subscribe →</button>
       </form>
-      <div class="fineprint">— Or write to mlcardosa@mlcardosa.space</div>
+      <div class="fineprint">— Or write to marialuisa@mlcardosa.space</div>
     </div>
   </div>
 </section>
@@ -409,7 +409,7 @@ p{margin:0}
   <div class="actions">
     <button class="btn btn-accent" onclick="scrollTo2('sec-sessions')">Join the next session →</button>
     <button class="btn" onclick="showToast('Added to the waitlist — you\'ll get first pick of new dates')">Join the waitlist</button>
-    <a class="btn btn-soft" href="mailto:mlcardosa@mlcardosa.space">Ask a question</a>
+    <a class="btn btn-soft" href="mailto:marialuisa@mlcardosa.space">Ask a question</a>
   </div>
 </div>
 
@@ -538,5 +538,180 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // init
 renderBuilds();renderLive();renderPast();
 </script>
+
+<script>
+window.SUBPAGE_DICT = {
+  "← Back": "← Zurück",
+  "What we build": "Was wir bauen", "Upcoming": "Demnächst", "Who it's for": "Für wen",
+  "Subscribe": "Abonnieren", "Join a session →": "An einer Session teilnehmen →",
+  "Bloom Sessions · Live practice · 2026": "Bloom Sessions · Live-Praxis · 2026",
+  "Learn by": "Lernen durch", "building": "Bauen", "it live": ", live.",
+  "Hands-on group sessions where we don't just talk about AI tools — we open them and build something real, together, in real time. You show up with a question; you leave with a thing that runs, and the muscle memory to do it again.":
+    "Praktische Gruppensessions, in denen wir nicht nur über KI-Tools reden, sondern sie öffnen und gemeinsam etwas Echtes bauen, in Echtzeit. Du kommst mit einer Frage; du gehst mit etwas, das läuft, und dem Muskelgedächtnis, es wieder zu tun.",
+  "See upcoming sessions →": "Kommende Sessions ansehen →", "How it works": "Wie es funktioniert",
+  "Reading about a tool teaches you that the tool exists. Building with it — live, alongside someone — teaches you to trust your own hands.":
+    "Über ein Werkzeug zu lesen lehrt dich, dass es das Werkzeug gibt. Damit zu bauen, live, an der Seite von jemandem, lehrt dich, deinen eigenen Händen zu vertrauen.",
+  "The Bloom idea · 2026": "Die Bloom-Idee · 2026",
+  "Currently": "Aktuell", "Weekly · open seats": "Wöchentlich · freie Plätze",
+  "Format": "Format", "Live · screens on · build-along": "Live · Bildschirme an · Mitbauen",
+  "Length": "Dauer", "75–90 minutes": "75–90 Minuten",
+  "Group size": "Gruppengröße", "Small · max 12": "Klein · max. 12",
+  "Max per session": "Max. pro Session", "Build tracks": "Bau-Tracks",
+  "Minutes, hands-on": "Minuten, praktisch", "Thing you keep": "Sache, die du behältst",
+  "— 01 / Format": "— 01 / Format",
+  "Three things": "Drei Dinge", "happen.": "passieren.",
+  "No lectures, no slide decks. Every Bloom Session follows the same simple shape — so you always know what you're walking into.":
+    "Keine Vorträge, keine Folien. Jede Bloom Session folgt derselben einfachen Form, damit du immer weißt, worauf du dich einlässt.",
+  "Show up.": "Auftauchen.",
+  "No prep required. Bring a laptop and one real task you'd like to get done — that becomes what we build.":
+    "Keine Vorbereitung nötig. Bring einen Laptop und eine echte Aufgabe mit, die du erledigen willst, daraus wird, was wir bauen.",
+  "Build live.": "Live bauen.",
+  "We share screens and build the same thing at the same time, step by step. You're never just watching — you're doing it too.":
+    "Wir teilen Bildschirme und bauen dasselbe zur selben Zeit, Schritt für Schritt. Du schaust nie nur zu, du machst mit.",
+  "Leave with a thing.": "Mit etwas gehen.",
+  "Every session ends with something that actually runs — an agent, an automation, a page, a workflow. Yours to keep.":
+    "Jede Session endet mit etwas, das wirklich läuft, ein Agent, eine Automatisierung, eine Seite, ein Workflow. Gehört dir.",
+  "— 02 / What we build": "— 02 / Was wir bauen",
+  "Pick a": "Wähl eine", "thing": "Sache", "to build.": "zum Bauen.",
+  "Each track is one focused build, sized to fit a single live session. Come for one, or work through the whole set.":
+    "Jeder Track ist ein fokussierter Bau, passend für eine einzelne Live-Session. Komm für einen oder arbeite das ganze Set durch.",
+  "— 03 / Upcoming": "— 03 / Demnächst",
+  "Grab a": "Schnapp dir einen", "seat.": "Platz.",
+  "Sessions are small on purpose. When a date is full, join the waitlist and you'll get first pick of the next one.":
+    "Sessions sind absichtlich klein. Wenn ein Termin voll ist, komm auf die Warteliste und du hast beim nächsten die erste Wahl.",
+  "Past sessions": "Vergangene Sessions",
+  "— 04 / Who it's for": "— 04 / Für wen",
+  "Made for": "Gemacht für", "doers,": "Macher,", "not spectators.": "nicht Zuschauer.",
+  "Bloom is a practice space. If you learn best by making something with your own hands, you'll feel at home.":
+    "Bloom ist ein Übungsraum. Wenn du am besten lernst, indem du mit den eigenen Händen etwas machst, fühlst du dich hier zu Hause.",
+  "This is for you if…": "Das ist für dich, wenn…",
+  "You've read enough": "Du hast genug", "about": "über",
+  "AI and want to actually": "KI gelesen und willst sie wirklich", "use": "nutzen", "it.": ".",
+  "You learn by doing, with someone who can answer in the moment.":
+    "Du lernst durchs Machen, mit jemandem, der im Moment antworten kann.",
+  "You want a small, friendly room — not a webinar with 500 people.":
+    "Du willst einen kleinen, freundlichen Raum, kein Webinar mit 500 Leuten.",
+  "You'd rather leave with one working thing than ten bookmarked tabs.":
+    "Du gehst lieber mit einer funktionierenden Sache als mit zehn gespeicherten Tabs.",
+  "Maybe not, if…": "Vielleicht nicht, wenn…",
+  "You want a passive lecture to watch later on 2× speed.":
+    "Du willst einen passiven Vortrag, den du später in 2× ansiehst.",
+  "You're after deep code — Bloom is practical, not engineering-heavy.":
+    "Du suchst tiefen Code, Bloom ist praktisch, nicht engineering-lastig.",
+  "You can't make a live slot.": "Du schaffst keinen Live-Termin.",
+  "Replays come later, but the room is the point.": "Replays kommen später, aber der Raum ist der Punkt.",
+  "in your inbox.": "in deinem Postfach.",
+  "A short note when new dates open, plus the occasional build you can try on your own. No spam, unsubscribe anytime.":
+    "Eine kurze Nachricht, wenn neue Termine öffnen, plus ab und zu ein Bau, den du allein ausprobieren kannst. Kein Spam, jederzeit abbestellbar.",
+  "Subscribe →": "Abonnieren →",
+  "— Or write to marialuisa@mlcardosa.space": "— Oder schreib an marialuisa@mlcardosa.space",
+  "Things grow by": "Dinge wachsen durchs", "doing.": "Machen.",
+  "Pick a build, grab a seat, and make something this week. The room is small and the kettle's always on.":
+    "Wähl einen Bau, schnapp dir einen Platz und mach diese Woche etwas. Der Raum ist klein und der Wasserkocher läuft immer.",
+  "Join the next session →": "An der nächsten Session teilnehmen →",
+  "Join the waitlist": "Auf die Warteliste", "Ask a question": "Eine Frage stellen",
+  "© 2026 · prototype ·": "© 2026 · Prototyp ·", "Back to mlcardosa.space": "Zurück zu mlcardosa.space",
+  /* builds */
+  "Starter": "Einsteiger", "Practical": "Praktisch",
+  "Open": "Offen", "Cohort · soon": "Gruppe · bald",
+  "Your first AI agent": "Dein erster KI-Agent",
+  "Automate a boring task": "Eine langweilige Aufgabe automatisieren",
+  "Prototype a page in an afternoon": "Eine Seite an einem Nachmittag prototypen",
+  "A research workflow that doesn't lie": "Ein Recherche-Workflow, der nicht lügt",
+  "Write with AI, keep your voice": "Mit KI schreiben, deine Stimme behalten",
+  "Make a custom project": "Ein eigenes Projekt anlegen",
+  "Build a small assistant that does one real job for you — drafts a reply, triages a list, answers from your notes.":
+    "Bau einen kleinen Assistenten, der eine echte Aufgabe für dich übernimmt, eine Antwort entwirft, eine Liste sortiert, aus deinen Notizen antwortet.",
+  "Take one repetitive thing you do every week and wire it up so it mostly runs itself.":
+    "Nimm eine wiederkehrende Sache, die du jede Woche tust, und verkabel sie so, dass sie weitgehend von selbst läuft.",
+  "Go from a rough idea to a real, clickable web page — no code background needed.":
+    "Geh von einer groben Idee zu einer echten, klickbaren Webseite, ohne Code-Hintergrund.",
+  "Set up a repeatable way to read, map and summarise a topic — with the citation checks that keep it honest.":
+    "Richte eine wiederholbare Art ein, ein Thema zu lesen, zu kartieren und zusammenzufassen, mit den Zitatprüfungen, die es ehrlich halten.",
+  "Build a drafting-and-editing loop that helps you write faster without flattening how you sound.":
+    "Bau eine Entwurfs-und-Redigier-Schleife, die dir hilft, schneller zu schreiben, ohne deinen Klang zu glätten.",
+  "Set up a reusable Claude or GPT project that knows your context, so you stop re-explaining yourself.":
+    "Richte ein wiederverwendbares Claude- oder GPT-Projekt ein, das deinen Kontext kennt, damit du dich nicht ständig neu erklärst.",
+  "A working agent": "Ein funktionierender Agent", "One automation": "Eine Automatisierung",
+  "A live page": "Eine Live-Seite", "A research setup": "Ein Recherche-Setup",
+  "A writing loop": "Eine Schreib-Schleife", "A saved project": "Ein gespeichertes Projekt",
+  "What \"an agent\" actually is, in plain terms": "Was ein \u201EAgent\u201C wirklich ist, in einfachen Worten",
+  "Giving it instructions it follows reliably": "Ihm Anweisungen geben, die es zuverlässig befolgt",
+  "Connecting it to one real task you do weekly": "Es mit einer echten Aufgabe verbinden, die du wöchentlich tust",
+  "Testing it so you can trust the output": "Es testen, damit du dem Ergebnis traust",
+  "Spotting which tasks are worth automating": "Erkennen, welche Aufgaben sich zu automatisieren lohnen",
+  "Connecting tools you already use": "Tools verbinden, die du schon nutzt",
+  "Building it step by step, live": "Es Schritt für Schritt bauen, live",
+  "A safe way to let it run without surprises": "Eine sichere Art, es ohne Überraschungen laufen zu lassen",
+  "Describing what you want so AI builds it": "Beschreiben, was du willst, damit die KI es baut",
+  "Iterating on layout and copy fast": "Layout und Text schnell iterieren",
+  "Making it look intentional, not generic": "Es bewusst aussehen lassen, nicht generisch",
+  "Sharing a link by the end of the session": "Bis zum Ende der Session einen Link teilen",
+  "Mapping a topic with AI without hallucinations": "Ein Thema mit KI kartieren, ohne Halluzinationen",
+  "The manual citation check you can't skip": "Die manuelle Zitatprüfung, die du nicht überspringen kannst",
+  "Saving sources you can actually find again": "Quellen so speichern, dass du sie wiederfindest",
+  "Turning notes into your own words": "Notizen in eigene Worte fassen",
+  "Drafting without losing your own voice": "Entwerfen, ohne die eigene Stimme zu verlieren",
+  "Using AI as your toughest editor": "KI als deinen härtesten Lektor nutzen",
+  "Spotting when it's rewriting you": "Erkennen, wann sie dich umschreibt",
+  "A reusable prompt for your own writing": "Ein wiederverwendbarer Prompt fürs eigene Schreiben",
+  "What to put in a project (and what to leave out)": "Was in ein Projekt gehört (und was nicht)",
+  "Loading your own docs and context": "Eigene Docs und Kontext laden",
+  "Saving prompts you re-use constantly": "Prompts speichern, die du ständig wiederverwendest",
+  "Sharing it with a teammate": "Es mit einem Teammitglied teilen",
+  /* sessions */
+  "Build your first AI agent": "Bau deinen ersten KI-Agenten",
+  "Live · Zoom · 90 min · 12 seats": "Live · Zoom · 90 Min. · 12 Plätze",
+  "Live · Zoom · 90 min · 10 seats": "Live · Zoom · 90 Min. · 10 Plätze",
+  "Hands-on. By the end you have a small assistant doing one real job. Total beginners welcome.":
+    "Praktisch. Am Ende hast du einen kleinen Assistenten, der eine echte Aufgabe erledigt. Auch totale Anfänger willkommen.",
+  "Bring one repetitive weekly task. We wire it up together so it mostly runs itself.":
+    "Bring eine wiederkehrende wöchentliche Aufgabe mit. Wir verkabeln sie gemeinsam, sodass sie weitgehend von selbst läuft.",
+  "From rough idea to a real, shareable web page — no code background needed.":
+    "Von der groben Idee zu einer echten, teilbaren Webseite, ohne Code-Hintergrund.",
+  "Set up a repeatable, honest way to read and map a topic, with citation checks built in.":
+    "Richte eine wiederholbare, ehrliche Art ein, ein Thema zu lesen und zu kartieren, mit eingebauten Zitatprüfungen.",
+  "Save my seat →": "Platz sichern →",
+  "12 attended · notes shared": "12 dabei · Notizen geteilt",
+  "10 attended · recording for guests": "10 dabei · Aufzeichnung für Gäste",
+  "11 attended · templates shared": "11 dabei · Vorlagen geteilt",
+  "Our most-requested track. Everyone left with a working assistant.":
+    "Unser meistgefragter Track. Alle gingen mit einem funktionierenden Assistenten.",
+  "Eight live pages shipped in 90 minutes. Replay available on request.":
+    "Acht Live-Seiten in 90 Minuten geliefert. Replay auf Anfrage.",
+  "Inbox triage, weekly reports, and a calendar tidy-up — all automated live.":
+    "Posteingang-Triage, Wochenberichte und Kalender-Aufräumen, alles live automatisiert.",
+  "Get the replay →": "Replay holen →",
+  /* modal static */
+  "What we'll do together": "Was wir gemeinsam tun",
+  "Find a date →": "Termin finden →", "Join the waitlist →": "Auf die Warteliste →",
+  "How it runs": "Wie es abläuft",
+  "Live on Zoom, screens on, small group. No slides — we work on real material and build together, step by step. You leave with something that runs.":
+    "Live auf Zoom, Bildschirme an, kleine Gruppe. Keine Folien, wir arbeiten an echtem Material und bauen gemeinsam, Schritt für Schritt. Du gehst mit etwas, das läuft.",
+  "What to bring": "Was du mitbringst",
+  "A laptop, one real task or idea, and your questions. No prep, no level required.":
+    "Einen Laptop, eine echte Aufgabe oder Idee und deine Fragen. Keine Vorbereitung, kein Niveau nötig.",
+  "Live on Zoom, cameras on, small group. We build the same thing at the same time — you're doing it, not just watching. You leave with a working agent.":
+    "Live auf Zoom, Kameras an, kleine Gruppe. Wir bauen dasselbe zur selben Zeit, du machst es, nicht nur zuschauen. Du gehst mit einem funktionierenden Agenten.",
+  "Live on Zoom, cameras on, small group. We build the same thing at the same time — you're doing it, not just watching. You leave with one automation.":
+    "Live auf Zoom, Kameras an, kleine Gruppe. Wir bauen dasselbe zur selben Zeit, du machst es, nicht nur zuschauen. Du gehst mit einer Automatisierung.",
+  "Live on Zoom, cameras on, small group. We build the same thing at the same time — you're doing it, not just watching. You leave with a live page.":
+    "Live auf Zoom, Kameras an, kleine Gruppe. Wir bauen dasselbe zur selben Zeit, du machst es, nicht nur zuschauen. Du gehst mit einer Live-Seite.",
+  "Live on Zoom, cameras on, small group. We build the same thing at the same time — you're doing it, not just watching. You leave with a research setup.":
+    "Live auf Zoom, Kameras an, kleine Gruppe. Wir bauen dasselbe zur selben Zeit, du machst es, nicht nur zuschauen. Du gehst mit einem Recherche-Setup.",
+  "Live on Zoom, cameras on, small group. We build the same thing at the same time — you're doing it, not just watching. You leave with a writing loop.":
+    "Live auf Zoom, Kameras an, kleine Gruppe. Wir bauen dasselbe zur selben Zeit, du machst es, nicht nur zuschauen. Du gehst mit einer Schreib-Schleife.",
+  "Live on Zoom, cameras on, small group. We build the same thing at the same time — you're doing it, not just watching. You leave with a saved project.":
+    "Live auf Zoom, Kameras an, kleine Gruppe. Wir bauen dasselbe zur selben Zeit, du machst es, nicht nur zuschauen. Du gehst mit einem gespeicherten Projekt.",
+  /* toasts */
+  "Added to the waitlist — you'll get first pick of new dates": "Zur Warteliste hinzugefügt, du hast bei neuen Terminen die erste Wahl",
+  "Seat saved — confirmation sent to your inbox": "Platz gesichert, Bestätigung an dein Postfach gesendet",
+  "Replays open to newsletter subscribers — subscribe below": "Replays sind für Newsletter-Abonnenten, abonniere unten",
+  "Seat saved — confirmation in your inbox": "Platz gesichert, Bestätigung im Postfach",
+  "You're in — new dates land in your inbox first": "Du bist dabei, neue Termine landen zuerst in deinem Postfach"
+};
+window.SUBPAGE_ATTR = { "your@email.com": "deine@email.com" };
+</script>
+<script src="subpage-i18n.js"></script>
 </body>
 </html>

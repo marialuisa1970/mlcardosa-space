@@ -218,10 +218,10 @@ p{margin:0}
 
 <!-- NAV -->
 <nav class="nav">
-  <a class="nav-brand" href="index.html">
-    AI Studio<span class="dot">.</span>
-    <small>← mlcardosa.space</small>
-  </a>
+  <div class="nav-left" style="display:flex;align-items:center;gap:18px">
+    <a class="nav-back" href="index.html" style="font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.14em;color:var(--muted);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted)'">← Back</a>
+    <span class="nav-brand" style="border-left:1px solid var(--line);padding-left:18px">AI Studio<span class="dot">.</span></span>
+  </div>
   <div class="nav-links">
     <a onclick="scrollTo2('sec-services')">What we do</a>
     <a onclick="scrollTo2('sec-process')">How we work</a>
@@ -409,7 +409,7 @@ p{margin:0}
       <h3>Start a <em>project.</em></h3>
       <p>Tell us a little about what you're trying to do. You'll get a reply within two working days with honest next steps — even if that's "this isn't a fit yet."</p>
       <div class="quick">
-        <a href="mailto:mlcardosa@mlcardosa.space">→ mlcardosa@mlcardosa.space</a>
+        <a href="mailto:marialuisa@mlcardosa.space">→ marialuisa@mlcardosa.space</a>
         <a onclick="showToast('Booking link opens once details are confirmed')">→ Book a 20-minute call</a>
         <a href="index.html">→ Back to mlcardosa.space</a>
       </div>
@@ -460,5 +460,144 @@ function scrollTo2(id){const el=document.getElementById(id);if(el)el.scrollIntoV
 function sendBrief(e){e.preventDefault();e.target.reset();showToast('Brief sent — you\'ll hear back within two working days')}
 function showToast(m){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3800)}
 </script>
+<script>
+window.SUBPAGE_DICT = {
+  "← Back": "← Zurück",
+  "What we do": "Was wir tun",
+  "How we work": "Wie wir arbeiten",
+  "Team training": "Team-Schulung",
+  "Engagements": "Zusammenarbeit",
+  "Start a project": "Projekt starten",
+  "Book a call": "Gespräch buchen",
+  "Start a project →": "Projekt starten →",
+  "AI Studio · For organizations · 2026": "AI Studio · Für Organisationen · 2026",
+  "AI that does": "KI, die",
+  "real work": "echte Arbeit",
+  "for your team": "für dein Team leistet",
+  "The studio arm of mlcardosa.space — for companies and teams who want AI working in production, not in a slide deck. We automate the repetitive work, build custom agents around the tools you already use, ship working web & app prototypes, and train your people when they want to take the wheel.":
+    "Der Studio-Zweig von mlcardosa.space, für Unternehmen und Teams, die KI in Produktion wollen, nicht auf einer Folie. Wir automatisieren die wiederkehrende Arbeit, bauen eigene Agenten rund um die Tools, die ihr schon nutzt, liefern funktionierende Web- & App-Prototypen und schulen eure Leute, wenn sie das Steuer übernehmen wollen.",
+  "Most AI projects die in the demo. We build the boring, reliable version that survives Monday morning.":
+    "Die meisten KI-Projekte sterben in der Demo. Wir bauen die langweilige, verlässliche Version, die den Montagmorgen übersteht.",
+  "How the studio works · 2026": "Wie das Studio arbeitet · 2026",
+  "Focus": "Fokus",
+  "Automation · Agents · Prototypes": "Automatisierung · Agenten · Prototypen",
+  "First ship": "Erste Lieferung",
+  "In weeks, not quarters": "In Wochen, nicht Quartalen",
+  "Based in": "Standort",
+  "Düsseldorf · remote-friendly": "Düsseldorf · remote-freundlich",
+  "Core capabilities": "Kernkompetenzen",
+  "Weeks to first ship": "Wochen bis zur ersten Lieferung",
+  "Worked like a project": "Wie ein Projekt geführt",
+  "Tools we connect": "Tools, die wir verbinden",
+  "— 01 / What we do": "— 01 / Was wir tun",
+  "Three things,": "Drei Dinge,",
+  "done well.": "gut gemacht.",
+  "No buzzwords, no fifty-slide strategy. We build a small number of things that earn their place in how your team actually works.":
+    "Keine Buzzwords, keine Fünfzig-Folien-Strategie. Wir bauen wenige Dinge, die sich ihren Platz in der tatsächlichen Arbeit eures Teams verdienen.",
+  "Process automation": "Prozessautomatisierung",
+  "Quiet automation for the repetitive work that slows you down — connecting the tools you already use, so your people spend their time on the human part.":
+    "Stille Automatisierung für die wiederkehrende Arbeit, die euch ausbremst, indem sie die Tools verbindet, die ihr schon nutzt, damit eure Leute ihre Zeit dem Menschlichen widmen.",
+  "Automation": "Automatisierung",
+  "Integrations": "Integrationen",
+  "Custom AI agents": "Eigene KI-Agenten",
+  "Agents that take on real work — research, drafting, triage, support — designed around your stack and your data, with the guardrails to run them safely.":
+    "Agenten, die echte Arbeit übernehmen, etwa Recherche, Entwürfe, Triage und Support, gebaut rund um euren Stack und eure Daten, mit den Leitplanken, um sie sicher zu betreiben.",
+  "Guardrails": "Leitplanken",
+  "Web & app prototypes": "Web- & App-Prototypen",
+  "A working prototype of your product idea — built fast, AI-assisted, run like a real project — so you can put it in front of real users before you commit.":
+    "Ein funktionierender Prototyp eurer Produktidee, schnell gebaut, KI-gestützt, wie ein echtes Projekt geführt, damit ihr ihn echten Nutzern zeigen könnt, bevor ihr euch festlegt.",
+  "— 02 / How we work": "— 02 / Wie wir arbeiten",
+  "From idea to a": "Aus einer Idee wird eine",
+  "working": "funktionierende",
+  "version.": "Version.",
+  "A small, transparent process. You always know what's being built, why, and what comes next.":
+    "Ein kleiner, transparenter Prozess. Ihr wisst immer, was gebaut wird, warum und was als Nächstes kommt.",
+  "Listen": "Zuhören",
+  "Understand the people and the real problem — not just the brief. We watch how the work actually happens today.":
+    "Die Menschen und das echte Problem verstehen, nicht nur den Auftrag. Wir schauen, wie die Arbeit heute wirklich abläuft.",
+  "Frame": "Einordnen",
+  "One page that names the problem and the choices. Nothing more. We agree on what \"done\" looks like before we build.":
+    "Eine Seite, die das Problem und die Optionen benennt. Mehr nicht. Wir einigen uns darauf, wie \u201Efertig\u201C aussieht, bevor wir bauen.",
+  "Prototype": "Prototyp",
+  "A working version in front of real users, fast. We keep what works and cut what doesn't, in the open.":
+    "Eine funktionierende Version vor echten Nutzern, schnell. Wir behalten, was funktioniert, und streichen, was nicht, ganz offen.",
+  "Ship": "Liefern",
+  "A small, reliable version that earns the right to grow — handed over with the docs your team needs to own it.":
+    "Eine kleine, verlässliche Version, die sich das Wachsen verdient, übergeben mit der Doku, die euer Team braucht, um sie selbst zu betreiben.",
+  "And we": "Und wir",
+  "train your team": "schulen euer Team",
+  "to take the wheel.": ", das Steuer zu übernehmen.",
+  "Optional, but it's where the value compounds. When you want your people to own what we build — or to start building their own — we run practical, human-centred training tailored to the way you actually work.":
+    "Optional, aber genau hier verstärkt sich der Wert. Wenn ihr wollt, dass eure Leute das Gebaute selbst betreiben, oder anfangen, Eigenes zu bauen, halten wir praktische, menschzentrierte Schulungen, zugeschnitten auf eure tatsächliche Arbeitsweise.",
+  "Add training to a project →": "Schulung zum Projekt hinzufügen →",
+  "AI literacy for the whole team": "KI-Kompetenz fürs ganze Team",
+  "What these tools are, where they help, and where they don't — in plain language.":
+    "Was diese Tools sind, wo sie helfen und wo nicht, in klarer Sprache.",
+  "Hands-on tool practice": "Praktische Tool-Übung",
+  "Working sessions on the exact tools and workflows we built for you.":
+    "Arbeitssessions zu genau den Tools und Workflows, die wir für euch gebaut haben.",
+  "Owning what we shipped": "Das Gelieferte selbst betreiben",
+  "Your team learns to maintain, adjust and extend the automations and agents.":
+    "Euer Team lernt, die Automatisierungen und Agenten zu pflegen, anzupassen und zu erweitern.",
+  "— 03 / Engagements": "— 03 / Zusammenarbeit",
+  "Ways to": "Wege, mit dem Studio",
+  "work": "zu arbeiten",
+  "with the studio.": ".",
+  "Pick the shape that fits. Every engagement starts with a short, no-obligation call to make sure it's the right one.":
+    "Wählt die Form, die passt. Jede Zusammenarbeit beginnt mit einem kurzen, unverbindlichen Gespräch, um sicherzugehen, dass es die richtige ist.",
+  "Explore": "Erkunden",
+  "Discovery sprint": "Discovery-Sprint",
+  "One to two weeks to map a problem, test feasibility, and leave you with a clear plan — build or not.":
+    "Ein bis zwei Wochen, um ein Problem zu kartieren, die Machbarkeit zu testen und euch mit einem klaren Plan zurückzulassen, bauen oder nicht.",
+  "Fixed scope · fixed fee": "Fester Umfang · festes Honorar",
+  "Build": "Bauen",
+  "Prototype build": "Prototyp-Bau",
+  "A working prototype — automation, agent, or app — in front of real users, run like a real project.":
+    "Ein funktionierender Prototyp, Automatisierung, Agent oder App, vor echten Nutzern, wie ein echtes Projekt geführt.",
+  "Per project · scoped together": "Pro Projekt · gemeinsam abgesteckt",
+  "Grow": "Wachsen",
+  "Ongoing capacity to extend, maintain and add to what we built, as your needs change.":
+    "Laufende Kapazität, um das Gebaute zu erweitern, zu pflegen und zu ergänzen, wenn sich euer Bedarf ändert.",
+  "Monthly · cancel anytime": "Monatlich · jederzeit kündbar",
+  "Enable": "Befähigen",
+  "Tailored AI-literacy and hands-on sessions for your team — on its own or alongside a build.":
+    "Maßgeschneiderte KI-Kompetenz und praktische Sessions für euer Team, allein oder begleitend zu einem Bau.",
+  "Per cohort · on request": "Pro Gruppe · auf Anfrage",
+  "Note": "Hinweis",
+  "Studio work is commercial — not the AZAV-funded courses on mlcardosa.space.":
+    "Studio-Arbeit ist kommerziell, nicht die AZAV-geförderten Kurse auf mlcardosa.space.",
+  "Pricing scoped per project after a first call.":
+    "Preise werden pro Projekt nach einem ersten Gespräch festgelegt.",
+  "Start a": "Starte ein",
+  "project.": "Projekt.",
+  "Tell us a little about what you're trying to do. You'll get a reply within two working days with honest next steps — even if that's \"this isn't a fit yet.\"":
+    "Erzähl uns kurz, was du vorhast. Du bekommst innerhalb von zwei Werktagen eine Antwort mit ehrlichen nächsten Schritten, auch wenn das heißt: \u201Edas passt noch nicht.\u201C",
+  "→ Book a 20-minute call": "→ 20-minütiges Gespräch buchen",
+  "→ Back to mlcardosa.space": "→ Zurück zu mlcardosa.space",
+  "Organization": "Organisation",
+  "Email": "E-Mail",
+  "What do you need?": "Was brauchst du?",
+  "A custom AI agent": "Ein eigener KI-Agent",
+  "A web or app prototype": "Ein Web- oder App-Prototyp",
+  "Not sure yet — let's talk": "Noch unsicher, lass uns reden",
+  "In a sentence or two": "In ein, zwei Sätzen",
+  "Send the brief →": "Brief senden →",
+  "Build the": "Bau die",
+  "Skip the year-long roadmap. Start with one real thing, shipped in weeks, that your team can actually use.":
+    "Überspring die einjährige Roadmap. Fang mit einer echten Sache an, in Wochen geliefert, die euer Team wirklich nutzen kann.",
+  "See what we do": "Sieh, was wir tun",
+  "© 2026 · prototype ·": "© 2026 · Prototyp ·",
+  "Back to mlcardosa.space": "Zurück zu mlcardosa.space",
+  "Booking link opens once details are confirmed": "Der Buchungslink öffnet sich, sobald die Details bestätigt sind",
+  "Brief sent — you'll hear back within two working days": "Brief gesendet, du hörst innerhalb von zwei Werktagen von uns"
+};
+window.SUBPAGE_ATTR = {
+  "Your name": "Dein Name",
+  "Company / team": "Firma / Team",
+  "you@company.com": "du@firma.com",
+  "The task, the tool, the timeline — whatever you have.": "Die Aufgabe, das Tool, der Zeitrahmen, was immer du hast."
+};
+</script>
+<script src="subpage-i18n.js"></script>
 </body>
 </html>

@@ -283,10 +283,10 @@ p{margin:0}
 
 <!-- NAV -->
 <nav class="nav">
-  <a class="nav-brand" href="index.html">
-    AI Lab<span class="dot">.</span>
-    <small>← mlcardosa.space</small>
-  </a>
+  <div class="nav-left" style="display:flex;align-items:center;gap:18px">
+    <a class="nav-back" href="index.html" style="font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.14em;color:var(--muted);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted)'">← Back</a>
+    <span class="nav-brand" style="border-left:1px solid var(--line);padding-left:18px">AI Lab<span class="dot">.</span></span>
+  </div>
   <div class="nav-links">
     <a onclick="scrollTo2('sec-method')">Method</a>
     <a onclick="scrollTo2('sec-courses')">Courses</a>
@@ -667,5 +667,222 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // init
 renderCourses();renderPB();renderLive();renderReplays();
 </script>
+
+<script>
+window.SUBPAGE_DICT = {
+  "← Back": "← Zurück",
+  "Method": "Methode", "Courses": "Kurse", "Sessions": "Sessions", "Newsletter": "Newsletter",
+  "Subscribe": "Abonnieren", "Browse →": "Durchsehen →",
+  "Browse courses →": "Kurse durchsehen →", "Read playbooks": "Playbooks lesen",
+  "AI as a": "KI als", "thinking": "Denk", "partner": "partner",
+  "Educational coaching for lifelong learners & curious minds. For people who want AI as a thinking partner, not a productivity hack. Playbooks, essays, experiments. Slow, specific, practical.":
+    "Bildungscoaching für lebenslang Lernende & neugierige Köpfe. Für Menschen, die KI als Denkpartner wollen, nicht als Produktivitäts-Hack. Playbooks, Essays, Experimente. Langsam, konkret, praktisch.",
+  "I don't want to type faster. I want to think more clearly. AI is the most patient sparring partner I've ever had — when you teach it to ask, not to answer.":
+    "Ich will nicht schneller tippen. Ich will klarer denken. KI ist der geduldigste Sparringspartner, den ich je hatte, wenn man ihr beibringt zu fragen, nicht zu antworten.",
+  "From the introduction · vol. 01": "Aus der Einführung · Vol. 01",
+  "Currently": "Aktuell", "Cohort 02 · open May 2026": "Gruppe 02 · ab Mai 2026",
+  "Format": "Format", "Self-paced · live · written": "Selbstbestimmt · live · schriftlich",
+  "Length": "Dauer", "2–8 hours per playbook": "2–8 Stunden pro Playbook",
+  "Index": "Index", "vol. 01 · 14 pieces": "Vol. 01 · 14 Stücke",
+  "Courses ": "Kurse", "Curiosity": "Neugier",
+  "— 01 / Method": "— 01 / Methode",
+  "Three words.": "Drei Worte.", "That's the method.": "Das ist die Methode.",
+  "Most AI content is loud and shallow. The Lab is the opposite. Three principles, applied to everything we publish.":
+    "Die meisten KI-Inhalte sind laut und flach. Das Lab ist das Gegenteil. Drei Prinzipien, angewandt auf alles, was wir veröffentlichen.",
+  "Slow.": "Langsam.", "No hot takes, no hacks. We sit with a question until it gets simpler.":
+    "Keine schnellen Meinungen, keine Hacks. Wir bleiben bei einer Frage, bis sie einfacher wird.",
+  "Specific.": "Konkret.", "Real prompts. Real outputs. Real mistakes. We show the work, not the highlight reel.":
+    "Echte Prompts. Echte Ergebnisse. Echte Fehler. Wir zeigen die Arbeit, nicht die Highlights.",
+  "Practical.": "Praktisch.", "Every piece ends with something you can try Monday — or decide to skip with reasons.":
+    "Jedes Stück endet mit etwas, das du am Montag ausprobieren kannst, oder mit guten Gründen überspringst.",
+  "— 02 / Courses": "— 02 / Kurse",
+  "Pick your": "Wähl dein", "level.": "Niveau.",
+  "Six courses, three levels. Self-paced, with live cohort weeks twice a year. No certificates — just better thinking.":
+    "Sechs Kurse, drei Niveaus. Selbstbestimmt, mit Live-Gruppenwochen zweimal im Jahr. Keine Zertifikate, nur besseres Denken.",
+  "All": "Alle", "Foundations": "Grundlagen", "Intermediate": "Fortgeschritten", "Practice": "Praxis",
+  "— 03 / Playbooks": "— 03 / Playbooks",
+  "Field notes for": "Feldnotizen zur", "working with AI.": "Arbeit mit KI.",
+  "Short essays with prompts attached. Each playbook is a way of thinking — written down, tested, sharable.":
+    "Kurze Essays mit angehängten Prompts. Jedes Playbook ist eine Denkweise, aufgeschrieben, getestet, teilbar.",
+  "Browse the full archive →": "Das ganze Archiv durchsehen →",
+  "— 04 / Sessions": "— 04 / Sessions",
+  "Live &": "Live &", "recorded.": "aufgezeichnet.",
+  "Office hours, workshops, conversations with people doing the work. Live attendance is small — replays are open.":
+    "Sprechstunden, Workshops, Gespräche mit Menschen, die die Arbeit machen. Die Live-Teilnahme ist klein, die Replays sind offen.",
+  "Upcoming Live": "Demnächst live",
+  "— 05 / Index": "— 05 / Index",
+  "What I'm": "Worüber ich", "thinking about.": "nachdenke.",
+  "A bibliographic stream — what's open in the browser, what's open in my head. Updated weekly.":
+    "Ein bibliografischer Strom, was im Browser offen ist, was im Kopf offen ist. Wöchentlich aktualisiert.",
+  "Now reading": "Gerade lese ich", "Now thinking": "Gerade denke ich",
+  "Mustafa Suleyman · re-read, ch. 4": "Mustafa Suleyman · erneut gelesen, Kap. 4",
+  "Adler & Van Doren · for the AI tutoring playbook": "Adler & Van Doren · fürs KI-Tutoring-Playbook",
+  "Ethan Mollick · cover to cover": "Ethan Mollick · von vorn bis hinten",
+  "The Anthropic blog, summer 2025": "Der Anthropic-Blog, Sommer 2025",
+  "Constitutional AI, slowly": "Constitutional AI, langsam",
+  "Voice as a primitive": "Stimme als Primitive",
+  "draft note · 2,400 words · slow week": "Entwurf · 2.400 Wörter · langsame Woche",
+  "Why prompt frameworks fail": "Warum Prompt-Frameworks scheitern",
+  "essay outline · stuck on the title": "Essay-Gliederung · hänge am Titel",
+  "Teaching mom to use Claude": "Mama Claude beibringen",
+  "in progress · changing how I write the docs": "in Arbeit · ändert, wie ich die Docs schreibe",
+  "The case for boring AI": "Ein Plädoyer für langweilige KI",
+  "opening keynote, AI Lab cohort 02": "Eröffnungs-Keynote, AI Lab Gruppe 02",
+  "Letters from": "Briefe aus", "the lab.": "dem Lab.",
+  "One playbook, one new question, one short note — every other Tuesday. No \"5 prompts that will change your life.\" Promise.":
+    "Ein Playbook, eine neue Frage, eine kurze Notiz, jeden zweiten Dienstag. Kein \u201E5 Prompts, die dein Leben verändern.\u201C Versprochen.",
+  "Subscribe →": "Abonnieren →",
+  "— No spam · Unsubscribe anytime · GDPR-friendly": "— Kein Spam · jederzeit abbestellbar · DSGVO-freundlich",
+  "Curious is": "Neugier ist", "a practice.": "eine Übung.",
+  "Pick a playbook to start, or join the next cohort. The Lab is open whenever you are.":
+    "Wähl ein Playbook zum Start oder komm in die nächste Gruppe. Das Lab ist offen, wann immer du es bist.",
+  "Start with a course →": "Mit einem Kurs starten →", "Read a playbook": "Ein Playbook lesen",
+  "© 2026 · prototype ·": "© 2026 · Prototyp ·", "Back to mlcardosa.space": "Zurück zu mlcardosa.space",
+  /* courses */
+  "AI as a thinking partner": "KI als Denkpartner",
+  "Reading the AI landscape": "Die KI-Landschaft lesen",
+  "The prompting playbook": "Das Prompting-Playbook",
+  "Research with AI": "Recherche mit KI",
+  "AI for solo operators": "KI für Solo-Selbstständige",
+  "Writing with AI, well": "Gut schreiben mit KI",
+  "Six lessons on using AI to ask better questions, not just answer faster ones.":
+    "Sechs Lektionen, wie man mit KI bessere Fragen stellt, nicht nur schneller antwortet.",
+  "A non-technical map. Models, players, capabilities, real limitations.":
+    "Eine nicht-technische Landkarte. Modelle, Akteure, Fähigkeiten, echte Grenzen.",
+  "Beyond \"act as.\" Frameworks, anti-patterns, and the prompts I actually re-use.":
+    "Jenseits von \u201Eact as.\u201C Frameworks, Anti-Muster und die Prompts, die ich wirklich wiederverwende.",
+  "Reading papers, mapping fields, summarising without hallucinating.":
+    "Paper lesen, Felder kartieren, zusammenfassen ohne zu halluzinieren.",
+  "For founders, writers, designers — using AI without losing the thread of your own work.":
+    "Für Gründer, Autorinnen, Designer, KI nutzen, ohne den Faden der eigenen Arbeit zu verlieren.",
+  "For people who write for a living. Drafting, editing, voice. The honest workflow.":
+    "Für Menschen, die vom Schreiben leben. Entwerfen, Redigieren, Stimme. Der ehrliche Workflow.",
+  "4h · 6 lessons": "4 Std. · 6 Lektionen", "2h · 4 lessons": "2 Std. · 4 Lektionen",
+  "6h · 8 lessons": "6 Std. · 8 Lektionen", "5h · 7 lessons": "5 Std. · 7 Lektionen",
+  "8h · 10 lessons": "8 Std. · 10 Lektionen",
+  "Free": "Kostenlos", "Open": "Offen", "Cohort 02 · May": "Gruppe 02 · Mai", "Coming · Q3": "Bald · Q3",
+  /* course learn bullets */
+  "What \"good prompting\" actually means": "Was \u201Egutes Prompting\u201C wirklich bedeutet",
+  "How to test your own thinking against AI": "Wie du dein eigenes Denken an der KI prüfst",
+  "Building a daily practice — 15 minutes a day": "Eine tägliche Praxis aufbauen, 15 Minuten am Tag",
+  "When to trust the answer, when to question it": "Wann man der Antwort traut, wann man sie hinterfragt",
+  "Frontier models in plain language": "Frontier-Modelle in klarer Sprache",
+  "Open-source vs proprietary — what the choice means for you": "Open Source vs. proprietär, was die Wahl für dich bedeutet",
+  "Where AI breaks (and why that matters)": "Wo KI versagt (und warum das zählt)",
+  "How the field will probably look in 2027": "Wie das Feld 2027 wahrscheinlich aussieht",
+  "The four prompt archetypes": "Die vier Prompt-Archetypen",
+  "Why most \"frameworks\" are theater": "Warum die meisten \u201EFrameworks\u201C Theater sind",
+  "Building a personal prompt library": "Eine persönliche Prompt-Bibliothek aufbauen",
+  "Reviewing your own prompts like code": "Eigene Prompts wie Code prüfen",
+  "How I read 30 papers a week": "Wie ich 30 Paper pro Woche lese",
+  "Building research maps with Claude Projects": "Recherche-Karten mit Claude Projects bauen",
+  "Verifying citations — the manual step you can't skip": "Zitate prüfen, der manuelle Schritt, den du nicht überspringen kannst",
+  "Synthesising into your own voice": "In die eigene Stimme synthetisieren",
+  "Building your operating system around AI": "Dein Betriebssystem um KI herum bauen",
+  "When to delegate to AI vs hire": "Wann an KI delegieren, wann einstellen",
+  "Voice and taste — keeping yours intact": "Stimme und Geschmack, deine intakt halten",
+  "Workflow patterns that don't fall apart": "Workflow-Muster, die nicht zerfallen",
+  "Drafting without flattening your voice": "Entwerfen, ohne deine Stimme zu glätten",
+  "Using AI as your toughest editor": "KI als deinen härtesten Lektor nutzen",
+  "When AI ruins prose (and how to spot it)": "Wann KI Prosa ruiniert (und wie du es erkennst)",
+  "Building feedback loops with your own writing": "Feedback-Schleifen mit dem eigenen Schreiben bauen",
+  /* modal static */
+  "What you'll learn": "Was du lernst",
+  "Self-paced video lessons, downloadable prompt templates, and a private discussion thread. Live cohort weeks twice a year for paid courses.":
+    "Selbstbestimmte Videolektionen, herunterladbare Prompt-Vorlagen und ein privater Diskussionsthread. Live-Gruppenwochen zweimal im Jahr für kostenpflichtige Kurse.",
+  "Inside": "Drinnen",
+  "The framing: why this matters now": "Die Einordnung: warum das jetzt zählt",
+  "The walk-through: how I actually do it": "Die Anleitung: wie ich es wirklich mache",
+  "The prompts: copy/paste with notes": "Die Prompts: Copy/Paste mit Notizen",
+  "The footnotes: what I'm still figuring out": "Die Fußnoten: was ich noch herausfinde",
+  "Full version is sent to subscribers and unlocks here after subscription.":
+    "Die Vollversion geht an Abonnenten und schaltet sich hier nach dem Abo frei.",
+  "Who it's for": "Für wen es ist",
+  "Live on Zoom, cameras on, small group. Recording shared with attendees only. No slides, no decks — we work on real material.":
+    "Live auf Zoom, Kameras an, kleine Gruppe. Aufzeichnung nur für Teilnehmende. Keine Folien, keine Decks, wir arbeiten an echtem Material.",
+  "People who already use AI a little and want to use it better. No level required.":
+    "Menschen, die KI schon ein wenig nutzen und besser nutzen wollen. Kein Niveau nötig.",
+  "▶ Video player · placeholder": "▶ Videoplayer · Platzhalter",
+  "Replays unlock with newsletter subscription. Free archive after 90 days.":
+    "Replays schalten sich mit dem Newsletter-Abo frei. Kostenloses Archiv nach 90 Tagen.",
+  "Enroll →": "Einschreiben →", "Join waitlist →": "Auf die Warteliste →", "Notify me →": "Benachrichtige mich →",
+  "Subscribe to read →": "Zum Lesen abonnieren →", "Save my seat →": "Platz sichern →", "Subscribe to watch →": "Zum Ansehen abonnieren →",
+  /* playbooks */
+  "Available now": "Jetzt verfügbar", "Open →": "Öffnen →", "Read →": "Lesen →",
+  "Claude · Setup": "Claude · Einrichtung", "Job Search": "Jobsuche",
+  "Walkthrough": "Anleitung", "Practice guide": "Praxis-Leitfaden", "Field note": "Feldnotiz",
+  "Research": "Recherche", "Voice": "Stimme",
+  "The Claude Playbook": "Das Claude-Playbook",
+  "My Job Coach Playbook": "Mein Job-Coach-Playbook",
+  "How to Claude Design": "Mit Claude gestalten",
+  "Reading 30 papers a week": "30 Paper pro Woche lesen",
+  "Keeping your voice when you co-write": "Deine Stimme behalten beim Mitschreiben",
+  "15 minutes a day with Claude": "15 Minuten am Tag mit Claude",
+  "Drafting essays, the honest way": "Essays entwerfen, ehrlich",
+  "Why most prompt \"frameworks\" fail": "Warum die meisten Prompt-\u201EFrameworks\u201C scheitern",
+  "Citation hygiene with AI": "Zitierhygiene mit KI",
+  "How to get the best out of every prompt. A practical guide to building AI projects that give you sharper, more consistent answers — using a real Job Coach project as the worked example.":
+    "Wie du aus jedem Prompt das Beste holst. Ein praktischer Leitfaden, um KI-Projekte zu bauen, die dir schärfere, konsistentere Antworten geben, mit einem echten Job-Coach-Projekt als Beispiel.",
+  "A step-by-step guide to setting up four Claude skills for your job search: job review, cover letter, interview prep, and networking. Complete beginner welcome.":
+    "Eine Schritt-für-Schritt-Anleitung, um vier Claude-Skills für deine Jobsuche einzurichten: Job-Check, Anschreiben, Interview-Vorbereitung und Networking. Auch für Anfänger.",
+  "A hands-on playbook for using Claude as a design thinking partner — from brief to concept, prompts that sharpen visual decisions, and a workflow that keeps your taste intact.":
+    "Ein praktisches Playbook, um Claude als Design-Denkpartner zu nutzen, vom Briefing zum Konzept, Prompts, die visuelle Entscheidungen schärfen, und ein Workflow, der deinen Geschmack bewahrt.",
+  "Most prompts fall into one of four categories. Knowing which one you need is half the work.":
+    "Die meisten Prompts fallen in eine von vier Kategorien. Zu wissen, welche du brauchst, ist die halbe Arbeit.",
+  "A simple Notion + clipboard system that survived two years of model changes.":
+    "Ein einfaches Notion-plus-Zwischenablage-System, das zwei Jahre Modellwechsel überstanden hat.",
+  "How I use Claude Projects to map a research field without losing the texture.":
+    "Wie ich mit Claude Projects ein Forschungsfeld kartiere, ohne die Textur zu verlieren.",
+  "A diagnostic: when AI is helping you write, and when it's rewriting you.":
+    "Eine Diagnose: wann KI dir beim Schreiben hilft und wann sie dich umschreibt.",
+  "A small habit that, over a month, changes what you can think about.":
+    "Eine kleine Gewohnheit, die über einen Monat verändert, worüber du nachdenken kannst.",
+  "My actual end-to-end flow, from blank page to publish, including where AI helps and where it doesn't.":
+    "Mein tatsächlicher Ablauf von der leeren Seite bis zur Veröffentlichung, inklusive wo KI hilft und wo nicht.",
+  "A short polemic. Frameworks promise leverage; mostly they perform expertise.":
+    "Eine kurze Polemik. Frameworks versprechen Hebelwirkung; meist führen sie nur Expertise vor.",
+  "AI lies about sources. Here's the manual step that catches it every time.":
+    "KI lügt über Quellen. Hier ist der manuelle Schritt, der das jedes Mal erwischt.",
+  "~33 min read": "~33 Min. Lesezeit", "~30 min + setup": "~30 Min. + Einrichtung", "~25 min read": "~25 Min. Lesezeit",
+  "12 min read": "12 Min. Lesezeit", "20 min · with templates": "20 Min. · mit Vorlagen",
+  "15 min · with prompts": "15 Min. · mit Prompts", "10 min read": "10 Min. Lesezeit",
+  "8 min · daily": "8 Min. · täglich", "25 min · with screenshots": "25 Min. · mit Screenshots",
+  "9 min read": "9 Min. Lesezeit", "6 min · with checklist": "6 Min. · mit Checkliste",
+  /* sessions */
+  "Office hours: prompt critiques": "Sprechstunde: Prompt-Kritiken",
+  "Workshop: building your prompt library": "Workshop: deine Prompt-Bibliothek bauen",
+  "Conversation: AI in education": "Gespräch: KI in der Bildung",
+  "Cohort 02 kickoff: AI for solo operators": "Gruppe 02 Kickoff: KI für Solo-Selbstständige",
+  "Live · Zoom · 60 min · €0": "Live · Zoom · 60 Min. · 0 €",
+  "Live · Zoom · 90 min · €29": "Live · Zoom · 90 Min. · 29 €",
+  "Live · Zoom · 60 min · Free": "Live · Zoom · 60 Min. · Kostenlos",
+  "Live · Zoom · 90 min · cohort only": "Live · Zoom · 90 Min. · nur Gruppe",
+  "Bring one prompt that's not working. We'll diagnose it together. Small group, max 12 seats.":
+    "Bring einen Prompt mit, der nicht funktioniert. Wir diagnostizieren ihn gemeinsam. Kleine Gruppe, max. 12 Plätze.",
+  "Hands-on. By the end, you have a working personal prompt library and a system to maintain it.":
+    "Praktisch. Am Ende hast du eine funktionierende persönliche Prompt-Bibliothek und ein System, sie zu pflegen.",
+  "A guest conversation with a teacher and a learning designer about AI in real classrooms.":
+    "Ein Gastgespräch mit einer Lehrerin und einem Lerndesigner über KI in echten Klassenzimmern.",
+  "Cohort week 1. Open only to enrolled participants. Recording shared after.":
+    "Gruppenwoche 1. Nur für eingeschriebene Teilnehmende. Aufzeichnung danach geteilt.",
+  "RSVP →": "Zusagen →",
+  "How I actually use Claude Projects": "Wie ich Claude Projects wirklich nutze",
+  "Reading the GPT-5 release, slowly": "Das GPT-5-Release langsam lesen",
+  "Prompt critiques · session 04": "Prompt-Kritiken · Session 04",
+  "Voice and taste with AI": "Stimme und Geschmack mit KI",
+  "Why I deleted my prompt frameworks doc": "Warum ich mein Prompt-Frameworks-Dokument gelöscht habe",
+  "Teaching my mom to use Claude": "Meiner Mutter Claude beibringen",
+  "42 min · Workflows": "42 Min. · Workflows", "28 min · Landscape": "28 Min. · Landschaft",
+  "58 min · Office hours": "58 Min. · Sprechstunde", "36 min · Conversation": "36 Min. · Gespräch",
+  "19 min · Essay-talk": "19 Min. · Essay-Talk", "31 min · Field report": "31 Min. · Feldbericht",
+  /* toasts */
+  "Archive opens with newsletter subscription": "Das Archiv öffnet sich mit dem Newsletter-Abo",
+  "Saved a seat — confirmation sent": "Platz gesichert, Bestätigung gesendet",
+  "Welcome — first letter goes out Tuesday": "Willkommen, der erste Brief geht Dienstag raus",
+  "Seat saved — confirmation in your inbox": "Platz gesichert, Bestätigung im Postfach"
+};
+window.SUBPAGE_ATTR = { "your@email.com": "deine@email.com" };
+</script>
+<script src="subpage-i18n.js"></script>
 </body>
 </html>
